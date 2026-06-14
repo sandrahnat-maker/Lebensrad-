@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Atemübung</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IM+Fell+English:ital@0;1&family=Raleway:wght@400;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sage:    #5e8a5a;
+  --sage-dk: #3a5a3e;
+  --sage-lt: #a8c8ac;
+  --mist:    #f0ece4;
+  --stone:   #1a2744;
+  --gold:    #c9893a;
+  --cream:   #fdf6ee;
+  --soft:    rgba(94,138,90,0.15);
+  --crimson: #b8294a;
+  --violet:  #6a3f7a;
+  --navy:    #1a2744;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--navy);
+  font-family: 'Raleway', sans-serif;
+  color: var(--mist);
+  user-select: none;
+}
+
+/* ── Background layers ── */
+.bg {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(106,63,122,0.4) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 20% 20%, rgba(184,41,74,0.08) 0%, transparent 60%),
+    linear-gradient(170deg, #0e1830 0%, #1a2744 40%, #0d1828 100%);
+}
+
+/* subtle leaf texture */
+.bg::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 85%, rgba(94,138,90,0.06) 0%, transparent 40%),
+    radial-gradient(circle at 85% 15%, rgba(201,137,58,0.05) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* ── Wimpelkette ── */
+.wimpel {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 36px;
+  z-index: 10;
+}
+.wimpel svg { width: 100%; height: 100%; }
+
+/* ── Main layout ── */
+.app {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 52px 24px 32px;
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.2s forwards;
+}
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 300;
+  font-size: 1.9rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+.header p {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--sage-lt);
+  opacity: 0.8;
+  margin-top: 3px;
+  letter-spacing: 0.05em;
+}
+
+/* ── Orb area ── */
+.orb-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.4s forwards;
+}
+
+/* Outer ring (progress) */
+.ring-svg {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+}
+.ring-track {
+  fill: none;
+  stroke: rgba(184,41,74,0.12);
+  stroke-width: 1.5;
+}
+.ring-fill {
+  fill: none;
+  stroke: var(--crimson);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  transform-origin: center;
+  transform: rotate(-90deg);
+  transition: stroke-dashoffset 0.15s linear, stroke 1s ease;
+  opacity: 0.7;
+}
+
+/* The breathing orb */
+.orb {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 35%,
+    rgba(200,160,200,0.9) 0%,
+    rgba(106,63,122,0.7) 40%,
+    rgba(26,39,68,0.5) 70%,
+    rgba(13,24,40,0.3) 100%);
+  box-shadow:
+    0 0 60px rgba(106,63,122,0.35),
+    0 0 120px rgba(184,41,74,0.15),
+    inset 0 0 40px rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  transition: transform 0.15s linear;
+  will-change: transform;
+}
+
+.orb-word {
+  font-family: 'Playfair Display', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.05em;
+  transition: opacity 0.4s ease;
+}
+.orb-count {
+  font-family: 'IM Fell English', serif;
+  font-size: 2.8rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.95);
+  line-height: 1;
+  min-width: 2ch;
+  text-align: center;
+}
+.orb-sub {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ── Phase indicator dots ── */
+.phase-dots {
+  display: flex;
+  gap: 10px;
+  margin-top: -8px;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.5s forwards;
+}
+.pdot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(122,158,126,0.25);
+  border: 1px solid rgba(201,137,58,0.4);
+  transition: all 0.5s ease;
+}
+.pdot.ein  { background: #a8c8ac; border-color: #a8c8ac; transform: scale(1.4); }
+.pdot.halt { background: var(--gold);    border-color: var(--gold);    transform: scale(1.4); }
+.pdot.aus  { background: var(--crimson); border-color: var(--crimson); transform: scale(1.4); }
+
+/* ── Info strip ── */
+.info-strip {
+  display: flex;
+  gap: 20px;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.6s forwards;
+}
+.info-item {
+  text-align: center;
+}
+.info-val {
+  font-family: 'IM Fell English', serif;
+  font-size: 1.5rem;
+  color: var(--gold);
+  line-height: 1;
+}
+.info-lbl {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(184,212,188,0.4);
+  margin-top: 2px;
+}
+.info-sep {
+  width: 1px;
+  background: rgba(122,158,126,0.2);
+  align-self: stretch;
+}
+
+/* ── Rounds display ── */
+.rounds-display {
+  font-family: 'IM Fell English', serif;
+  font-size: 0.85rem;
+  color: rgba(184,212,188,0.5);
+  letter-spacing: 0.1em;
+  text-align: center;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.65s forwards;
+  height: 1.2em;
+}
+
+/* ── Controls ── */
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.7s forwards;
+  width: 100%;
+}
+
+.btn-start {
+  background: linear-gradient(135deg, var(--navy), #0e1830);
+  border: 1px solid rgba(201,137,58,0.4);
+  border-radius: 50px;
+  padding: 14px 48px;
+  color: var(--mist);
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(26,39,68,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+  transition: all 0.2s;
+  min-width: 180px;
+}
+.btn-start:hover { transform: translateY(-1px); box-shadow: 0 6px 30px rgba(74,107,78,0.5); }
+.btn-start:active { transform: translateY(1px); }
+.btn-start:disabled { opacity: 0.3; cursor: default; transform: none; }
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-icon {
+  background: rgba(122,158,126,0.1);
+  border: 1px solid rgba(122,158,126,0.2);
+  border-radius: 50%;
+  width: 40px; height: 40px;
+  color: var(--sage-lt);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.btn-icon:hover { background: rgba(122,158,126,0.2); }
+.btn-icon:disabled { opacity: 0.3; cursor: default; }
+
+/* Mode selector */
+.mode-row {
+  display: flex;
+  gap: 8px;
+}
+.mode-btn {
+  background: rgba(122,158,126,0.08);
+  border: 1px solid rgba(122,158,126,0.2);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: rgba(184,212,188,0.5);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.mode-btn.active {
+  background: rgba(122,158,126,0.2);
+  border-color: rgba(122,158,126,0.5);
+  color: var(--sage-lt);
+}
+
+/* ── Done message ── */
+.done-msg {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(26,39,68,0.97);
+  animation: fadeIn 1s ease;
+}
+.done-msg.show { display: flex; }
+.done-big {
+  font-family: 'Playfair Display', serif;
+  font-weight: 300;
+  font-size: 2rem;
+  color: var(--gold);
+}
+.done-sub {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  color: var(--sage-lt);
+  opacity: 0.8;
+  font-size: 1rem;
+}
+.done-stat {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: rgba(184,212,188,0.4);
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+.btn-again {
+  margin-top: 16px;
+  background: none;
+  border: 1px solid rgba(201,137,58,0.4);
+  border-radius: 30px;
+  padding: 10px 32px;
+  color: var(--sage-lt);
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-again:hover { background: rgba(122,158,126,0.1); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<!-- Wimpelkette -->
+<div class="wimpel">
+  <svg viewBox="0 0 800 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="4" x2="800" y2="4" stroke="#c9893a" stroke-width="0.6" opacity="0.4"/>
+    <g id="wFlags"></g>
+  </svg>
+</div>
+
+<div class="app">
+
+  <div class="header">
+    <h1>Atemübung</h1>
+    <p>verlängertes Ausatmen · Blutdruck senken</p>
+  </div>
+
+  <div class="orb-area">
+    <svg class="ring-svg" viewBox="0 0 260 260">
+      <circle class="ring-track" cx="130" cy="130" r="124"/>
+      <circle class="ring-fill" id="ringFill" cx="130" cy="130" r="124"
+        stroke-dasharray="779" stroke-dashoffset="779"/>
+    </svg>
+    <div class="orb" id="orb">
+      <div class="orb-word" id="orbWord">bereit</div>
+      <div class="orb-count" id="orbCount">—</div>
+      <div class="orb-sub" id="orbSub">Drücke Start</div>
+    </div>
+  </div>
+
+  <div class="phase-dots">
+    <div class="pdot" id="dot0" title="Einatmen"></div>
+    <div class="pdot" id="dot1" title="Halten"></div>
+    <div class="pdot" id="dot2" title="Ausatmen"></div>
+  </div>
+
+  <div class="info-strip">
+    <div class="info-item">
+      <div class="info-val" id="infoRunden">5</div>
+      <div class="info-lbl">Runden</div>
+    </div>
+    <div class="info-sep"></div>
+    <div class="info-item">
+      <div class="info-val" id="infoMuster">4·0·8</div>
+      <div class="info-lbl">Sekunden</div>
+    </div>
+    <div class="info-sep"></div>
+    <div class="info-item">
+      <div class="info-val" id="infoDauer">4:00</div>
+      <div class="info-lbl">Gesamt</div>
+    </div>
+  </div>
+
+  <div class="rounds-display" id="roundsDisplay"></div>
+
+  <div class="controls">
+    <div class="mode-row">
+      <button class="mode-btn active" id="mode1" onclick="setMode(0)">4·0·8</button>
+      <button class="mode-btn" id="mode2" onclick="setMode(1)">4·4·8</button>
+      <button class="mode-btn" id="mode3" onclick="setMode(2)">4·7·8</button>
+      <button class="mode-btn" id="mode4" onclick="setMode(3)">Box 4·4·4·4</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn-icon" id="btnMinus" onclick="changeRounds(-1)" title="Weniger Runden">−</button>
+      <button class="btn-start" id="btnStart" onclick="startSession()">Start</button>
+      <button class="btn-icon" id="btnPlus" onclick="changeRounds(1)" title="Mehr Runden">+</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn-icon" id="btnPause" onclick="togglePause()" disabled title="Pause">⏸</button>
+      <button class="btn-icon" onclick="restart()" title="Neu starten">↺</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Done overlay -->
+<div class="done-msg" id="doneMsg">
+  <div class="done-big">✦ Wunderbar ✦</div>
+  <div class="done-sub">Dein Nervensystem dankt dir.</div>
+  <div class="done-stat" id="doneStat"></div>
+  <button class="btn-again" onclick="restart()">Nochmal</button>
+</div>
+
+<script>
+// ── Wimpelkette ──
+const wFlagsEl = document.getElementById('wFlags');
+const wColors = ['#b8294a','#c9893a','#1a2744','#6a3f7a','#5e8a5a'];
+for (let i = 0; i < 40; i++) {
+  const x = i * 21;
+  const tri = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+  tri.setAttribute('points', `${x},4 ${x+10},4 ${x+5},18`);
+  tri.setAttribute('fill', wColors[i % wColors.length]);
+  tri.setAttribute('opacity','0.55');
+  wFlagsEl.appendChild(tri);
+}
+
+// ── Modes ──
+const MODES = [
+  { label:'4·0·8',     ein:4, halt:0, aus:8,  box:false },
+  { label:'4·4·8',     ein:4, halt:4, aus:8,  box:false },
+  { label:'4·7·8',     ein:4, halt:7, aus:8,  box:false },
+  { label:'Box 4·4·4·4', ein:4, halt:4, aus:4, halt2:4, box:true },
+];
+
+let modeIdx = 0;
+let rounds = 5;
+
+function totalDuration(m, r) {
+  const cycle = m.ein + m.halt + m.aus + (m.box ? m.halt2 : 0);
+  return cycle * r;
+}
+
+function fmtTime(s) {
+  return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+}
+
+function updateInfoStrip() {
+  const m = MODES[modeIdx];
+  document.getElementById('infoRunden').textContent = rounds;
+  document.getElementById('infoMuster').textContent = m.label;
+  document.getElementById('infoDauer').textContent = fmtTime(totalDuration(m, rounds));
+}
+
+function setMode(idx) {
+  modeIdx = idx;
+  document.querySelectorAll('.mode-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  updateInfoStrip();
+}
+
+function changeRounds(delta) {
+  rounds = Math.max(1, Math.min(20, rounds + delta));
+  updateInfoStrip();
+}
+
+updateInfoStrip();
+
+// ── Speech ──
+let synth = ('speechSynthesis' in window) ? window.speechSynthesis : null;
+let voices = [];
+let speechVolume = 0.9;
+
+function loadVoices() {
+  try { if (!synth) return; const v = synth.getVoices(); if (v && v.length) voices = v; } catch(e) {}
+}
+try { loadVoices(); } catch(e) {}
+try { if (synth && typeof synth.onvoiceschanged !== 'undefined') synth.onvoiceschanged = loadVoices; } catch(e) {}
+
+function getVoice() {
+  if (!voices.length) return null;
+  return voices.find(v => v.lang.startsWith('de') && v.localService) ||
+         voices.find(v => v.lang.startsWith('de')) || voices[0];
+}
+
+function speak(text) {
+  try {
+    if (!synth) return;
+    synth.cancel();
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'de-AT';
+    utt.rate = 0.80;
+    utt.pitch = 0.92;
+    utt.volume = speechVolume;
+    const v = getVoice();
+    if (v) utt.voice = v;
+    synth.speak(utt);
+  } catch(e) {}
+}
+
+// Guided texts per phase transition
+const PHASE_TEXTS = {
+  ein: [
+    "Atme jetzt tief und ruhig durch die Nase ein.",
+    "Einatmen — lass die Luft tief in den Bauch strömen.",
+    "Durch die Nase einatmen — langsam und gleichmäßig.",
+    "Atme ein — spüre, wie sich dein Brustkorb weitet.",
+    "Einatmen, tief und bewusst.",
+    "Durch die Nase einatmen — ganz ruhig.",
+    "Lass die Luft sanft einströmen.",
+    "Einatmen — tief, voll, entspannt.",
+  ],
+  halt: [
+    "Halte die Luft — ruhig und ohne Anspannung.",
+    "Innehalten — alles ist gut.",
+    "Halten — spüre die Stille in dir.",
+    "Halte den Atem — ganz locker, kein Druck.",
+    "Innehalten — du bist ganz ruhig.",
+  ],
+  halt2: [
+    "Halte inne — leer und offen.",
+    "Nach dem Ausatmen — kurz ruhen.",
+    "Innehalten — leicht und frei.",
+  ],
+  aus: [
+    "Und jetzt langsam, ganz langsam ausatmen — durch den leicht geöffneten Mund.",
+    "Ausatmen — länger als das Einatmen, lass alles los.",
+    "Langsam ausströmen lassen — Schultern fallen lassen.",
+    "Durch den Mund ausatmen — ruhig, kontrolliert, entspannt.",
+    "Ausatmen — und mit der Luft auch die Anspannung.",
+    "Langsam ausatmen — lass den Körper weicher werden.",
+    "Ausströmen — du gibst alles los.",
+    "Durch den Mund — lang, ruhig, loslassen.",
+  ],
+  start: "Nimm eine bequeme Position ein. Lass deine Schultern fallen, deine Hände ruhen locker. Schließe die Augen, wenn du möchtest. Wir beginnen.",
+  finish: "Wunderbar. Du hast deinem Nervensystem Ruhe geschenkt. Nimm einen tiefen Atemzug — und komme sanft zurück."
+};
+
+// Counter per phase to cycle through texts
+const phaseCounters = { ein: 0, halt: 0, halt2: 0, aus: 0 };
+
+function speakPhase(phase) {
+  const arr = PHASE_TEXTS[phase];
+  if (!arr) return;
+  const idx = phaseCounters[phase] % arr.length;
+  phaseCounters[phase]++;
+  speak(arr[idx]);
+}
+
+// ── Session state ──
+let running = false;
+let paused = false;
+let stepTimer = null;
+
+// ── Wake Lock ──
+let wakeLock = null;
+async function requestWakeLock() {
+  if ('wakeLock' in navigator) {
+    try { wakeLock = await navigator.wakeLock.request('screen'); } catch(e) {}
+  }
+}
+async function releaseWakeLock() {
+  if (wakeLock) { try { await wakeLock.release(); } catch(e) {} wakeLock = null; }
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && running && !paused) requestWakeLock();
+});
+let completedRounds = 0;
+
+// Phase sequence
+function buildSequence(m) {
+  const seq = [];
+  for (let r = 0; r < rounds; r++) {
+    seq.push({ phase:'ein',  dur: m.ein,  word:'einatmen',  cls:'ein'  });
+    if (m.halt > 0)
+      seq.push({ phase:'halt', dur: m.halt, word:'halten',   cls:'halt' });
+    seq.push({ phase:'aus',  dur: m.aus,  word:'ausatmen',  cls:'aus'  });
+    if (m.box && m.halt2 > 0)
+      seq.push({ phase:'halt2',dur: m.halt2,word:'halten',   cls:'halt' });
+  }
+  return seq;
+}
+
+let sequence = [];
+let seqIdx = 0;
+let stepSec = 0;
+let totalSec = 0;
+let elapsed = 0;
+
+function startSession() {
+  const m = MODES[modeIdx];
+  sequence = buildSequence(m);
+  seqIdx = 0;
+  stepSec = 0;
+  elapsed = 0;
+  totalSec = totalDuration(m, rounds);
+  completedRounds = 0;
+  running = true;
+  paused = false;
+
+  document.getElementById('btnStart').disabled = true;
+  document.getElementById('btnPause').disabled = false;
+  document.getElementById('btnMinus').disabled = true;
+  document.getElementById('btnPlus').disabled = true;
+  document.querySelectorAll('.mode-btn').forEach(b => b.disabled = true);
+
+  applyStep();
+  stepTimer = setInterval(tick, 1000);
+  requestWakeLock();
+  speak(PHASE_TEXTS.start);
+}
+
+function applyStep() {
+  if (seqIdx >= sequence.length) { finish(); return; }
+  const s = sequence[seqIdx];
+  stepSec = s.dur;
+
+  // Orb text
+  document.getElementById('orbWord').textContent = s.word;
+  document.getElementById('orbSub').textContent = s.phase === 'ein' ? 'durch die Nase' :
+    s.phase === 'aus' ? 'durch den Mund' : 'ruhig halten';
+
+  // Speak guidance (slight delay so start-text finishes first on round 1)
+  if (completedRounds > 0 || seqIdx > 0) speakPhase(s.phase);
+
+  // Dots
+  document.getElementById('dot0').className = 'pdot' + (s.cls==='ein'?' ein':'');
+  document.getElementById('dot1').className = 'pdot' + (s.cls==='halt'?' halt':'');
+  document.getElementById('dot2').className = 'pdot' + (s.cls==='aus'?' aus':'');
+
+  // Count
+  document.getElementById('orbCount').textContent = stepSec;
+
+  // Orb scale
+  setOrbScale(s.phase, s.dur, s.dur);
+
+  // Rounds
+  if (s.phase === 'ein') completedRounds++;
+  updateRoundsDisplay();
+}
+
+function setOrbScale(phase, remaining, total) {
+  const orb = document.getElementById('orb');
+  let scale = 1;
+  const progress = 1 - (remaining / total);
+  if (phase === 'ein') scale = 0.85 + 0.28 * progress;
+  else if (phase === 'aus') scale = 1.13 - 0.28 * progress;
+  else scale = 1.13; // halt
+  orb.style.transform = `scale(${scale.toFixed(3)})`;
+  orb.style.transition = `transform ${Math.min(remaining, 1)}s linear`;
+}
+
+function updateRoundsDisplay() {
+  const r = Math.min(completedRounds, rounds);
+  const circles = Array.from({length: rounds}, (_,i) =>
+    `<span style="opacity:${i < r ? '0.8' : '0.2'};color:${i < r ? 'var(--sage-lt)' : 'inherit'}">●</span>`
+  ).join(' ');
+  document.getElementById('roundsDisplay').innerHTML = circles;
+}
+
+// Ring progress
+function updateRing() {
+  const circ = 779;
+  const frac = elapsed / totalSec;
+  const offset = circ * (1 - frac);
+  document.getElementById('ringFill').style.strokeDashoffset = offset;
+}
+
+function tick() {
+  if (!running || paused) return;
+  elapsed++;
+  stepSec--;
+  updateRing();
+
+  const s = sequence[seqIdx];
+  document.getElementById('orbCount').textContent = Math.max(0, stepSec);
+  setOrbScale(s.phase, stepSec, s.dur);
+
+  if (stepSec <= 0) {
+    seqIdx++;
+    if (seqIdx >= sequence.length) {
+      finish();
+    } else {
+      applyStep();
+    }
+  }
+}
+
+function togglePause() {
+  if (!running) return;
+  paused = !paused;
+  const btn = document.getElementById('btnPause');
+  if (paused) {
+    try { if (synth) synth.pause(); } catch(e) {}
+    btn.textContent = '▶';
+    btn.title = 'Fortsetzen';
+    document.getElementById('orbWord').textContent = 'pause';
+    document.getElementById('orb').style.transform = 'scale(1)';
+  } else {
+    try { if (synth) synth.resume(); } catch(e) {}
+    btn.textContent = '⏸';
+    btn.title = 'Pause';
+    applyStep();
+  }
+}
+
+function finish() {
+  clearInterval(stepTimer);
+  running = false;
+  releaseWakeLock();
+  speak(PHASE_TEXTS.finish);
+  document.getElementById('doneMsg').classList.add('show');
+  document.getElementById('doneStat').textContent =
+    `${rounds} Runden · ${fmtTime(totalSec)} · Muster: ${MODES[modeIdx].label}`;
+}
+
+function restart() {
+  clearInterval(stepTimer);
+  running = false;
+  paused = false;
+  releaseWakeLock();
+  try { if (synth) synth.cancel(); } catch(e) {}
+  Object.keys(phaseCounters).forEach(k => phaseCounters[k] = 0);
+  seqIdx = 0;
+  elapsed = 0;
+  completedRounds = 0;
+
+  document.getElementById('doneMsg').classList.remove('show');
+  document.getElementById('btnStart').disabled = false;
+  document.getElementById('btnPause').disabled = true;
+  document.getElementById('btnPause').textContent = '⏸';
+  document.getElementById('btnMinus').disabled = false;
+  document.getElementById('btnPlus').disabled = false;
+  document.querySelectorAll('.mode-btn').forEach(b => b.disabled = false);
+
+  document.getElementById('orb').style.transform = 'scale(1)';
+  document.getElementById('orbWord').textContent = 'bereit';
+  document.getElementById('orbCount').textContent = '—';
+  document.getElementById('orbSub').textContent = 'Drücke Start';
+  document.getElementById('ringFill').style.strokeDashoffset = 779;
+  document.getElementById('roundsDisplay').textContent = '';
+
+  ['dot0','dot1','dot2'].forEach(id => document.getElementById(id).className = 'pdot');
+  updateInfoStrip();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#fdf6ee">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yoga Nidra · Tiefenentspannung</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IM+Fell+English:ital@0;1&family=Raleway:wght@400;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,.12);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,.10);
+  --violet:#6a3f7a;--border-col:rgba(184,41,74,.15);--shadow:rgba(30,18,8,.08);
+  --up-col:#b8294a;--down-col:#5e8a5a;--same-col:#888;}
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {background-image:repeating-linear-gradient(-4deg,rgba(184,41,74,.022) 0px,rgba(184,41,74,.022) 32px,transparent 32px,transparent 64px,rgba(201,137,58,.018) 64px,rgba(201,137,58,.018) 96px,transparent 96px,transparent 128px);
+    background: var(--dark);
+    color: var(--cream);
+    font-family: 'Raleway', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Starry background */
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--gold-light);
+    animation: twinkle var(--d, 3s) ease-in-out infinite;
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: var(--o, 0.6); }
+  }
+
+  /* Breathing orb */
+  .orb-container {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%,
+      rgba(74, 44, 110, 0.3),
+      rgba(26, 39, 68, 0.15),
+      transparent 70%);
+    filter: blur(40px);
+    transition: transform 4s ease-in-out, opacity 2s;
+    opacity: 0;
+  }
+  .orb.active {
+    opacity: 1;
+    animation: breathe 8s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+  }
+
+  /* Wimpelkette */
+  .wimpel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    z-index: 10;
+    overflow: hidden;
+  }
+  .wimpel svg { width: 100%; height: 100%; }
+
+  /* Main layout */
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 60px 24px 40px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .title-block {
+    text-align: center;
+    padding-top: 8px;
+  }
+  .title-block h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .title-block p {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--gold-light);
+    opacity: 0.75;
+    font-size: 0.95rem;
+    margin-top: 6px;
+  }
+
+  /* Phase indicator */
+  .phase-track {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .phase-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.2);
+    border: 1px solid rgba(201,168,76,0.4);
+    transition: all 0.5s;
+  }
+  .phase-dot.done { background: var(--sage); border-color: var(--sage); }
+  .phase-dot.active { background: var(--gold); border-color: var(--gold); transform: scale(1.5); }
+
+  /* Timer circle */
+  .timer-ring {
+    position: relative;
+    width: 180px;
+    height: 180px;
+  }
+  .timer-ring svg {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+  }
+  .ring-bg {
+    fill: none;
+    stroke: rgba(201,168,76,0.12);
+    stroke-width: 3;
+  }
+  .ring-progress {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 3;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+  }
+  .timer-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+  .timer-time {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .timer-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    opacity: 0.6;
+  }
+
+  /* Text display */
+  .speech-box {
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 16px;
+    padding: 24px 28px;
+    text-align: center;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .speech-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(74,44,110,0.08), transparent);
+    pointer-events: none;
+  }
+  .speech-text {
+    font-family: 'IM Fell English', serif;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--cream);
+    opacity: 0.9;
+    transition: opacity 0.8s;
+  }
+  .speech-text.fade { opacity: 0; }
+
+  /* Phase name */
+  .phase-name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    text-align: center;
+  }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .btn {
+    border: none;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+    transition: all 0.2s;
+  }
+  .btn-main {
+    background: linear-gradient(135deg, var(--crimson), #6B1414);
+    color: var(--gold-light);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50px;
+    padding: 14px 40px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 20px rgba(184,41,74,0.4);
+  }
+  .btn-main:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(184,41,74,0.5); }
+  .btn-main:active { transform: translateY(0); }
+  .btn-main:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+  .btn-icon {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    color: var(--gold);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-icon:hover { background: rgba(201,168,76,0.15); }
+
+  /* Volume control */
+  .vol-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.6;
+  }
+  .vol-row span { font-size: 0.75rem; letter-spacing: 0.1em; }
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100px;
+    height: 3px;
+    background: rgba(201,168,76,0.3);
+    border-radius: 2px;
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gold);
+    cursor: pointer;
+  }
+
+  /* Finished state */
+  .finished-msg {
+    text-align: center;
+    animation: fadeIn 1.5s ease;
+  }
+  .finished-msg .big { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--gold); }
+  .finished-msg .sub { font-family: 'IM Fell English', serif; font-style: italic; color: var(--gold-light); opacity: 0.75; margin-top: 8px; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .hidden { display: none !important; }
+
+body::after{content:'';position:fixed;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,#b8294a 0,#b8294a 20%,#c9893a 20%,#c9893a 40%,#1a2744 40%,#1a2744 60%,#6a3f7a 60%,#6a3f7a 80%,#5e8a5a 80%,#5e8a5a 100%);z-index:100;opacity:.7;}
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Breathing orb -->
+<div class="orb-container"><div class="orb" id="orb"></div></div>
+
+<!-- Wimpelkette -->
+<div class="wimpel">
+  <svg viewBox="0 0 800 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="5" x2="800" y2="5" stroke="#c9893a" stroke-width="0.8" opacity="0.5"/>
+    <g id="flags"></g>
+  </svg>
+</div>
+
+<div class="container">
+  <div class="title-block">
+    <h1>Yoga Nidra</h1>
+    <p>Tiefenentspannung · 20 Minuten</p>
+  </div>
+
+  <div class="phase-track" id="phaseTrack"></div>
+
+  <div class="timer-ring">
+    <svg viewBox="0 0 180 180">
+      <circle class="ring-bg" cx="90" cy="90" r="84"/>
+      <circle class="ring-progress" id="ringProgress" cx="90" cy="90" r="84"
+        stroke-dasharray="528" stroke-dashoffset="0"/>
+    </svg>
+    <div class="timer-center">
+      <div class="timer-time" id="timerDisplay">20:00</div>
+      <div class="timer-label" id="timerLabel">Bereit</div>
+    </div>
+  </div>
+
+  <div class="phase-name" id="phaseName">Leg dich bequem hin &amp; schließe die Augen</div>
+
+  <div class="speech-box">
+    <div class="speech-text" id="speechText">
+      Willkommen zu deiner Tiefenentspannung.<br>Leg dich hin, schließe die Augen und drücke Start.
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-icon" id="btnRestart" title="Neu starten" onclick="restart()">↺</button>
+    <button class="btn btn-main" id="btnStart" onclick="startSession()">Start</button>
+    <button class="btn btn-icon" id="btnPause" title="Pause" onclick="togglePause()" disabled>⏸</button>
+  </div>
+
+  <div class="vol-row">
+    <span>🔊 Stimme</span>
+    <input type="range" id="volSlider" min="0" max="1" step="0.1" value="0.9" oninput="setVolume(this.value)">
+  </div>
+
+  <div class="finished-msg hidden" id="finishedMsg">
+    <div class="big">✦ Wunderbar ✦</div>
+    <div class="sub">Nimm dir einen Moment, bevor du aufstehst.</div>
+  </div>
+</div>
+
+<script>
+// ── Wimpelkette ─────────────────────────────────────────
+const colors = ['#b8294a','#c9893a','#1a2744','#6a3f7a','#5e8a5a'];
+const flagsEl = document.getElementById('flags');
+for (let i = 0; i < 32; i++) {
+  const x = i * 26;
+  const col = colors[i % colors.length];
+  const tri = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+  tri.setAttribute('points', `${x},5 ${x+13},5 ${x+6.5},22`);
+  tri.setAttribute('fill', col);
+  tri.setAttribute('opacity','0.75');
+  flagsEl.appendChild(tri);
+}
+
+// ── Stars ────────────────────────────────────────────────
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 80; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 2 + 1;
+  s.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%; top:${Math.random()*100}%;
+    --d:${2+Math.random()*4}s; --o:${0.3+Math.random()*0.5};
+    animation-delay:${Math.random()*5}s;
+  `;
+  starsEl.appendChild(s);
+}
+
+// ── Session script ───────────────────────────────────────
+const TOTAL = 20 * 60; // 20 minutes in seconds
+
+const PHASES = [
+  {
+    name: "Ankommen",
+    duration: 90,
+    texts: [
+      "Willkommen. Leg dich bequem hin — Beine leicht geöffnet, Arme neben dem Körper.",
+      "Schließe die Augen. Lass den Boden dein ganzes Gewicht tragen.",
+      "Du musst jetzt nichts tun. Nichts leisten. Einfach da sein.",
+      "Atme tief ein... und langsam aus. Noch einmal."
+    ]
+  },
+  {
+    name: "Absicht",
+    duration: 60,
+    texts: [
+      "Setze jetzt innerlich eine Absicht. Ein kurzer Satz, der dir wichtig ist.",
+      "Vielleicht: Ich bin ruhig. Ich vertraue mir. Ich bin genug.",
+      "Wiederhole diesen Satz dreimal, ganz leise in dir.",
+      "Gut. Diese Absicht begleitet dich durch die Entspannung."
+    ]
+  },
+  {
+    name: "Körper-Rotation",
+    duration: 360,
+    texts: [
+      "Nun wandert deine Aufmerksamkeit langsam durch den Körper.",
+      "Rechter Daumen... Zeigefinger... Mittelfinger... Ringfinger... kleiner Finger.",
+      "Rechte Handfläche... Handrücken... Handgelenk... Unterarm... Ellbogen... Oberarm.",
+      "Rechte Schulter... rechte Seite des Halses... rechte Seite des Gesichts... rechtes Ohr.",
+      "Linker Daumen... Zeigefinger... Mittelfinger... Ringfinger... kleiner Finger.",
+      "Linke Hand... Handgelenk... Unterarm... Ellbogen... Oberarm... linke Schulter.",
+      "Linke Seite des Halses... linke Seite des Gesichts... linkes Ohr.",
+      "Scheitel des Kopfes... Stirn... Augenbrauen... Augenlieder... Nase.",
+      "Lippen... Kinn... Kehle... rechte Brust... linke Brust... Mitte der Brust.",
+      "Bauch... Nabel... unterer Bauch... rechte Hüfte... linke Hüfte.",
+      "Rechter Oberschenkel... Knie... Unterschenkel... Fußknöchel... Ferse... Fußsohle... Zehen.",
+      "Linker Oberschenkel... Knie... Unterschenkel... Fußknöchel... Ferse... Fußsohle... Zehen.",
+      "Der gesamte Körper als Ganzes. Spüre ihn vollständig."
+    ]
+  },
+  {
+    name: "Gegensätze",
+    duration: 180,
+    texts: [
+      "Jetzt spielen wir kurz mit Gegensätzen. Lass Bilder entstehen, ohne sie zu halten.",
+      "Spüre Schwere... und dann Leichtigkeit.",
+      "Spüre Wärme... und dann Kühle.",
+      "Spüre Stille... und dann ein sanftes Geräusch.",
+      "Spüre Enge... und dann weite Offenheit.",
+      "Gut. Lass alle Bilder ziehen."
+    ]
+  },
+  {
+    name: "Visualisierung",
+    duration: 240,
+    texts: [
+      "Lass jetzt ein ruhiges Bild entstehen. Vielleicht eine Wiese, ein Wald, ein Ufer.",
+      "Du musst nichts erfinden — lass es einfach auftauchen.",
+      "Nimm wahr, was du siehst. Welche Farben, welches Licht.",
+      "Vielleicht spürst du eine sanfte Brise. Oder du hörst etwas in der Ferne.",
+      "Du bist vollkommen sicher. Vollkommen entspannt.",
+      "Bleib einfach hier. Lass den Ort für dich da sein."
+    ]
+  },
+  {
+    name: "Absicht wiederholen",
+    duration: 60,
+    texts: [
+      "Kehre zurück zu deiner Absicht vom Beginn.",
+      "Wiederhole sie noch einmal, dreimal, ganz leise in dir.",
+      "Lass sie sich setzen — tief in dir."
+    ]
+  },
+  {
+    name: "Zurückkommen",
+    duration: 210,
+    texts: [
+      "Die Entspannung neigt sich dem Ende.",
+      "Beginne, deinen Atem wieder wahrzunehmen. Tiefer, bewusster.",
+      "Bewege langsam die Finger und Zehen.",
+      "Strecke dich, wenn es sich richtig anfühlt.",
+      "Drehe dich auf eine Seite, bevor du aufstehst. Lass dir Zeit.",
+      "Trage diese Stille mit dir in den Rest des Tages."
+    ]
+  }
+];
+
+let currentPhase = 0;
+let currentTextIdx = 0;
+let elapsed = 0;
+let phaseElapsed = 0;
+let running = false;
+let paused = false;
+let interval = null;
+
+// ── Wake Lock ──
+let wakeLock = null;
+async function requestWakeLock() {
+  if ('wakeLock' in navigator) {
+    try { wakeLock = await navigator.wakeLock.request('screen'); } catch(e) {}
+  }
+}
+async function releaseWakeLock() {
+  if (wakeLock) { try { await wakeLock.release(); } catch(e) {} wakeLock = null; }
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && running && !paused) requestWakeLock();
+});
+let synth = ('speechSynthesis' in window) ? window.speechSynthesis : null;
+let volume = 0.9;
+let voices = [];
+let textPerPhase = [];
+
+// Precompute text timing per phase
+PHASES.forEach(p => {
+  const perText = Math.floor(p.duration / p.texts.length);
+  textPerPhase.push(perText);
+});
+
+function loadVoices() {
+  try {
+    if (!synth) return;
+    const v = synth.getVoices();
+    if (v && v.length) voices = v;
+  } catch(e) { voices = []; }
+}
+try { loadVoices(); } catch(e) {}
+try {
+  if (synth && typeof synth.onvoiceschanged !== 'undefined') {
+    synth.onvoiceschanged = loadVoices;
+  }
+} catch(e) {}
+
+// Show warning if no speech support
+if (!synth) {
+  const vol = document.querySelector('.vol-row');
+  if (vol) vol.innerHTML = '<span style="font-size:.8rem;color:#c9893a;opacity:.7;">⚠️ Sprachausgabe nicht verfügbar — Texte erscheinen trotzdem auf dem Bildschirm.</span>';
+}
+
+function getGermanVoice() {
+  if (!voices.length) return null;
+  return voices.find(v => v.lang.startsWith('de') && v.localService) ||
+         voices.find(v => v.lang.startsWith('de')) ||
+         voices[0];
+}
+
+function speak(text) {
+  try {
+    if (!synth) return;
+    synth.cancel();
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'de-AT';
+    utt.rate = 0.78;
+    utt.pitch = 0.95;
+    utt.volume = volume;
+    const v = getGermanVoice();
+    if (v) utt.voice = v;
+    synth.speak(utt);
+  } catch(e) {}
+}
+
+function setVolume(val) {
+  volume = parseFloat(val);
+}
+
+function updateDisplay(text) {
+  const el = document.getElementById('speechText');
+  el.classList.add('fade');
+  setTimeout(() => {
+    el.innerHTML = text;
+    el.classList.remove('fade');
+  }, 800);
+}
+
+function formatTime(secs) {
+  const m = Math.floor(secs / 60).toString().padStart(2,'0');
+  const s = (secs % 60).toString().padStart(2,'0');
+  return `${m}:${s}`;
+}
+
+function buildPhaseDots() {
+  const track = document.getElementById('phaseTrack');
+  track.innerHTML = '';
+  PHASES.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'phase-dot';
+    d.id = `dot-${i}`;
+    track.appendChild(d);
+  });
+}
+
+function updatePhaseDots() {
+  PHASES.forEach((_, i) => {
+    const d = document.getElementById(`dot-${i}`);
+    if (i < currentPhase) d.className = 'phase-dot done';
+    else if (i === currentPhase) d.className = 'phase-dot active';
+    else d.className = 'phase-dot';
+  });
+}
+
+function updateRing() {
+  const remaining = TOTAL - elapsed;
+  const fraction = remaining / TOTAL;
+  const circumference = 528;
+  const offset = circumference * (1 - fraction);
+  document.getElementById('ringProgress').style.strokeDashoffset = offset;
+  document.getElementById('timerDisplay').textContent = formatTime(remaining);
+}
+
+function tick() {
+  if (!running || paused) return;
+  elapsed++;
+  phaseElapsed++;
+
+  updateRing();
+
+  const phase = PHASES[currentPhase];
+  const perText = textPerPhase[currentPhase];
+  const newTextIdx = Math.min(Math.floor(phaseElapsed / perText), phase.texts.length - 1);
+
+  if (newTextIdx !== currentTextIdx) {
+    currentTextIdx = newTextIdx;
+    const txt = phase.texts[currentTextIdx];
+    updateDisplay(txt);
+    speak(txt);
+  }
+
+  // Phase transition
+  if (phaseElapsed >= phase.duration) {
+    currentPhase++;
+    phaseElapsed = 0;
+    currentTextIdx = 0;
+    updatePhaseDots();
+
+    if (currentPhase >= PHASES.length || elapsed >= TOTAL) {
+      finish();
+      return;
+    }
+
+    const nextPhase = PHASES[currentPhase];
+    document.getElementById('phaseName').textContent = nextPhase.name;
+    document.getElementById('timerLabel').textContent = nextPhase.name;
+    updateDisplay(nextPhase.texts[0]);
+    speak(nextPhase.texts[0]);
+  }
+}
+
+function startSession() {
+  document.getElementById('btnStart').disabled = true;
+  document.getElementById('btnPause').disabled = false;
+  document.getElementById('orb').classList.add('active');
+  buildPhaseDots();
+  updatePhaseDots();
+
+  running = true;
+  paused = false;
+  currentPhase = 0;
+  currentTextIdx = 0;
+  elapsed = 0;
+  phaseElapsed = 0;
+
+  const first = PHASES[0];
+  document.getElementById('phaseName').textContent = first.name;
+  document.getElementById('timerLabel').textContent = first.name;
+  updateDisplay(first.texts[0]);
+  speak(first.texts[0]);
+  updateRing();
+
+  interval = setInterval(tick, 1000);
+  requestWakeLock();
+}
+
+function togglePause() {
+  if (!running) return;
+  paused = !paused;
+  const btn = document.getElementById('btnPause');
+  if (paused) {
+    if (synth) synth.pause();
+    btn.textContent = '▶';
+    btn.title = 'Fortsetzen';
+  } else {
+    if (synth) synth.resume();
+    btn.textContent = '⏸';
+    btn.title = 'Pause';
+  }
+}
+
+function finish() {
+  clearInterval(interval);
+  if (synth) synth.cancel();
+  running = false;
+  releaseWakeLock();
+  document.getElementById('ringProgress').style.strokeDashoffset = 528;
+  document.getElementById('timerDisplay').textContent = '00:00';
+  document.getElementById('timerLabel').textContent = 'Fertig';
+  document.getElementById('phaseName').textContent = '✦ Vollständig entspannt ✦';
+  document.getElementById('finishedMsg').classList.remove('hidden');
+  document.getElementById('btnPause').disabled = true;
+
+  const endText = 'Wunderbar. Du hast dir zwanzig Minuten geschenkt. Nimm dir noch einen Moment, bevor du aufstehst.';
+  updateDisplay(endText);
+  speak(endText);
+
+  PHASES.forEach((_, i) => {
+    const d = document.getElementById(`dot-${i}`);
+    if (d) d.className = 'phase-dot done';
+  });
+}
+
+function restart() {
+  clearInterval(interval);
+  if (synth) synth.cancel();
+  running = false;
+  paused = false;
+  releaseWakeLock();
+  elapsed = 0;
+  phaseElapsed = 0;
+  currentPhase = 0;
+  currentTextIdx = 0;
+  document.getElementById('btnStart').disabled = false;
+  document.getElementById('btnPause').disabled = true;
+  document.getElementById('btnPause').textContent = '⏸';
+  document.getElementById('orb').classList.remove('active');
+  document.getElementById('finishedMsg').classList.add('hidden');
+  document.getElementById('timerDisplay').textContent = '20:00';
+  document.getElementById('timerLabel').textContent = 'Bereit';
+  document.getElementById('phaseName').textContent = 'Leg dich bequem hin & schließe die Augen';
+  document.getElementById('ringProgress').style.strokeDashoffset = 0;
+  updateDisplay('Willkommen zu deiner Tiefenentspannung.<br>Leg dich hin, schließe die Augen und drücke Start.');
+  buildPhaseDots();
+  PHASES.forEach((_, i) => {
+    const d = document.getElementById(`dot-${i}`);
+    if (d) d.className = 'phase-dot';
+  });
+}
+</script>
+</body>
+</html>

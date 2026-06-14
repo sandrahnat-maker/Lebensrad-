@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zirkus Palette & Style</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --crimson:        #B5152B;
+  --crimson-dark:   #7A0D1C;
+  --crimson-light:  #D94F5C;
+  --crimson-pastell:#F2B8BE;
+  --crimson-pale:   #FAE0E3;
+
+  --gold:           #C9973A;
+  --gold-dark:      #8A6420;
+  --gold-light:     #E8C06A;
+  --gold-pastell:   #F5DFA8;
+  --gold-pale:      #FBF0D2;
+
+  --navy:           #1C2E5A;
+  --navy-dark:      #0E1830;
+  --navy-light:     #2E4A8A;
+  --navy-pastell:   #B8C8E8;
+  --navy-pale:      #DDE6F5;
+
+  --violet:         #6B3FA0;
+  --violet-dark:    #3D1F6A;
+  --violet-light:   #9B6FD0;
+  --violet-pastell: #D0B8F0;
+  --violet-pale:    #EDE0FA;
+
+  --sage:           #7A9E7E;
+  --sage-dark:      #4A6E4E;
+  --sage-light:     #A8C9AC;
+  --sage-pastell:   #C2DEC4;
+  --sage-pale:      #E4F0E5;
+
+  --cream:  #F5EDD8;
+  --dark:   #14100A;
+  --bg:     #1A1208;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 15% 10%, rgba(181,21,43,0.12) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 85%, rgba(107,63,160,0.12) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(201,151,58,0.06) 0%, transparent 55%);
+  min-height: 100vh;
+  font-family: 'Raleway', sans-serif;
+  color: var(--cream);
+  padding-bottom: 60px;
+}
+
+/* ── HEADER ─────────────────────────────────── */
+.site-header {
+  position: relative;
+  padding: 0 0 0;
+  overflow: hidden;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  color: var(--gold-light);
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+  margin: 12px 0 0 12px;
+  display: block;
+}
+.back-btn:hover { opacity: 1; }
+
+.wimpelkette {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 12px 0 0;
+  position: relative;
+  gap: 0;
+}
+.wimpelkette::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(500px, 90vw);
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.wimpel {
+  width: 0; height: 0;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-top: 21px solid;
+  margin: 0 2px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  animation: wimpelSwing 3s ease-in-out infinite;
+}
+.wimpel:nth-child(odd)  { animation-delay: 0s; }
+.wimpel:nth-child(even) { animation-delay: 0.4s; }
+@keyframes wimpelSwing {
+  0%,100% { transform: rotate(-2deg); }
+  50%      { transform: rotate(2deg); }
+}
+.w1  { border-top-color: var(--crimson); }
+.w2  { border-top-color: var(--gold); }
+.w3  { border-top-color: var(--navy-light); }
+.w4  { border-top-color: var(--violet); }
+.w5  { border-top-color: var(--sage); }
+.w6  { border-top-color: var(--crimson-light); }
+.w7  { border-top-color: var(--gold-light); }
+.w8  { border-top-color: var(--navy-light); }
+.w9  { border-top-color: var(--violet-light); }
+.w10 { border-top-color: var(--sage-light); }
+.w11 { border-top-color: var(--crimson-pastell); }
+.w12 { border-top-color: var(--gold-pastell); }
+
+.hero {
+  text-align: center;
+  padding: 20px 20px 32px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 7vw, 3.2rem);
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 24px rgba(201,151,58,0.35);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.hero p {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--cream);
+  opacity: 0.5;
+  letter-spacing: 0.12em;
+}
+
+/* ── TAB NAV ─────────────────────────────────── */
+.tab-nav {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 0 16px 28px;
+}
+.tab-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(201,151,58,0.2);
+  color: var(--cream);
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  padding: 7px 16px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.25s;
+  opacity: 0.65;
+}
+.tab-btn:hover  { opacity: 0.9; border-color: rgba(201,151,58,0.5); }
+.tab-btn.active {
+  background: rgba(201,151,58,0.15);
+  border-color: var(--gold);
+  color: var(--gold-light);
+  opacity: 1;
+}
+
+/* ── SECTIONS ────────────────────────────────── */
+.section { display: none; padding: 0 16px; max-width: 860px; margin: 0 auto; }
+.section.visible { display: block; animation: fadeIn 0.35s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: var(--gold-light);
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.section-sub {
+  text-align: center;
+  font-style: italic;
+  font-size: 0.8rem;
+  color: var(--cream);
+  opacity: 0.4;
+  letter-spacing: 0.08em;
+  margin-bottom: 24px;
+}
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 20px;
+}
+.divider::before,.divider::after {
+  content:''; flex:1; height:1px;
+  background: linear-gradient(90deg, transparent, rgba(201,151,58,0.3), transparent);
+}
+.divider span {
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:0.8rem;
+  color:var(--gold-light);
+  opacity:0.6;
+  white-space:nowrap;
+  letter-spacing:0.1em;
+}
+
+/* ── COLOR CARDS ─────────────────────────────── */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 8px;
+}
+.color-card {
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+.color-card:hover { transform: translateY(-3px) rotate(0.4deg); box-shadow: 0 12px 36px rgba(0,0,0,0.55); }
+.swatch-main {
+  height: 100px;
+  display: flex;
+  align-items: flex-end;
+  padding: 8px 10px;
+}
+.swatch-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+  letter-spacing: 0.04em;
+}
+.swatch-name.dark { color: rgba(0,0,0,0.55); text-shadow: none; }
+.swatch-shades { display: flex; height: 28px; }
+.swatch-shades div { flex:1; transition: flex 0.3s; }
+.swatch-shades div:hover { flex: 1.6; }
+.card-info {
+  background: rgba(255,255,255,0.05);
+  padding: 10px 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.hex-row { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 6px; }
+.hex-chip {
+  font-family: monospace;
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.07);
+  color: var(--cream);
+  opacity: 0.75;
+  letter-spacing: 0.05em;
+}
+.mood { font-style: italic; font-size: 0.78rem; color: var(--cream); opacity: 0.45; line-height: 1.4; }
+
+/* ── COMBO STRIPS ────────────────────────────── */
+.combo-block { margin-bottom: 20px; }
+.combo-strip {
+  display: flex;
+  border-radius: 3px;
+  overflow: hidden;
+  height: 58px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.45);
+  margin-bottom: 7px;
+}
+.combo-strip div { flex: 1; }
+.combo-label {
+  text-align: center;
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+  opacity: 0.38;
+  font-style: italic;
+  font-family: 'IM Fell English', serif;
+}
+
+/* ── MONOCHROME ──────────────────────────────── */
+.mono-strip {
+  display: flex;
+  border-radius: 3px;
+  overflow: hidden;
+  height: 64px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.45);
+  margin-bottom: 7px;
+}
+.mono-strip div {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  padding: 6px 7px;
+}
+.mono-hex {
+  font-family: monospace;
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.04em;
+}
+.mono-hex.dark-hex { color: rgba(0,0,0,0.35); }
+.mono-label {
+  text-align: center;
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+  opacity: 0.38;
+  font-style: italic;
+  font-family: 'IM Fell English', serif;
+  margin-bottom: 20px;
+}
+
+/* ── PASTELL GRID ────────────────────────────── */
+.pastell-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.pastell-card {
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  transition: transform 0.3s;
+}
+.pastell-card:hover { transform: translateY(-3px) rotate(-0.4deg); }
+.pastell-swatch { height: 75px; }
+.pastell-shades { display: flex; height: 20px; }
+.pastell-shades div { flex:1; transition: flex 0.3s; }
+.pastell-shades div:hover { flex: 1.6; }
+.pastell-info {
+  background: rgba(255,255,255,0.05);
+  padding: 9px 11px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.pastell-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.8rem;
+  color: var(--cream);
+  opacity: 0.65;
+  display: block;
+  margin-bottom: 5px;
+  letter-spacing: 0.06em;
+}
+.pastell-hexes { display: flex; gap: 4px; flex-wrap: wrap; }
+.pastell-hex {
+  font-family: monospace;
+  font-size: 0.62rem;
+  padding: 2px 5px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.07);
+  color: var(--cream);
+  opacity: 0.65;
+}
+
+/* ── ACCESSORIES ─────────────────────────────── */
+.acc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.acc-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,151,58,0.18);
+  border-radius: 3px;
+  padding: 18px 18px 16px;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.acc-card:hover { border-color: rgba(201,151,58,0.45); transform: translateY(-2px); }
+.acc-icon { font-size: 1.6rem; margin-bottom: 8px; display: block; }
+.acc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--gold-light);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+.acc-body {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--cream);
+  opacity: 0.65;
+}
+.acc-body strong { color: var(--cream); opacity: 1; font-weight: 600; }
+.acc-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+.acc-tag {
+  font-size: 0.68rem;
+  padding: 3px 9px;
+  border-radius: 2px;
+  letter-spacing: 0.07em;
+  font-weight: 500;
+}
+
+/* ── OUTFIT TIPS ─────────────────────────────── */
+.outfit-tips { display: flex; flex-direction: column; gap: 12px; }
+.outfit-tip {
+  background: rgba(255,255,255,0.04);
+  border-left: 3px solid var(--gold);
+  padding: 14px 16px;
+  border-radius: 0 3px 3px 0;
+  transition: background 0.25s;
+}
+.outfit-tip:hover { background: rgba(255,255,255,0.07); }
+.outfit-tip-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  color: var(--gold-light);
+  margin-bottom: 5px;
+  letter-spacing: 0.04em;
+}
+.outfit-tip p {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--cream);
+  opacity: 0.62;
+}
+
+/* ── YELLOW NOTE ─────────────────────────────── */
+.yellow-note {
+  margin-top: 28px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,151,58,0.28);
+  border-radius: 3px;
+  padding: 18px 22px;
+  text-align: center;
+}
+.yellow-note p {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--cream);
+  opacity: 0.65;
+}
+.yellow-note strong { color: var(--gold-light); font-style: normal; opacity: 1; }
+
+/* Entry animations */
+.color-card { animation: fadeUp 0.45s ease both; }
+.color-card:nth-child(1){animation-delay:.05s}
+.color-card:nth-child(2){animation-delay:.1s}
+.color-card:nth-child(3){animation-delay:.15s}
+.color-card:nth-child(4){animation-delay:.2s}
+.color-card:nth-child(5){animation-delay:.25s}
+.acc-card { animation: fadeUp 0.45s ease both; }
+.acc-card:nth-child(1){animation-delay:.05s}
+.acc-card:nth-child(2){animation-delay:.1s}
+.acc-card:nth-child(3){animation-delay:.15s}
+.acc-card:nth-child(4){animation-delay:.2s}
+.acc-card:nth-child(5){animation-delay:.25s}
+.acc-card:nth-child(6){animation-delay:.3s}
+.acc-card:nth-child(7){animation-delay:.35s}
+.acc-card:nth-child(8){animation-delay:.4s}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(14px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="back-btn" href="index.html">← Zurück</a>
+  <div class="wimpelkette">
+    <div class="wimpel w1"></div><div class="wimpel w2"></div><div class="wimpel w3"></div>
+    <div class="wimpel w4"></div><div class="wimpel w5"></div><div class="wimpel w6"></div>
+    <div class="wimpel w7"></div><div class="wimpel w8"></div><div class="wimpel w9"></div>
+    <div class="wimpel w10"></div><div class="wimpel w11"></div><div class="wimpel w12"></div>
+  </div>
+  <div class="hero">
+    <h1>Zirkus Palette & Style</h1>
+    <p>Farben · Kombinationen · Accessoires</p>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('kraeftig')">🎨 Kräftig</button>
+  <button class="tab-btn" onclick="showTab('pastell')">🌸 Pastell</button>
+  <button class="tab-btn" onclick="showTab('monochrom')">⚫ Monochrom</button>
+  <button class="tab-btn" onclick="showTab('kombis')">✨ Kombis</button>
+  <button class="tab-btn" onclick="showTab('accessoires')">💎 Accessoires</button>
+  <button class="tab-btn" onclick="showTab('outfits')">👗 Outfit-Tipps</button>
+</nav>
+
+<!-- ─── TAB: KRÄFTIG ──────────────────────── -->
+<section class="section visible" id="tab-kraeftig">
+  <p class="section-title">Kräftige Palette</p>
+  <p class="section-sub">Fünf Farben — volle Intensität</p>
+
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="swatch-main" style="background:var(--crimson)">
+        <span class="swatch-name">Crimson</span>
+      </div>
+      <div class="swatch-shades">
+        <div style="background:var(--crimson-dark)"></div>
+        <div style="background:var(--crimson)"></div>
+        <div style="background:var(--crimson-light)"></div>
+      </div>
+      <div class="card-info">
+        <div class="hex-row">
+          <span class="hex-chip">#7A0D1C</span>
+          <span class="hex-chip">#B5152B</span>
+          <span class="hex-chip">#D94F5C</span>
+        </div>
+        <p class="mood">Leidenschaftlich · Dramatisch · Der Vorhang hebt sich</p>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="swatch-main" style="background:var(--gold)">
+        <span class="swatch-name dark">Gold</span>
+      </div>
+      <div class="swatch-shades">
+        <div style="background:var(--gold-dark)"></div>
+        <div style="background:var(--gold)"></div>
+        <div style="background:var(--gold-light)"></div>
+      </div>
+      <div class="card-info">
+        <div class="hex-row">
+          <span class="hex-chip">#8A6420</span>
+          <span class="hex-chip">#C9973A</span>
+          <span class="hex-chip">#E8C06A</span>
+        </div>
+        <p class="mood">Strahlend · Festlich · Scheinwerferlicht</p>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="swatch-main" style="background:var(--navy)">
+        <span class="swatch-name">Navy</span>
+      </div>
+      <div class="swatch-shades">
+        <div style="background:var(--navy-dark)"></div>
+        <div style="background:var(--navy)"></div>
+        <div style="background:var(--navy-light)"></div>
+      </div>
+      <div class="card-info">
+        <div class="hex-row">
+          <span class="hex-chip">#0E1830</span>
+          <span class="hex-chip">#1C2E5A</span>
+          <span class="hex-chip">#2E4A8A</span>
+        </div>
+        <p class="mood">Tief · Geheimnisvoll · Nachthimmel</p>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="swatch-main" style="background:var(--violet)">
+        <span class="swatch-name">Violet</span>
+      </div>
+      <div class="swatch-shades">
+        <div style="background:var(--violet-dark)"></div>
+        <div style="background:var(--violet)"></div>
+        <div style="background:var(--violet-light)"></div>
+      </div>
+      <div class="card-info">
+        <div class="hex-row">
+          <span class="hex-chip">#3D1F6A</span>
+          <span class="hex-chip">#6B3FA0</span>
+          <span class="hex-chip">#9B6FD0</span>
+        </div>
+        <p class="mood">Magisch · Verspielt · Illusion</p>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="swatch-main" style="background:var(--sage)">
+        <span class="swatch-name">Sage</span>
+      </div>
+      <div class="swatch-shades">
+        <div style="background:var(--sage-dark)"></div>
+        <div style="background:var(--sage)"></div>
+        <div style="background:var(--sage-light)"></div>
+      </div>
+      <div class="card-info">
+        <div class="hex-row">
+          <span class="hex-chip">#4A6E4E</span>
+          <span class="hex-chip">#7A9E7E</span>
+          <span class="hex-chip">#A8C9AC</span>
+        </div>
+        <p class="mood">Geerdet · Ruhig · Der Ausgleich</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="yellow-note">
+    <p>Dein <strong>Gelb</strong> — Kittelkleid und Doc Martens — ist der persönliche Akzent, der die Palette zum Leben erweckt. 🎪</p>
+  </div>
+</section>
+
+<!-- ─── TAB: PASTELL ──────────────────────── -->
+<section class="section" id="tab-pastell">
+  <p class="section-title">Pastell-Varianten</p>
+  <p class="section-sub">Dieselben Farben — hauchzart und luftig</p>
+
+  <div class="pastell-grid">
+    <div class="pastell-card">
+      <div class="pastell-swatch" style="background:var(--crimson-pastell)"></div>
+      <div class="pastell-shades">
+        <div style="background:var(--crimson-pastell)"></div>
+        <div style="background:var(--crimson-pale)"></div>
+      </div>
+      <div class="pastell-info">
+        <span class="pastell-name">Rose</span>
+        <div class="pastell-hexes">
+          <span class="pastell-hex">#F2B8BE</span>
+          <span class="pastell-hex">#FAE0E3</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pastell-card">
+      <div class="pastell-swatch" style="background:var(--gold-pastell)"></div>
+      <div class="pastell-shades">
+        <div style="background:var(--gold-pastell)"></div>
+        <div style="background:var(--gold-pale)"></div>
+      </div>
+      <div class="pastell-info">
+        <span class="pastell-name">Champagner</span>
+        <div class="pastell-hexes">
+          <span class="pastell-hex">#F5DFA8</span>
+          <span class="pastell-hex">#FBF0D2</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pastell-card">
+      <div class="pastell-swatch" style="background:var(--navy-pastell)"></div>
+      <div class="pastell-shades">
+        <div style="background:var(--navy-pastell)"></div>
+        <div style="background:var(--navy-pale)"></div>
+      </div>
+      <div class="pastell-info">
+        <span class="pastell-name">Periwinkle</span>
+        <div class="pastell-hexes">
+          <span class="pastell-hex">#B8C8E8</span>
+          <span class="pastell-hex">#DDE6F5</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pastell-card">
+      <div class="pastell-swatch" style="background:var(--violet-pastell)"></div>
+      <div class="pastell-shades">
+        <div style="background:var(--violet-pastell)"></div>
+        <div style="background:var(--violet-pale)"></div>
+      </div>
+      <div class="pastell-info">
+        <span class="pastell-name">Lavendel</span>
+        <div class="pastell-hexes">
+          <span class="pastell-hex">#D0B8F0</span>
+          <span class="pastell-hex">#EDE0FA</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pastell-card">
+      <div class="pastell-swatch" style="background:var(--sage-pastell)"></div>
+      <div class="pastell-shades">
+        <div style="background:var(--sage-pastell)"></div>
+        <div style="background:var(--sage-pale)"></div>
+      </div>
+      <div class="pastell-info">
+        <span class="pastell-name">Mintgrün</span>
+        <div class="pastell-hexes">
+          <span class="pastell-hex">#C2DEC4</span>
+          <span class="pastell-hex">#E4F0E5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><span>Pastell-Kombinationen</span></div>
+
+  <div class="combo-block">
+    <div class="combo-strip">
+      <div style="background:#FAE0E3"></div>
+      <div style="background:#F5DFA8"></div>
+      <div style="background:#EDE0FA"></div>
+      <div style="background:#C2DEC4"></div>
+      <div style="background:#DDE6F5"></div>
+    </div>
+    <p class="combo-label">Alle Pastell · Frühlingsleicht · Sanft</p>
+  </div>
+  <div class="combo-block">
+    <div class="combo-strip">
+      <div style="background:#D0B8F0"></div>
+      <div style="background:#F5DFA8"></div>
+      <div style="background:#C2DEC4"></div>
+    </div>
+    <p class="combo-label">Lavendel + Champagner + Mint · Traumhaft</p>
+  </div>
+  <div class="combo-block">
+    <div class="combo-strip">
+      <div style="background:#B5152B"></div>
+      <div style="background:#F2B8BE"></div>
+      <div style="background:#FAE0E3"></div>
+    </div>
+    <p class="combo-label">Kräftig trifft Zart · Crimson + Rose</p>
+  </div>
+</section>
+
+<!-- ─── TAB: MONOCHROM ────────────────────── -->
+<section class="section" id="tab-monochrom">
+  <p class="section-title">Monochrome Verläufe</p>
+  <p class="section-sub">Dunkel → Mitte → Hell → Pastell — eine Farbe, viele Tiefen</p>
+
+  <div class="mono-strip">
+    <div style="background:#7A0D1C"><span class="mono-hex">#7A0D1C</span></div>
+    <div style="background:#B5152B"><span class="mono-hex">#B5152B</span></div>
+    <div style="background:#D94F5C"><span class="mono-hex">#D94F5C</span></div>
+    <div style="background:#F2B8BE"><span class="mono-hex dark-hex">#F2B8BE</span></div>
+    <div style="background:#FAE0E3"><span class="mono-hex dark-hex">#FAE0E3</span></div>
+  </div>
+  <p class="mono-label">Crimson · Von Burgund bis Rosenhauch</p>
+
+  <div class="mono-strip">
+    <div style="background:#8A6420"><span class="mono-hex">#8A6420</span></div>
+    <div style="background:#C9973A"><span class="mono-hex">#C9973A</span></div>
+    <div style="background:#E8C06A"><span class="mono-hex dark-hex">#E8C06A</span></div>
+    <div style="background:#F5DFA8"><span class="mono-hex dark-hex">#F5DFA8</span></div>
+    <div style="background:#FBF0D2"><span class="mono-hex dark-hex">#FBF0D2</span></div>
+  </div>
+  <p class="mono-label">Gold · Von Bernstein bis Champagner</p>
+
+  <div class="mono-strip">
+    <div style="background:#0E1830"><span class="mono-hex">#0E1830</span></div>
+    <div style="background:#1C2E5A"><span class="mono-hex">#1C2E5A</span></div>
+    <div style="background:#2E4A8A"><span class="mono-hex">#2E4A8A</span></div>
+    <div style="background:#B8C8E8"><span class="mono-hex dark-hex">#B8C8E8</span></div>
+    <div style="background:#DDE6F5"><span class="mono-hex dark-hex">#DDE6F5</span></div>
+  </div>
+  <p class="mono-label">Navy · Von Mitternacht bis Periwinkle</p>
+
+  <div class="mono-strip">
+    <div style="background:#3D1F6A"><span class="mono-hex">#3D1F6A</span></div>
+    <div style="background:#6B3FA0"><span class="mono-hex">#6B3FA0</span></div>
+    <div style="background:#9B6FD0"><span class="mono-hex">#9B6FD0</span></div>
+    <div style="background:#D0B8F0"><span class="mono-hex dark-hex">#D0B8F0</span></div>
+    <div style="background:#EDE0FA"><span class="mono-hex dark-hex">#EDE0FA</span></div>
+  </div>
+  <p class="mono-label">Violet · Von Pflaume bis Lavendel</p>
+
+  <div class="mono-strip">
+    <div style="background:#4A6E4E"><span class="mono-hex">#4A6E4E</span></div>
+    <div style="background:#7A9E7E"><span class="mono-hex">#7A9E7E</span></div>
+    <div style="background:#A8C9AC"><span class="mono-hex dark-hex">#A8C9AC</span></div>
+    <div style="background:#C2DEC4"><span class="mono-hex dark-hex">#C2DEC4</span></div>
+    <div style="background:#E4F0E5"><span class="mono-hex dark-hex">#E4F0E5</span></div>
+  </div>
+  <p class="mono-label">Sage · Von Waldgrün bis Minthauch</p>
+
+  <div class="yellow-note">
+    <p>Ein monochromes Outfit — z.B. <strong>dunkelviolette Hose + violette Bluse + Lavendel-Schal</strong> — wirkt elegant und durchdacht. Dein <strong>Gelb</strong> als einziger Akzent setzt dann den perfekten Kontrapunkt. ✨</p>
+  </div>
+</section>
+
+<!-- ─── TAB: KOMBIS ───────────────────────── -->
+<section class="section" id="tab-kombis">
+  <p class="section-title">Farbkombinationen</p>
+  <p class="section-sub">Zusammenspiele für Outfit & App</p>
+
+  <div class="combo-block">
+    <div class="combo-strip">
+      <div style="background:#B5152B"></div>
+      <div style="background:#C9973A"></div>
+      <div style="background:#F5EDD8"></div>
+      <div style="background:#1C2E5A"></div>
+      <div style="background:#6B3FA0"></div>
+    </div>
+    <p class="combo-label">Die volle Zirkus-Palette · Klassisch · Festlich</p>
+  </div>
+
+  <div class="combo-block">
+    <div class="combo-strip">
+      <div style="background:#1C2E5A"></div>
+      <div style="background:#E8C06A"></div>
+      <div style="background:#F5EDD8"></div>
+    </div>
+    <p class="combo-label">Navy + Gold · Elegant · Stark</p>
+  </div>
+
+  <div class="combo-block">
+    <div class="combo-strip">
+      <div style="background:#B5152B"></div>
+      <div style="background:#F5EDD8"></div>
+      <div style="background:#7A9E7E"></div>
+    </div>
+    <p class="combo-label">Crimson + Sage · Lebendig · Geerdet</p>
+  </div>
+
+  <div class="combo-block">
+    <div class="combo-strip">
+      <div style="background:#6B3FA0"></div>
+      <div style="background:#C9973A"></div>
+      <div style="background:#F5EDD8"></div>
+    </div>
+    <p class="combo-label">Violet + Gold · Magisch · Warm</p>
+  </div>
+
+  <div class="combo-block">
+    <div class="combo-strip">
+      <div style="background:#E8D84A"></div>
+      <div style="background:#1C2E5A"></div>
+      <div style="background:#F5EDD8"></div>
+    </div>
+    <p class="combo-label">Dein Gelb + Navy · Ikonisch · Zirkus pur</p>
+  </div>
+
+  <div class="combo-block">
+    <div class="combo-strip">
+      <div style="background:#E8D84A"></div>
+      <div style="background:#B5152B"></div>
+      <div style="background:#1A1208"></div>
+    </div>
+    <p class="combo-label">Dein Gelb + Crimson + Schwarz · Drama!</p>
+  </div>
+
+  <div class="combo-block">
+    <div class="combo-strip">
+      <div style="background:#E8D84A"></div>
+      <div style="background:#6B3FA0"></div>
+      <div style="background:#F5EDD8"></div>
+    </div>
+    <p class="combo-label">Dein Gelb + Violet · Komplementär · Leuchtkraft</p>
+  </div>
+
+  <div class="divider"><span>mit schwarz-weiß gestreiften Socken</span></div>
+
+  <div class="combo-block">
+    <div class="combo-strip">
+      <div style="background:#E8D84A"></div>
+      <div style="background:#F5EDD8"></div>
+      <div style="background:#222"></div>
+      <div style="background:#fff"></div>
+      <div style="background:#222"></div>
+    </div>
+    <p class="combo-label">Gelb + Streifen-Socken + Schwarz · Dein Signature-Look 🎪</p>
+  </div>
+</section>
+
+<!-- ─── TAB: ACCESSOIRES ──────────────────── -->
+<section class="section" id="tab-accessoires">
+  <p class="section-title">Accessoires im Zirkus-Stil</p>
+  <p class="section-sub">Details, die erzählen — ohne Kostüm zu sein</p>
+
+  <div class="acc-grid">
+
+    <div class="acc-card">
+      <span class="acc-icon">🧣</span>
+      <div class="acc-title">Gestreifte Socken</div>
+      <div class="acc-body">
+        Dein <strong>Signature-Detail</strong>. Schwarz-weiß Streifen sind das neutrale Bindeglied — sie sprechen mit allen Farben der Palette. Über Doc Martens, über Sandalen, über Boots. Immer.
+      </div>
+      <div class="acc-tags">
+        <span class="acc-tag" style="background:rgba(181,21,43,0.25);color:#F2B8BE">täglich</span>
+        <span class="acc-tag" style="background:rgba(201,151,58,0.2);color:#E8C06A">ikonisch</span>
+      </div>
+    </div>
+
+    <div class="acc-card">
+      <span class="acc-icon">📌</span>
+      <div class="acc-title">Brosche</div>
+      <div class="acc-body">
+        Ein einzelner <strong>Statement-Punkt</strong> am Revers, am Träger, am Kragen. Stern, Herz, Tier, geometrische Form. Gold oder emailliert in Zirkus-Farben. Ein Stück — volle Wirkung.
+      </div>
+      <div class="acc-tags">
+        <span class="acc-tag" style="background:rgba(201,151,58,0.2);color:#E8C06A">Gold</span>
+        <span class="acc-tag" style="background:rgba(107,63,160,0.25);color:#D0B8F0">Emaille</span>
+      </div>
+    </div>
+
+    <div class="acc-card">
+      <span class="acc-icon">🎀</span>
+      <div class="acc-title">Samtband</div>
+      <div class="acc-body">
+        Breit, <strong>tief in der Farbe</strong> — als Halsband, Haarband oder Armband. Crimson, Violet oder Navy. Gibt jedem schlichten Look sofort Tiefe und Charakter.
+      </div>
+      <div class="acc-tags">
+        <span class="acc-tag" style="background:rgba(181,21,43,0.25);color:#F2B8BE">Crimson</span>
+        <span class="acc-tag" style="background:rgba(107,63,160,0.25);color:#D0B8F0">Violet</span>
+        <span class="acc-tag" style="background:rgba(28,46,90,0.4);color:#B8C8E8">Navy</span>
+      </div>
+    </div>
+
+    <div class="acc-card">
+      <span class="acc-icon">👜</span>
+      <div class="acc-title">Tasche</div>
+      <div class="acc-body">
+        <strong>Dunkelbraun oder Schwarz</strong> als klassische Basis. Oder mutig: eine Tasche in Crimson oder Navy, die die Palette aufgreift. Crossbody oder strukturierter Mini-Bag.
+      </div>
+      <div class="acc-tags">
+        <span class="acc-tag" style="background:rgba(255,255,255,0.08);color:var(--cream)">Leder</span>
+        <span class="acc-tag" style="background:rgba(181,21,43,0.25);color:#F2B8BE">Statement</span>
+      </div>
+    </div>
+
+    <div class="acc-card">
+      <span class="acc-icon">💍</span>
+      <div class="acc-title">Ringe & Ohrringe</div>
+      <div class="acc-body">
+        <strong>Goldtöne</strong> passen perfekt zur Palette. Chunky Ringe oder Statement-Ohrringe — eines davon, nicht beides auf einmal. Asymmetrisch ist erlaubt und gewollt.
+      </div>
+      <div class="acc-tags">
+        <span class="acc-tag" style="background:rgba(201,151,58,0.2);color:#E8C06A">Gold</span>
+        <span class="acc-tag" style="background:rgba(255,255,255,0.08);color:var(--cream)">Messing</span>
+      </div>
+    </div>
+
+    <div class="acc-card">
+      <span class="acc-icon">🎩</span>
+      <div class="acc-title">Hut</div>
+      <div class="acc-body">
+        Strukturierter <strong>Cloche-Hut oder Beret</strong> in Navy, Schwarz oder Crimson. Im Sommer ein Strohhut mit breiter Krempe. Kein Zylinder nötig — der Geist reicht.
+      </div>
+      <div class="acc-tags">
+        <span class="acc-tag" style="background:rgba(28,46,90,0.4);color:#B8C8E8">Navy</span>
+        <span class="acc-tag" style="background:rgba(181,21,43,0.25);color:#F2B8BE">Crimson</span>
+      </div>
+    </div>
+
+    <div class="acc-card">
+      <span class="acc-icon">🧤</span>
+      <div class="acc-title">Handschuhe</div>
+      <div class="acc-body">
+        <strong>Kurze Netzhandschuhe</strong> oder fingerlose Lederhandschuhe in Schwarz. Nur im Herbst/Winter — aber dann ein echter Zirkus-Moment am Alltag.
+      </div>
+      <div class="acc-tags">
+        <span class="acc-tag" style="background:rgba(255,255,255,0.06);color:var(--cream)">Herbst</span>
+        <span class="acc-tag" style="background:rgba(255,255,255,0.06);color:var(--cream)">Winter</span>
+      </div>
+    </div>
+
+    <div class="acc-card">
+      <span class="acc-icon">💄</span>
+      <div class="acc-title">Make-up als Accessoire</div>
+      <div class="acc-body">
+        <strong>Roter Lippenstift</strong> (Crimson!) oder dramatischer Eyeliner in Schwarz. Eines davon — beides wäre zu viel. Das ist das billigste und wirkungsvollste Zirkus-Detail überhaupt.
+      </div>
+      <div class="acc-tags">
+        <span class="acc-tag" style="background:rgba(181,21,43,0.25);color:#F2B8BE">Crimson Lip</span>
+        <span class="acc-tag" style="background:rgba(255,255,255,0.06);color:var(--cream)">Smoky Eye</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── TAB: OUTFIT-TIPPS ─────────────────── -->
+<section class="section" id="tab-outfits">
+  <p class="section-title">Outfit-Tipps</p>
+  <p class="section-sub">Kreativität & Spaß — kein Kostüm</p>
+
+  <div class="outfit-tips">
+
+    <div class="outfit-tip">
+      <div class="outfit-tip-title">🌟 Dein Signature-Look</div>
+      <p>Gelbes Kittelkleid + weißes Langarm-Shirt + gestreifte Socken + gelbe Doc Martens. Ein Stück Brosche am Träger. Fertig — das ist ikonisch, das ist du.</p>
+    </div>
+
+    <div class="outfit-tip">
+      <div class="outfit-tip-title">🟣 Violet Monochrom</div>
+      <p>Dunkelviolette Hose + mittelviolette Bluse + Lavendel-Schal. Schwarze Boots + gestreifte Socken als Blitz-Detail. Das Gelb der Doc Martens als einziger Farbakzent — kraftvoll.</p>
+    </div>
+
+    <div class="outfit-tip">
+      <div class="outfit-tip-title">❤️ Crimson Statement</div>
+      <p>Dunkelrote Strickjacke über cremem Kleid. Navy-Hose, Crimson-Samtband am Handgelenk. Roter Lippenstift. Schwarze Boots mit gestreiften Socken.</p>
+    </div>
+
+    <div class="outfit-tip">
+      <div class="outfit-tip-title">🌸 Sommerpastell</div>
+      <p>Lavendel-Kleid oder Rock + creme Leinenshirt. Sandalen in Braun oder Tan. Goldene Ohrringe. Strohhut. Leicht, luftig, trotzdem Charakter.</p>
+    </div>
+
+    <div class="outfit-tip">
+      <div class="outfit-tip-title">🌊 Navy + Gold</div>
+      <p>Marineblaue Marlene-Hose + goldenes oder creme Top. Strukturierter Blazer in Navy mit Goldknöpfen. Gelbe Doc Martens als Überraschung unten.</p>
+    </div>
+
+    <div class="outfit-tip">
+      <div class="outfit-tip-title">🎨 Das Künstlerinnen-Outfit</div>
+      <p>Was auch immer du anziehst — ein bewusstes Detail macht es zum Zirkus: eine Brosche, die gestreiften Socken, das Samtband. Nicht mehr. Nicht weniger. Das ist echter Stil.</p>
+    </div>
+
+  </div>
+
+  <div class="yellow-note" style="margin-top:28px">
+    <p>Der schönste Stil ist der, bei dem man merkt: <strong>Diese Person hat Spaß.</strong> Das strahlt mit 54 viel stärker als mit 24, weil es echt ist. 💛</p>
+  </div>
+</section>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('visible');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

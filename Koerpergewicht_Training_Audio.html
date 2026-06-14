@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>Körpergewicht Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+@keyframes wimpel-swing{0%,100%{transform:rotate(-4deg) skewX(2deg);}50%{transform:rotate(4deg) skewX(-2deg);}}
+@keyframes wimpel-swing2{0%,100%{transform:rotate(3deg) skewX(-1deg);}50%{transform:rotate(-3deg) skewX(1deg);}}
+@keyframes wimpel-swing3{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(5deg);}}
+@keyframes rope-sway{0%,100%{transform:scaleX(1);}50%{transform:scaleX(1.008);}}
+@keyframes tier-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+@keyframes spotlight{0%{left:-100%;}60%,100%{left:220%;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+:root{
+  --bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,0.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,0.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,0.13);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,0.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,0.12);
+  --violet:#6a3f7a;
+  --border:rgba(184,41,74,0.13);--shadow:rgba(30,18,8,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+body{
+  background:var(--bg);font-family:"Raleway",sans-serif;color:var(--text);
+  min-height:100vh;padding-bottom:4rem;
+  background-image:repeating-linear-gradient(-6deg,rgba(184,41,74,0.022) 0px,rgba(184,41,74,0.022) 28px,transparent 28px,transparent 56px,rgba(201,137,58,0.018) 56px,rgba(201,137,58,0.018) 84px,transparent 84px,transparent 112px);
+}
+.wimpelkette{position:relative;width:100%;height:40px;overflow:hidden;display:block;background:var(--bg);}
+.wimpelkette svg{width:100%;height:40px;overflow:visible;animation:rope-sway 5s ease-in-out infinite;}
+.wimpel-1{animation:wimpel-swing 2.8s ease-in-out infinite;}
+.wimpel-2{animation:wimpel-swing2 3.2s ease-in-out infinite 0.3s;}
+.wimpel-3{animation:wimpel-swing3 2.5s ease-in-out infinite 0.6s;}
+.wimpel-4{animation:wimpel-swing 3.0s ease-in-out infinite 0.9s;}
+.wimpel-5{animation:wimpel-swing2 2.7s ease-in-out infinite 1.2s;}
+.wimpel-6{animation:wimpel-swing3 3.4s ease-in-out infinite 1.5s;}
+.wimpel-7{animation:wimpel-swing 2.9s ease-in-out infinite 1.8s;}
+.wimpel-8{animation:wimpel-swing2 2.6s ease-in-out infinite 2.1s;}
+.wimpel-9{animation:wimpel-swing3 3.1s ease-in-out infinite 2.4s;}
+header{padding:1rem 1.2rem .85rem;border-bottom:2px solid var(--border);background:rgba(255,251,245,0.92);backdrop-filter:blur(3px);position:relative;}
+.back-btn{display:inline-flex;align-items:center;gap:.3rem;font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--crimson);text-decoration:none;opacity:.7;margin-bottom:.4rem;background:none;border:none;cursor:pointer;padding:0;}
+.back-btn:active{opacity:1;}
+.header-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;font-weight:500;}
+.header-title{font-family:"Playfair Display",serif;font-size:22px;font-style:italic;color:var(--text);line-height:1.2;}
+.header-sub{font-family:"IM Fell English",serif;font-size:14px;font-style:italic;color:var(--muted);margin-top:.15rem;}
+.rainbow-stripe{height:5px;background:repeating-linear-gradient(90deg,var(--crimson) 0%,var(--crimson) 20%,var(--gold) 20%,var(--gold) 40%,var(--navy) 40%,var(--navy) 60%,var(--violet) 60%,var(--violet) 80%,var(--sage) 80%,var(--sage) 100%);opacity:.6;margin-bottom:.2rem;}
+.z-card{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:0 3px 16px var(--shadow);margin:.5rem 1rem;overflow:hidden;position:relative;}
+.z-card::after{content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.055),transparent);animation:spotlight 10s ease-in-out infinite;pointer-events:none;}
+.z-item{display:flex;align-items:flex-start;gap:.6rem;padding:.55rem .9rem;border-bottom:1px solid rgba(184,41,74,0.07);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .2s;}
+.z-item:last-child{border-bottom:none;}
+.z-item.done{opacity:.28;}
+.z-item.done .z-name{text-decoration:line-through;text-decoration-color:rgba(184,41,74,0.3);}
+.z-check{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(184,41,74,0.3);flex-shrink:0;margin-top:2px;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;}
+.z-item.done .z-check{background:var(--sage-l);border-color:var(--sage);color:var(--sage);}
+.z-item.done .z-check::after{content:"✦";}
+.z-name{font-size:16px;color:var(--text);line-height:1.35;}
+.z-sub{font-size:13px;font-style:italic;color:var(--muted);margin-top:1px;font-family:"IM Fell English",serif;}
+.z-sec{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);padding:.7rem 1rem .2rem;opacity:.8;font-weight:500;}
+.z-info{margin:.3rem 1rem .4rem;padding:.5rem .8rem;background:var(--gold-l);border-left:2px solid var(--gold);font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--muted);line-height:1.6;}
+.section-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:.8rem 1rem .3rem;padding-left:.2rem;font-weight:500;}
+.z-progress{margin:.4rem 1rem .2rem;}
+.z-progress-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:.3rem;}
+.z-progress-bar{height:3px;background:var(--border);border-radius:10px;overflow:hidden;}
+.z-progress-fill{height:100%;background:linear-gradient(90deg,var(--crimson),var(--gold));border-radius:10px;transition:width .4s ease;}
+.z-reset{position:fixed;bottom:1.2rem;right:1.2rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:20px;padding:.4rem 1rem;font-size:13px;font-family:"IM Fell English",serif;font-style:italic;cursor:pointer;}
+.z-reset:active{background:var(--crimson-l);color:var(--crimson);}
+.tier-zeile{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:.3rem 1rem;user-select:none;pointer-events:none;overflow:hidden;}
+.tier-zeile .tier{display:inline-block;animation:tier-float 3s ease-in-out infinite;opacity:.5;font-size:.9rem;}
+.tier-zeile .tier:nth-child(2){animation-delay:.4s;}.tier-zeile .tier:nth-child(3){animation-delay:.8s;}.tier-zeile .tier:nth-child(4){animation-delay:1.2s;}.tier-zeile .tier:nth-child(5){animation-delay:1.6s;}
+.tier-linie{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(184,41,74,0.2),transparent);}
+.manege-line{display:flex;align-items:center;gap:.5rem;padding:.1rem 1rem;color:var(--crimson);opacity:.3;font-size:11px;letter-spacing:.3em;user-select:none;}
+.manege-line::before,.manege-line::after{content:'';flex:1;height:1px;background:currentColor;}
+</style>
+
+<style>
+/* App-spezifisches CSS */
+.container{max-width:420px;width:100%;}
+.header{text-align:center;margin-bottom:1.5rem;}
+.header-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);margin-bottom:.4rem;}
+.header-title{font-family:"Playfair Display",serif;font-size:28px;font-style:italic;font-weight:400;color:var(--text);}
+.header-title span{color:var(--sage);}
+.header-sub{margin-top:.4rem;font-size:14px;color:var(--muted);font-style:italic;}
+.timer-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:1.8rem 1.2rem 1.2rem;margin-bottom:1rem;text-align:center;box-shadow:0 4px 20px rgba(180,120,40,0.08);}
+.phase-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+.phase-label.work{color:var(--sage);}
+.phase-label.rest{color:var(--gold);}
+.phase-label.done{color:var(--sage);}
+.exercise-name{font-family:"Playfair Display",serif;font-size:28px;font-style:italic;font-weight:400;color:var(--text);margin-bottom:.4rem;min-height:2rem;}
+.exercise-note{font-size:14px;color:var(--muted);font-style:italic;margin-bottom:1.2rem;min-height:1.2rem;}
+.big-timer{font-family:"Playfair Display",serif;font-size:72px;font-weight:400;color:var(--text);line-height:1;margin-bottom:.5rem;}
+.big-timer.work{color:var(--sage);}
+.big-timer.rest{color:var(--gold);}
+.big-timer.danger{color:var(--terra);}
+.progress-bar-wrap{height:6px;background:var(--border);border-radius:6px;overflow:hidden;margin-bottom:.8rem;}
+.progress-bar{height:100%;background:var(--sage);border-radius:6px;transition:width .5s linear;width:0%;}
+.counters{display:flex;justify-content:center;gap:2rem;font-size:14px;color:var(--muted);}
+.counter-val{font-family:"Playfair Display",serif;font-size:18px;color:var(--text);}
+.btn-row{display:flex;gap:.7rem;margin-bottom:.8rem;}
+.btn-start{flex:2;background:var(--sage);color:#fff;border:none;border-radius:14px;padding:.9rem;font-size:17px;font-family:"Cormorant Garamond",serif;cursor:pointer;}
+.btn-reset{flex:1;background:var(--white);border:1.5px solid var(--border);color:var(--muted);border-radius:14px;padding:.9rem;font-size:17px;font-family:"Cormorant Garamond",serif;cursor:pointer;}
+.btn-unlock{width:100%;background:rgba(200,148,58,0.1);border:1.5px solid var(--border);color:var(--gold);border-radius:14px;padding:.6rem;font-size:15px;font-family:"Cormorant Garamond",serif;cursor:pointer;margin-bottom:.6rem;}
+.vol-row{display:flex;align-items:center;gap:.7rem;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:.6rem .9rem;margin-bottom:.8rem;}
+.vol-label{font-size:13px;color:var(--muted);font-style:italic;flex-shrink:0;}
+.vol-slider{flex:1;accent-color:var(--sage);}
+.voice-status{font-size:12px;flex-shrink:0;}
+.voice-status.ok{color:var(--sage);}
+.voice-status.warn{color:var(--terra);}
+.ex-list{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.ex-row{display:flex;align-items:center;gap:.7rem;padding:.65rem 1rem;border-bottom:1px solid var(--border);}
+.ex-row:last-child{border-bottom:none;}
+.ex-row.active{background:rgba(122,154,90,0.08);}
+.ex-row.done-ex{opacity:.4;}
+.ex-dot{width:10px;height:10px;border-radius:50%;background:var(--border);flex-shrink:0;}
+.ex-row.active .ex-dot{background:var(--sage);}
+.ex-row.done-ex .ex-dot{background:var(--sage);opacity:.5;}
+.ex-name-list{font-size:15px;color:var(--text);}
+.ex-row.active .ex-name-list{font-weight:600;color:var(--sage);}
+.dots-row{display:flex;flex-wrap:wrap;gap:.3rem;padding:.8rem 1rem;justify-content:center;}
+.op-dot{width:10px;height:10px;border-radius:50%;background:var(--border);}
+.op-dot.active{background:var(--sage);}
+.op-dot.done-dot{background:var(--sage);opacity:.4;}
+</style>
+</head>
+<body>
+<div class="wimpelkette" aria-hidden="true"><svg viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,7 Q50,11 100,9 Q150,7 200,10 Q250,13 300,9 Q350,7 400,9" stroke="#1a2744" stroke-width="1" fill="none" opacity="0.3"/><g class="wimpel-1" transform-origin="30 9"><polygon points="23,9 37,9 30,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-2" transform-origin="67 9"><polygon points="60,9 74,9 67,28" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-3" transform-origin="104 9"><polygon points="97,9 111,9 104,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-4" transform-origin="141 9"><polygon points="134,9 148,9 141,28" fill="#6a3f7a" opacity="0.75"/></g><g class="wimpel-5" transform-origin="178 10"><polygon points="171,10 185,10 178,29" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-6" transform-origin="215 9"><polygon points="208,9 222,9 215,28" fill="#5e8a5a" opacity="0.7"/></g><g class="wimpel-7" transform-origin="252 10"><polygon points="245,10 259,10 252,29" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-8" transform-origin="289 9"><polygon points="282,9 296,9 289,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-9" transform-origin="326 9"><polygon points="319,9 333,9 326,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-1" transform-origin="363 9"><polygon points="356,9 370,9 363,28" fill="#6a3f7a" opacity="0.75"/></g></svg></div>
+<header>
+<div class="rainbow-stripe"></div>
+<div class="header-eyebrow">Sport</div>
+<div class="header-title">Körpergewicht Training</div>
+<div class="header-sub">Audio-geführt</div>
+</header>
+<div class="container">
+  <div class="header">
+    <div class="header-label">Mo &amp; Fr &middot; 10:00</div>
+    <div class="header-title"><em>Koerper</em><span>gewicht</span></div>
+    <div class="header-sub">3 Runden &middot; 5 Uebungen &middot; 40 Sek Arbeit / 20 Sek Pause &middot; ~20 Min</div>
+  </div>
+
+  <div class="timer-card">
+    <div class="phase-label" id="phaseLabel">BEREIT</div>
+    <div class="exercise-name" id="exerciseName">Bereit machen</div>
+    <div class="exercise-note" id="exerciseNote">Stell dich locker hin &middot; tief durchatmen</div>
+    <div class="big-timer" id="bigTimer">&ndash;</div>
+    <div class="progress-bar-wrap"><div class="z-progress-bar" id="progressBar"></div></div>
+    <div class="counters">
+      <div>Runde <span class="counter-val" id="roundDisplay">&ndash;</span> / 3</div>
+      <div>Uebung <span class="counter-val" id="exerciseDisplay">&ndash;</span> / 5</div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-start" id="btnStart" onclick="handleStart()">&#9654; Starten</button>
+    <button class="btn-reset" onclick="resetWorkout()">&#8635; Reset</button>
+  </div>
+
+  <button class="btn-unlock" onclick="unlockAudio()">&#128266; Audio freischalten (Android)</button>
+
+  <div class="vol-row">
+    <span class="vol-label">&#128266; Lautstaerke</span>
+    <input class="vol-slider" type="range" id="volRange" min="0" max="1" step="0.1" value="0.9" onchange="updateVol()">
+    <span class="voice-status" id="voiceStatus">...</span>
+  </div>
+
+  <div class="ex-list" id="exList"></div>
+  <div class="dots-row" id="dotsRow"></div>
+</div>
+
+<script>
+var EXERCISES = [
+  {name:"Squats", note:"Fuesse schulterbreit, Knie ueber Zehen, tief runter", voice:"Squats! Fuesse schulterbreit, Knie ueber die Zehen, tief in die Knie."},
+  {name:"Wandliegestuetze", note:"Haende auf Schulterhoehe, Koerper gerade halten", voice:"Wandliegestuetze! Haende auf Schulterhoehe, Koerper bleibt gerade."},
+  {name:"Beckenheben", note:"Ruecken auf Boden, Gesaess langsam heben und senken", voice:"Beckenheben! Ruecken auf dem Boden, Fuesse aufgestellt, Gesaess heben."},
+  {name:"Ausfallschritte", note:"Abwechselnd links und rechts, Knie 90 Grad", voice:"Ausfallschritte! Abwechselnd links und rechts, Knie neunzig Grad."},
+  {name:"Plank", note:"Unterarme auf Boden, Koerper gerade wie ein Brett", voice:"Plank! Unterarme auf dem Boden, Koerper gerade wie ein Brett, atmen!"}
+];
+
+var ROUNDS = 3;
+var WORK = 40;
+var REST = 20;
+var PREP = 5;
+var ROUND_REST = 30;
+
+var timer = null;
+var secsLeft = 0;
+var curRound = 0;
+var curEx = 0;
+var phase = "idle";
+var paused = false;
+var phaseDur = 0;
+var elapsed = 0;
+var vol = 0.9;
+var synth = window.window.speechSynthesis || null;
+var germVoice = null;
+
+// Wake Lock
+var wakeLock = null;
+function reqWakeLock() {
+  if (navigator.wakeLock) {
+    navigator.wakeLock.request("screen").then(function(wl) { wakeLock = wl; }).catch(function() {});
+  }
+}
+document.addEventListener("visibilitychange", function() {
+  if (document.visibilityState === "visible") { reqWakeLock(); }
+});
+reqWakeLock();
+
+// Voice
+function loadVoices() {
+  if (!synth) { document.getElementById("voiceStatus").textContent = "n/a"; return; }
+  var voices = synth.getVoices();
+  var prefs = ["Anna","Helena","Marlene","Google Deutsch","de-DE","de-AT","de-CH"];
+  germVoice = null;
+  for (var i = 0; i < prefs.length; i++) {
+    for (var j = 0; j < voices.length; j++) {
+      if (voices[j].name.indexOf(prefs[i]) >= 0 || voices[j].lang.indexOf("de") === 0) {
+        germVoice = voices[j];
+        break;
+      }
+    }
+    if (germVoice) break;
+  }
+  var st = document.getElementById("voiceStatus");
+  if (germVoice) { st.textContent = "OK"; st.className = "voice-status ok"; }
+  else { st.textContent = "keine DE"; st.className = "voice-status warn"; }
+}
+if (synth && synth.onvoiceschanged !== undefined) { synth.onvoiceschanged = loadVoices; }
+setTimeout(loadVoices, 500);
+
+function speak(text) {
+  if (!synth) return;
+  try { synth.cancel(); } catch(e) {}
+  try {
+    var u = new SpeechSynthesisUtterance(text);
+    u.volume = vol; u.rate = 0.95; u.lang = "de-DE";
+    if (germVoice) u.voice = germVoice;
+    synth.speak(u);
+  } catch(e) {}
+}
+
+function unlockAudio() {
+  if (!synth) return;
+  try { var u = new SpeechSynthesisUtterance(" "); u.volume = 0.01; synth.speak(u); } catch(e) {}
+}
+
+function updateVol() {
+  vol = parseFloat(document.getElementById("volRange").value);
+}
+
+// Build UI
+function buildExList() {
+  var html = "";
+  for (var i = 0; i < EXERCISES.length; i++) {
+    html += "<div class='ex-row' id='row" + i + "'>";
+    html += "<div class='ex-dot'></div>";
+    html += "<div class='ex-name-list'>" + EXERCISES[i].name + "</div>";
+    html += "</div>";
+  }
+  document.getElementById("exList").innerHTML = html;
+}
+
+function buildDots() {
+  var html = "";
+  var total = ROUNDS * EXERCISES.length;
+  for (var i = 0; i < total; i++) {
+    html += "<div class='op-dot' id='dot" + i + "'></div>";
+  }
+  document.getElementById("dotsRow").innerHTML = html;
+}
+
+buildExList();
+buildDots();
+
+function updateUI() {
+  var timerEl = document.getElementById("bigTimer");
+  var phaseEl = document.getElementById("phaseLabel");
+  var nameEl = document.getElementById("exerciseName");
+  var noteEl = document.getElementById("exerciseNote");
+  var barEl = document.getElementById("progressBar");
+  var pct = phaseDur > 0 ? ((phaseDur - elapsed) / phaseDur) * 100 : 100;
+
+  timerEl.textContent = secsLeft < 0 ? "0" : secsLeft;
+
+  if (phase === "prep") {
+    phaseEl.textContent = "VORBEREITUNG"; phaseEl.className = "phase-label";
+    nameEl.textContent = "Gleich geht es los";
+    noteEl.textContent = "Matte ausrollen, locker schuetteln";
+    timerEl.className = "big-timer";
+    barEl.style.background = "var(--muted)";
+    barEl.style.width = pct + "%";
+    document.getElementById("roundDisplay").textContent = "1";
+    document.getElementById("exerciseDisplay").textContent = "1";
+
+  } else if (phase === "work") {
+    var ex = EXERCISES[curEx];
+    phaseEl.textContent = "ARBEIT"; phaseEl.className = "phase-label work";
+    nameEl.textContent = ex.name;
+    noteEl.textContent = ex.note;
+    timerEl.className = secsLeft <= 5 ? "big-timer danger" : "big-timer work";
+    barEl.style.background = secsLeft <= 5 ? "var(--terra)" : "var(--sage)";
+    barEl.style.width = pct + "%";
+    document.getElementById("roundDisplay").textContent = curRound + 1;
+    document.getElementById("exerciseDisplay").textContent = curEx + 1;
+
+  } else if (phase === "rest") {
+    phaseEl.textContent = "PAUSE"; phaseEl.className = "phase-label rest";
+    var nextIdx = (curEx + 1) % EXERCISES.length;
+    var isLast = curEx === EXERCISES.length - 1;
+    nameEl.textContent = isLast ? "Rundenende" : "Naechste: " + EXERCISES[nextIdx].name;
+    noteEl.textContent = "Durchatmen, kurz entspannen";
+    timerEl.className = "big-timer rest";
+    barEl.style.background = "var(--gold)";
+    barEl.style.width = pct + "%";
+    document.getElementById("roundDisplay").textContent = curRound + 1;
+    document.getElementById("exerciseDisplay").textContent = curEx + 1;
+
+  } else if (phase === "roundrest") {
+    phaseEl.textContent = "RUNDENPAUSE"; phaseEl.className = "phase-label rest";
+    nameEl.textContent = "Runde " + (curRound + 1) + " geschafft!";
+    noteEl.textContent = "Kurz verschnaufen, Wasser trinken";
+    timerEl.className = "big-timer rest";
+    barEl.style.background = "var(--gold)";
+    barEl.style.width = pct + "%";
+
+  } else if (phase === "done") {
+    phaseEl.textContent = "FERTIG!"; phaseEl.className = "phase-label done";
+    nameEl.textContent = "Geschafft!";
+    noteEl.textContent = "Tolle Leistung! Jetzt dehnen.";
+    timerEl.textContent = "OK";
+    timerEl.className = "big-timer work";
+    barEl.style.width = "100%";
+    barEl.style.background = "var(--sage)";
+  }
+
+  // Update ex list
+  for (var i = 0; i < EXERCISES.length; i++) {
+    var row = document.getElementById("row" + i);
+    row.className = "ex-row";
+    if (phase === "work" && i === curEx) row.className = "ex-row active";
+    else if (phase === "rest" && i === curEx) row.className = "ex-row active";
+    else if (phase === "done") row.className = "ex-row done-ex";
+    else if ((phase === "work" || phase === "rest") && i < curEx) row.className = "ex-row done-ex";
+  }
+
+  // Update dots
+  for (var r = 0; r < ROUNDS; r++) {
+    for (var ex2 = 0; ex2 < EXERCISES.length; ex2++) {
+      var dotEl = document.getElementById("dot" + (r * EXERCISES.length + ex2));
+      if (!dotEl) continue;
+      if (r < curRound) dotEl.className = "op-dot done-dot";
+      else if (r === curRound) {
+        if (ex2 < curEx) dotEl.className = "op-dot done-dot";
+        else if (ex2 === curEx && phase === "work") dotEl.className = "op-dot active";
+        else dotEl.className = "op-dot";
+      } else dotEl.className = "op-dot";
+    }
+  }
+  if (phase === "done") {
+    for (var i = 0; i < ROUNDS * EXERCISES.length; i++) {
+      var d = document.getElementById("dot" + i);
+      if (d) d.className = "op-dot done-dot";
+    }
+  }
+}
+
+function startPhase(p, dur, callback) {
+  phase = p;
+  secsLeft = dur;
+  phaseDur = dur;
+  elapsed = 0;
+  if (callback) callback();
+  updateUI();
+  if (timer) clearInterval(timer);
+  timer = setInterval(function() {
+    if (paused) return;
+    elapsed++;
+    secsLeft--;
+    if (secsLeft === 10 && phase === "work") speak("Zehn Sekunden!");
+    if (secsLeft === 3 && (phase === "work" || phase === "rest" || phase === "roundrest")) {
+      speak("Drei. Zwei. Eins.");
+    }
+    if (secsLeft <= 0) {
+      clearInterval(timer);
+      timer = null;
+      nextPhase();
+      return;
+    }
+    updateUI();
+  }, 1000);
+}
+
+function nextPhase() {
+  if (phase === "prep") {
+    speak(EXERCISES[0].voice);
+    startPhase("work", WORK, null);
+
+  } else if (phase === "work") {
+    if (curEx < EXERCISES.length - 1) {
+      var nextEx = EXERCISES[curEx + 1];
+      speak("Pause! Naechste Uebung: " + nextEx.name);
+      startPhase("rest", REST, null);
+    } else {
+      if (curRound < ROUNDS - 1) {
+        speak("Runde " + (curRound + 1) + " geschafft! Rundenpause.");
+        startPhase("roundrest", ROUND_REST, null);
+      } else {
+        phase = "done";
+        if (timer) clearInterval(timer);
+        speak("Training abgeschlossen! Fantastisch!");
+        updateUI();
+      }
+    }
+
+  } else if (phase === "rest") {
+    curEx++;
+    speak(EXERCISES[curEx].voice);
+    startPhase("work", WORK, null);
+
+  } else if (phase === "roundrest") {
+    curRound++;
+    curEx = 0;
+    speak("Runde " + (curRound + 1) + ". Los geht es! " + EXERCISES[0].voice);
+    startPhase("work", WORK, null);
+  }
+}
+
+function handleStart() {
+  var btn = document.getElementById("btnStart");
+  if (phase === "idle" || phase === "done") {
+    curRound = 0; curEx = 0; paused = false;
+    btn.textContent = "|| Pause";
+    speak("Training beginnt. Bereit machen.");
+    startPhase("prep", PREP, null);
+  } else if (paused) {
+    paused = false;
+    btn.textContent = "|| Pause";
+    speak("Weiter!");
+  } else {
+    paused = true;
+    btn.textContent = "Weiter";
+    speak("Pause.");
+  }
+}
+
+function resetWorkout() {
+  if (timer) clearInterval(timer);
+  timer = null;
+  phase = "idle"; paused = false;
+  secsLeft = 0; curRound = 0; curEx = 0;
+  document.getElementById("btnStart").textContent = "Starten";
+  document.getElementById("phaseLabel").textContent = "BEREIT";
+  document.getElementById("exerciseName").textContent = "Bereit machen";
+  document.getElementById("exerciseNote").textContent = "Stell dich locker hin, tief durchatmen";
+  document.getElementById("bigTimer").textContent = "-";
+  document.getElementById("bigTimer").className = "big-timer";
+  document.getElementById("progressBar").style.width = "0%";
+  document.getElementById("roundDisplay").textContent = "-";
+  document.getElementById("exerciseDisplay").textContent = "-";
+  buildExList(); buildDots();
+}
+</script>
+</body>
+</html>

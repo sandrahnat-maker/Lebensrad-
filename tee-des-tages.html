@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>Tee des Tages</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+@keyframes wimpel-swing{0%,100%{transform:rotate(-4deg) skewX(2deg);}50%{transform:rotate(4deg) skewX(-2deg);}}
+@keyframes wimpel-swing2{0%,100%{transform:rotate(3deg) skewX(-1deg);}50%{transform:rotate(-3deg) skewX(1deg);}}
+@keyframes wimpel-swing3{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(5deg);}}
+@keyframes rope-sway{0%,100%{transform:scaleX(1);}50%{transform:scaleX(1.008);}}
+@keyframes tier-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+@keyframes spotlight{0%{left:-100%;}60%,100%{left:220%;}}
+:root{--bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,0.45);--crimson:#b8294a;--crimson-l:rgba(184,41,74,0.10);--gold:#c9893a;--gold-l:rgba(201,137,58,0.13);--navy:#1a2744;--sage:#5e8a5a;--sage-l:rgba(94,138,90,0.12);--violet:#6a3f7a;--border:rgba(184,41,74,0.13);--shadow:rgba(30,18,8,0.08);}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+body{background:var(--bg);font-family:"Raleway",sans-serif;color:var(--text);min-height:100vh;padding-bottom:4rem;background-image:repeating-linear-gradient(-6deg,rgba(184,41,74,0.022) 0px,rgba(184,41,74,0.022) 28px,transparent 28px,transparent 56px,rgba(201,137,58,0.018) 56px,rgba(201,137,58,0.018) 84px,transparent 84px,transparent 112px);}
+.wimpelkette{position:relative;width:100%;height:40px;overflow:hidden;display:block;background:var(--bg);}
+.wimpelkette svg{width:100%;height:40px;overflow:visible;animation:rope-sway 5s ease-in-out infinite;}
+.wimpel-1{animation:wimpel-swing 2.8s ease-in-out infinite;}
+.wimpel-2{animation:wimpel-swing2 3.2s ease-in-out infinite 0.3s;}
+.wimpel-3{animation:wimpel-swing3 2.5s ease-in-out infinite 0.6s;}
+.wimpel-4{animation:wimpel-swing 3.0s ease-in-out infinite 0.9s;}
+.wimpel-5{animation:wimpel-swing2 2.7s ease-in-out infinite 1.2s;}
+.wimpel-6{animation:wimpel-swing3 3.4s ease-in-out infinite 1.5s;}
+.wimpel-7{animation:wimpel-swing 2.9s ease-in-out infinite 1.8s;}
+.wimpel-8{animation:wimpel-swing2 2.6s ease-in-out infinite 2.1s;}
+.wimpel-9{animation:wimpel-swing3 3.1s ease-in-out infinite 2.4s;}
+.zirkus-header{padding:0.8rem 1.2rem 0.85rem;border-bottom:2px solid var(--border);background:rgba(255,251,245,0.92);}
+.back-btn{display:inline-flex;align-items:center;gap:.3rem;font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--crimson);text-decoration:none;opacity:.7;margin-bottom:.4rem;background:none;border:none;cursor:pointer;padding:0;}
+.back-btn:active{opacity:1;}
+.header-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;font-weight:500;}
+.header-title{font-family:"Playfair Display",serif;font-size:22px;font-style:italic;color:var(--text);line-height:1.2;}
+.header-sub{font-family:"IM Fell English",serif;font-size:14px;font-style:italic;color:var(--muted);margin-top:.15rem;}
+.rainbow-stripe{height:5px;background:repeating-linear-gradient(90deg,var(--crimson) 0%,var(--crimson) 20%,var(--gold) 20%,var(--gold) 40%,var(--navy) 40%,var(--navy) 60%,var(--violet) 60%,var(--violet) 80%,var(--sage) 80%,var(--sage) 100%);opacity:.6;margin-bottom:.2rem;}
+</style>
+<style>
+.container {
+    width: 100%;
+    max-width: 420px;
+    padding: 0 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  header {
+    text-align: center;
+    padding: 20px 0 16px;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  /* Back-Link */
+  .back {
+    display: inline-block;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--crimson);
+    text-decoration: none;
+    opacity: .7;
+    padding: .4rem 0 .6rem;
+    align-self: flex-start;
+  }
+  .back:active { opacity: 1; }
+
+  .date-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+
+  .main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--crimson);
+  }
+
+  /* Wimpel-Linie unter dem Titel */
+  .title-wimpel {
+    font-size: 9px; letter-spacing: .28em;
+    color: var(--gold); opacity: .5;
+    margin-top: 4px;
+  }
+
+  /* Tea card */
+  .tea-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px 4px 16px 16px;
+    box-shadow: 0 3px 16px var(--shadow);
+    overflow: hidden;
+    margin: 0 0 14px 0;
+    animation: fadeUp 0.5s ease both;
+    position: relative;
+  }
+  /* Zirkus-Dachstreifen */
+  .tea-card::before {
+    content: '';
+    display: block;
+    height: 5px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--crimson) 0%, var(--crimson) 20%,
+      var(--gold) 20%, var(--gold) 40%,
+      var(--navy) 40%, var(--navy) 60%,
+      #6a3f7a 60%, #6a3f7a 80%,
+      var(--accent) 80%, var(--accent) 100%
+    );
+    opacity: .65;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tea-hero {
+    padding: 22px 22px 18px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .day-tag {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--crimson);
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+    font-family: 'Raleway', sans-serif;
+    opacity: .75;
+  }
+
+  .tea-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .tea-tagline {
+    font-family: 'IM Fell English', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .tea-emoji {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 40px;
+    opacity: 0.65;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat {
+    padding: 14px 16px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+    display: block;
+    font-family: 'Raleway', sans-serif;
+  }
+
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--crimson);
+    line-height: 1;
+  }
+
+  .stat-unit {
+    font-family: 'IM Fell English', serif;
+    font-size: 10px;
+    font-style: italic;
+    color: var(--muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* Details */
+  .details { padding: 16px 22px; }
+
+  .detail-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .detail-row:last-child { margin-bottom: 0; }
+  .detail-icon { font-size: 14px; width: 20px; flex-shrink: 0; margin-top: 2px; }
+  .detail-text {
+    font-family: 'IM Fell English', serif;
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .detail-text strong { color: var(--text); font-style: normal; }
+
+  /* Benefits */
+  .benefits-card {
+    background: rgba(94,138,90,0.06);
+    border: 1px solid rgba(94,138,90,0.2);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    animation: fadeUp 0.5s 0.15s ease both;
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 12px;
+    display: block;
+    font-family: 'Raleway', sans-serif;
+  }
+
+  .benefit-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 9px;
+  }
+  .benefit-item:last-child { margin-bottom: 0; }
+
+  .benefit-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--crimson);
+    margin-top: 7px;
+    flex-shrink: 0;
+    opacity: .6;
+  }
+
+  .benefit-text {
+    font-family: 'IM Fell English', serif;
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  /* Week nav */
+  .week-nav {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    animation: fadeUp 0.5s 0.3s ease both;
+  }
+
+  .week-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: block;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+  }
+
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .day-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 3px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--muted);
+  }
+  .day-btn:active { border-color: var(--border); }
+  .day-btn.active {
+    border-color: var(--crimson);
+    background: var(--crimson-l);
+    color: var(--crimson);
+  }
+  .day-abbr {
+    font-size: 8px; letter-spacing: 1px;
+    text-transform: uppercase; font-weight: 500;
+    font-family: 'Raleway', sans-serif;
+  }
+  .day-emoji { font-size: 16px; }
+
+  /* Timer */
+  .timer-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-top: 0;
+    text-align: center;
+    animation: fadeUp 0.5s 0.45s ease both;
+  }
+
+  .timer-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--crimson);
+    line-height: 1;
+    margin: 10px 0;
+    letter-spacing: 4px;
+  }
+
+  .timer-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    display: block;
+    font-family: 'Raleway', sans-serif;
+  }
+
+  .timer-progress {
+    height: 2px;
+    background: rgba(184,41,74,0.1);
+    border-radius: 1px;
+    margin: 12px 0;
+    overflow: hidden;
+  }
+
+  .timer-bar {
+    height: 100%;
+    background: var(--crimson);
+    border-radius: 1px;
+    transition: width 1s linear;
+    width: 0%;
+    opacity: .7;
+  }
+
+  .timer-btns {
+    display: flex; gap: 8px;
+    justify-content: center; margin-top: 12px;
+  }
+
+  .btn {
+    font-family: 'IM Fell English', serif;
+    font-size: 14px; font-style: italic;
+    padding: 8px 22px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .btn:active { border-color: var(--crimson); color: var(--crimson); }
+  .btn.primary { border-color: var(--crimson); color: var(--crimson); }
+  .btn.primary:active { background: var(--crimson-l); }
+  .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .timer-phase {
+    font-family: 'IM Fell English', serif;
+    font-size: 13px; font-style: italic;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+    margin-top: 8px; min-height: 18px;
+  }
+
+  /* Temp note */
+  .temp-note {
+    font-family: 'IM Fell English', serif;
+    font-size: 14px; font-style: italic;
+    color: var(--muted); margin-top: 6px; line-height: 1.5;
+  }
+
+  @keyframes steam {
+    0%, 100% { transform: translateY(0); opacity: 0.65; }
+    50% { transform: translateY(-4px); opacity: 0.45; }
+  }
+  .tea-emoji { animation: steam 3s ease-in-out infinite; }
+  .transition-fade { animation: fadeUp 0.4s ease both; }
+  }
+
+  .transition-fade { animation: fadeUp 0.4s ease both; }
+</style>
+</head>
+<body>
+<div class="wimpelkette" aria-hidden="true"><svg viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,7 Q50,11 100,9 Q150,7 200,10 Q250,13 300,9 Q350,7 400,9" stroke="#1a2744" stroke-width="1" fill="none" opacity="0.3"/><g class="wimpel-1" transform-origin="30 9"><polygon points="23,9 37,9 30,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-2" transform-origin="67 9"><polygon points="60,9 74,9 67,28" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-3" transform-origin="104 9"><polygon points="97,9 111,9 104,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-4" transform-origin="141 9"><polygon points="134,9 148,9 141,28" fill="#6a3f7a" opacity="0.75"/></g><g class="wimpel-5" transform-origin="178 10"><polygon points="171,10 185,10 178,29" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-6" transform-origin="215 9"><polygon points="208,9 222,9 215,28" fill="#5e8a5a" opacity="0.7"/></g><g class="wimpel-7" transform-origin="252 10"><polygon points="245,10 259,10 252,29" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-8" transform-origin="289 9"><polygon points="282,9 296,9 289,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-9" transform-origin="326 9"><polygon points="319,9 333,9 326,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-1" transform-origin="363 9"><polygon points="356,9 370,9 363,28" fill="#6a3f7a" opacity="0.75"/></g></svg></div>
+<div class="zirkus-header">
+<a class="back-btn" href="index.html">‹ zurück zu Mein Leben</a>
+<div class="rainbow-stripe"></div>
+<div class="header-eyebrow">Morgenritual</div>
+<div class="header-title">Tee des Tages</div>
+<div class="header-sub">7-Tage-Teeplan</div>
+</div>
+
+
+<div class="date-label" id="todayDate" style="text-align:center;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);padding:.4rem 1rem 0;"></div>
+<div class="container">
+  
+
+  <div id="teaCard" class="tea-card">
+    <div class="tea-hero">
+      <span class="day-tag" id="dayTag"></span>
+      <div class="tea-emoji" id="teaEmoji"></div>
+      <div class="tea-name" id="teaName"></div>
+      <div class="tea-tagline" id="teaTagline"></div>
+    </div>
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-label">Menge</span>
+        <span class="stat-value" id="statMenge"></span>
+        <span class="stat-unit" id="statMengeUnit"></span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Temperatur</span>
+        <span class="stat-value" id="statTemp"></span>
+        <span class="stat-unit">°C</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Ziehzeit</span>
+        <span class="stat-value" id="statZieh"></span>
+        <span class="stat-unit">Min</span>
+      </div>
+    </div>
+    <div class="details">
+      <div class="detail-row">
+        <div class="detail-icon">🌡️</div>
+        <div class="detail-text" id="tempTip"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">💡</div>
+        <div class="detail-text" id="teaTip"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="benefits-card">
+    <span class="section-label">Warum dieser Tee mir gut tut</span>
+    <div id="benefitsList"></div>
+  </div>
+
+  <div class="week-nav">
+    <span class="week-label">Mein Tee-Ritual der Woche</span>
+    <div class="days-grid" id="daysGrid"></div>
+  </div>
+
+  <div class="timer-section">
+    <span class="section-label">Zieh-Timer — mit Ruhe</span>
+    <span class="timer-label" id="timerLabel">Bereit</span>
+    <div class="timer-display" id="timerDisplay">—:——</div>
+    <div class="timer-progress">
+      <div class="timer-bar" id="timerBar"></div>
+    </div>
+    <div class="timer-phase" id="timerPhase"></div>
+    <div class="timer-btns">
+      <button class="btn primary" id="btnStart" onclick="startTimer()">🍵 Starten</button>
+      <button class="btn" id="btnReset" onclick="resetTimer()" disabled>↺ Neu</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const TEAS = [
+  {
+    day: 'Montag',
+    abbr: 'Mo',
+    emoji: '🌺',
+    name: 'Hibiskustee',
+    tagline: 'Rubinrot & fruchtig-säuerlich',
+    menge: '4–5',
+    mengeUnit: 'TL Blüten',
+    temp: '100',
+    tempRange: [100, 100],
+    zieh: '8–10',
+    ziehMin: 8,
+    tempTip: 'Kochend heißes Wasser verwenden (100 °C) — direkt nach dem Wasserkocher aufgießen.',
+    tip: '<strong>Cold Brew:</strong> 4–5 TL in 1 Liter kaltes Wasser geben, 4–8 Stunden im Kühlschrank ziehen lassen — ergibt ein wunderschön rubinrotes, erfrischendes Getränk. Oder heiß: aufbrühen, abkühlen lassen, kalt genießen. <strong>Tipp:</strong> Nicht direkt zu eisenreichen Mahlzeiten trinken — Hibiskus kann die Eisenaufnahme leicht hemmen.',
+    benefits: [
+      'Stärkster natürlicher Blutdrucksenker unter den Tees — 2–3 Tassen täglich wirken messbar',
+      'Senkt nachweislich sowohl systolischen als auch diastolischen Blutdruck',
+      'Anthozyan & Polyphenol wirken entzündungshemmend und gefäßschützend',
+      'Harntreibend — spült überschüssiges Natrium (Salz) aus dem Körper — ideal zur DASH-Ernährung'
+    ]
+  },
+  {
+    day: 'Dienstag',
+    abbr: 'Di',
+    emoji: '🍃',
+    name: 'Grüner Tee',
+    tagline: 'Frisch & graskräuterig',
+    menge: '2',
+    mengeUnit: 'TL für 5 × 200 ml',
+    temp: '70–80',
+    tempRange: [70, 80],
+    zieh: '2–3',
+    ziehMin: 2,
+    tempTip: 'Nicht kochen lassen — wird sonst bitter! Entweder 8–12 Min. nach dem Abkochen warten, oder einen Schluck kaltes Wasser in die Kanne geben.',
+    tip: '<strong>Tagesprozedere:</strong> Morgens 2 TL in einen Aufguss-Behälter geben. 5× im Tagesverlauf je 200 ml aufgießen (= 1 Liter). Die ersten 2 Aufgüsse sind kräftig und aromatisch, die späteren milder — ideal, da das Koffein nachmittags ohnehin weniger erwünscht ist.',
+    benefits: [
+      'Erweitert die Blutgefäße via Stickstoffmonoxid → blutdrucksenkend — Teil des Daily Dozen!',
+      'Catechine senken LDL-Cholesterin und hemmen die Cholesterin-Produktion in der Leber',
+      'Hemmt die Aufnahme von Cholesterin im Darm',
+      'Antioxidativ, entzündungshemmend — regelmäßiger Konsum senkt Blutdruck dauerhaft moderat'
+    ]
+  },
+  {
+    day: 'Mittwoch',
+    abbr: 'Mi',
+    emoji: '🟡',
+    name: 'Kurkuma-Gewürztee',
+    tagline: 'Golden, warm & entzündungshemmend',
+    menge: '1 TL Kurkuma',
+    mengeUnit: '+ Zimt, Kardamom, Pfeffer',
+    temp: '100',
+    tempRange: [100, 100],
+    zieh: '8–10',
+    ziehMin: 8,
+    tempTip: 'Kochend heißes Wasser (100 °C) — kurz köcheln lassen erhöht die Wirkstofffreisetzung.',
+    tip: '<strong>Unbedingt:</strong> Eine Prise schwarzen Pfeffer dazugeben — erhöht die Aufnahme von Curcumin um bis zu 2000%! Etwas Kokos- oder Hafermilch macht ihn cremiger. Zimt & Kardamom nach Geschmack.',
+    benefits: [
+      'Curcumin senkt den Blutdruck durch Entspannung der Gefäßwände',
+      'Stark entzündungshemmend — schützt Herz und Gefäße langfristig',
+      'Zimt verbessert die Insulinsensitivität und stabilisiert den Blutzucker',
+      'Kardamom wirkt blutdrucksenkend und verdauungsfördernd'
+    ]
+  },
+  {
+    day: 'Donnerstag',
+    abbr: 'Do',
+    emoji: '🌿',
+    name: 'Artischocken-Löwenzahn',
+    tagline: 'Bitter & leberstärkend',
+    menge: 'je 2 TL',
+    mengeUnit: 'Artischocke + Löwenzahn',
+    temp: '100',
+    tempRange: [100, 100],
+    zieh: '10',
+    ziehMin: 10,
+    tempTip: 'Kochend heißes Wasser (100 °C) — direkt aufgießen.',
+    tip: 'Deutliche Bitternote — das sind genau die cholesterinsenkenden Bitterstoffe! Wer es milder mag, gibt 1 TL Pfefferminze dazu.',
+    benefits: [
+      'Artischocke steigert den Gallefluss und hemmt die Cholesterinbildung',
+      'Beteiligt an der Auflösung bestehender Cholesterinablagerungen',
+      'Bitterstoffe unterstützen die Leber und den Fettstoffwechsel',
+      'Löwenzahn wirkt entwässernd und unterstützt die Leber'
+    ]
+  },
+  {
+    day: 'Freitag',
+    abbr: 'Fr',
+    emoji: '🍂',
+    name: 'Rooibos',
+    tagline: 'Warm, süßlich & koffeinfrei',
+    menge: '2–3',
+    mengeUnit: 'TL für 2–3 × 200 ml',
+    temp: '100',
+    tempRange: [100, 100],
+    zieh: '5–8',
+    ziehMin: 5,
+    tempTip: 'Kochend heißes Wasser (100 °C) — kann auch länger ziehen, wird nicht bitter.',
+    tip: '<strong>Mehrfach aufgießen:</strong> 2–3 TL morgens einlegen, 2–3× je 200 ml aufgießen. Rooibos wird nicht bitter, daher auch den zweiten und dritten Aufguss ruhig gleich lang ziehen lassen. Koffeinfrei — ideal für den ganzen Tag.',
+    benefits: [
+      'Quercetin senkt nachweislich den Blutdruck — koffeinfrei, also auch abends ideal',
+      'Reich an Antioxidantien — schützt die Gefäße vor oxidativem Stress',
+      'Entzündungshemmend und immunstärkend',
+      'Enthält Kalium und Magnesium — beide senken den Blutdruck (DASH-Synergieeffekt!)'
+    ]
+  },
+  {
+    day: 'Samstag',
+    abbr: 'Sa',
+    emoji: '🫚',
+    name: 'Ingwer-Kurkuma',
+    tagline: 'Würzig, warm & entzündungshemmend',
+    menge: '3–4 Scheiben',
+    mengeUnit: 'Ingwer + ½ TL Kurkuma',
+    temp: '100',
+    tempRange: [100, 100],
+    zieh: '10–15',
+    ziehMin: 10,
+    tempTip: 'Kochend heißes Wasser (100 °C) — oder kurz köcheln lassen für mehr Intensität.',
+    tip: 'Eine Prise schwarzer Pfeffer dazugeben — erhöht die Aufnahme von Kurkuma im Körper erheblich! Etwas Zitronensaft macht es milder.',
+    benefits: [
+      'Ingwer entspannt die Gefäßwände und verbessert die Durchblutung → blutdrucksenkend',
+      'Kurkuma senkt den Cholesterinspiegel und Gesamtblutfette',
+      'Leberschützend und stark antioxidativ',
+      'Beide stark entzündungshemmend — ideale Kombination für Herz & Gefäße'
+    ]
+  },
+  {
+    day: 'Sonntag',
+    abbr: 'So',
+    emoji: '🫖',
+    name: 'Oolong',
+    tagline: 'Nussig, blumig & halbfermentiert',
+    menge: '2',
+    mengeUnit: 'TL für 4–5 × 200 ml',
+    temp: '85–90',
+    tempRange: [85, 90],
+    zieh: '3–4',
+    ziehMin: 3,
+    tempTip: '85–90 °C: entweder 3–5 Minuten nach dem Abkochen warten, oder einen kleinen Schluck kaltes Wasser dazugeben.',
+    tip: '<strong>Tagesprozedere:</strong> Morgens 2 TL einlegen, 4–5× im Tagesverlauf je 200 ml aufgießen (= fast 1 Liter). Oolong entfaltet sich mit jedem Aufguss anders — der zweite und dritte sind oft am aromatischsten. Die späteren Aufgüsse kürzer ziehen lassen.',
+    benefits: [
+      'Hemmt die Aufnahme von Nahrungsfetten → senkt LDL',
+      'Enthält Catechine ähnlich wie Grüntee',
+      'Schonender für den Magen als Grüntee',
+      'Fördert den Stoffwechsel und die Fettverbrennung'
+    ]
+  }
+];
+
+const DAYS_DE = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+const MONTHS_DE = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+
+let currentDayIndex = 0;
+let timerInterval = null;
+let timerRunning = false;
+let timerTotal = 0;
+let timerRemaining = 0;
+
+function getTodayTeaIndex() {
+  const d = new Date().getDay(); // 0=So, 1=Mo...
+  // TEAS: 0=Mo(1), 1=Di(2), 2=Mi(3), 3=Do(4), 4=Fr(5), 5=Sa(6), 6=So(0)
+  const map = {1:0,2:1,3:2,4:3,5:4,6:5,0:6};
+  return map[d];
+}
+
+function formatDate() {
+  const d = new Date();
+  return `${DAYS_DE[d.getDay()]}, ${d.getDate()}. ${MONTHS_DE[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function renderTea(idx) {
+  const tea = TEAS[idx];
+  document.getElementById('dayTag').textContent = tea.day;
+  document.getElementById('teaEmoji').textContent = tea.emoji;
+  document.getElementById('teaName').textContent = tea.name;
+  document.getElementById('teaTagline').textContent = tea.tagline;
+  document.getElementById('statMenge').textContent = tea.menge;
+  document.getElementById('statMengeUnit').textContent = tea.mengeUnit;
+  document.getElementById('statTemp').textContent = tea.temp;
+  document.getElementById('statZieh').textContent = tea.zieh;
+  document.getElementById('tempTip').innerHTML = tea.tempTip;
+  document.getElementById('teaTip').innerHTML = `<strong>🌿 Mein Tipp:</strong> ${tea.tip}`;
+
+  const bl = document.getElementById('benefitsList');
+  bl.innerHTML = tea.benefits.map(b => `
+    <div class="benefit-item">
+      <div class="benefit-dot"></div>
+      <div class="benefit-text">${b}</div>
+    </div>`).join('');
+
+  // Update day buttons
+  document.querySelectorAll('.day-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === idx);
+  });
+
+  // Reset timer for new tea
+  resetTimer();
+  document.getElementById('timerLabel').textContent = `Ziehzeit: ${tea.zieh} Min`;
+}
+
+function buildDaysGrid() {
+  const grid = document.getElementById('daysGrid');
+  grid.innerHTML = TEAS.map((t, i) => `
+    <button class="day-btn ${i === currentDayIndex ? 'active' : ''}" onclick="selectDay(${i})">
+      <span class="day-abbr">${t.abbr}</span>
+      <span class="day-emoji">${t.emoji}</span>
+    </button>`).join('');
+}
+
+function selectDay(idx) {
+  currentDayIndex = idx;
+  renderTea(idx);
+  document.querySelectorAll('.day-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === idx);
+  });
+}
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s.toString().padStart(2,'0')}`;
+}
+
+function startTimer() {
+  if (timerRunning) return;
+  const tea = TEAS[currentDayIndex];
+  if (timerRemaining === 0) {
+    timerTotal = tea.ziehMin * 60;
+    timerRemaining = timerTotal;
+  }
+  timerRunning = true;
+  document.getElementById('btnStart').disabled = true;
+  document.getElementById('btnReset').disabled = false;
+  document.getElementById('timerPhase').textContent = '🍵 Tee zieht …';
+
+  timerInterval = setInterval(() => {
+    timerRemaining--;
+    const pct = ((timerTotal - timerRemaining) / timerTotal) * 100;
+    document.getElementById('timerDisplay').textContent = formatTime(timerRemaining);
+    document.getElementById('timerBar').style.width = pct + '%';
+
+    if (timerRemaining <= 0) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      document.getElementById('timerDisplay').textContent = '🌿 Fertig';
+      document.getElementById('timerPhase').textContent = 'Dein Tee ist bereit — genieße jeden Schluck. 🍵';
+      document.getElementById('timerBar').style.width = '100%';
+      document.getElementById('btnStart').disabled = true;
+    }
+  }, 1000);
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerRemaining = 0;
+  timerTotal = 0;
+  document.getElementById('timerDisplay').textContent = '—:——';
+  document.getElementById('timerBar').style.width = '0%';
+  document.getElementById('timerPhase').textContent = '';
+  const tea = TEAS[currentDayIndex];
+  document.getElementById('timerLabel').textContent = `Ziehzeit: ${tea.zieh} Min`;
+  document.getElementById('btnStart').disabled = false;
+  document.getElementById('btnReset').disabled = true;
+}
+
+// Init
+document.getElementById('todayDate').textContent = formatDate();
+currentDayIndex = getTodayTeaIndex();
+buildDaysGrid();
+renderTea(currentDayIndex);
+</script>
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>Wildcard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+@keyframes wimpel-swing{0%,100%{transform:rotate(-4deg) skewX(2deg);}50%{transform:rotate(4deg) skewX(-2deg);}}
+@keyframes wimpel-swing2{0%,100%{transform:rotate(3deg) skewX(-1deg);}50%{transform:rotate(-3deg) skewX(1deg);}}
+@keyframes wimpel-swing3{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(5deg);}}
+@keyframes rope-sway{0%,100%{transform:scaleX(1);}50%{transform:scaleX(1.008);}}
+@keyframes tier-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+@keyframes spotlight{0%{left:-100%;}60%,100%{left:220%;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+:root{
+  --bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,0.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,0.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,0.13);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,0.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,0.12);
+  --violet:#6a3f7a;
+  --border:rgba(184,41,74,0.13);--shadow:rgba(30,18,8,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+body{
+  background:var(--bg);font-family:"Raleway",sans-serif;color:var(--text);
+  min-height:100vh;padding-bottom:4rem;
+  background-image:repeating-linear-gradient(-6deg,rgba(184,41,74,0.022) 0px,rgba(184,41,74,0.022) 28px,transparent 28px,transparent 56px,rgba(201,137,58,0.018) 56px,rgba(201,137,58,0.018) 84px,transparent 84px,transparent 112px);
+}
+.wimpelkette{position:relative;width:100%;height:40px;overflow:hidden;display:block;background:var(--bg);}
+.wimpelkette svg{width:100%;height:40px;overflow:visible;animation:rope-sway 5s ease-in-out infinite;}
+.wimpel-1{animation:wimpel-swing 2.8s ease-in-out infinite;}
+.wimpel-2{animation:wimpel-swing2 3.2s ease-in-out infinite 0.3s;}
+.wimpel-3{animation:wimpel-swing3 2.5s ease-in-out infinite 0.6s;}
+.wimpel-4{animation:wimpel-swing 3.0s ease-in-out infinite 0.9s;}
+.wimpel-5{animation:wimpel-swing2 2.7s ease-in-out infinite 1.2s;}
+.wimpel-6{animation:wimpel-swing3 3.4s ease-in-out infinite 1.5s;}
+.wimpel-7{animation:wimpel-swing 2.9s ease-in-out infinite 1.8s;}
+.wimpel-8{animation:wimpel-swing2 2.6s ease-in-out infinite 2.1s;}
+.wimpel-9{animation:wimpel-swing3 3.1s ease-in-out infinite 2.4s;}
+header{padding:1rem 1.2rem .85rem;border-bottom:2px solid var(--border);background:rgba(255,251,245,0.92);backdrop-filter:blur(3px);position:relative;}
+.back-btn{display:inline-flex;align-items:center;gap:.3rem;font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--crimson);text-decoration:none;opacity:.7;margin-bottom:.4rem;background:none;border:none;cursor:pointer;padding:0;}
+.back-btn:active{opacity:1;}
+.header-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;font-weight:500;}
+.header-title{font-family:"Playfair Display",serif;font-size:22px;font-style:italic;color:var(--text);line-height:1.2;}
+.header-sub{font-family:"IM Fell English",serif;font-size:14px;font-style:italic;color:var(--muted);margin-top:.15rem;}
+.rainbow-stripe{height:5px;background:repeating-linear-gradient(90deg,var(--crimson) 0%,var(--crimson) 20%,var(--gold) 20%,var(--gold) 40%,var(--navy) 40%,var(--navy) 60%,var(--violet) 60%,var(--violet) 80%,var(--sage) 80%,var(--sage) 100%);opacity:.6;margin-bottom:.2rem;}
+.z-card{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:0 3px 16px var(--shadow);margin:.5rem 1rem;overflow:hidden;position:relative;}
+.z-card::after{content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.055),transparent);animation:spotlight 10s ease-in-out infinite;pointer-events:none;}
+.z-item{display:flex;align-items:flex-start;gap:.6rem;padding:.55rem .9rem;border-bottom:1px solid rgba(184,41,74,0.07);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .2s;}
+.z-item:last-child{border-bottom:none;}
+.z-item.done{opacity:.28;}
+.z-item.done .z-name{text-decoration:line-through;text-decoration-color:rgba(184,41,74,0.3);}
+.z-check{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(184,41,74,0.3);flex-shrink:0;margin-top:2px;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;}
+.z-item.done .z-check{background:var(--sage-l);border-color:var(--sage);color:var(--sage);}
+.z-item.done .z-check::after{content:"✦";}
+.z-name{font-size:16px;color:var(--text);line-height:1.35;}
+.z-sub{font-size:13px;font-style:italic;color:var(--muted);margin-top:1px;font-family:"IM Fell English",serif;}
+.z-sec{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);padding:.7rem 1rem .2rem;opacity:.8;font-weight:500;}
+.z-info{margin:.3rem 1rem .4rem;padding:.5rem .8rem;background:var(--gold-l);border-left:2px solid var(--gold);font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--muted);line-height:1.6;}
+.section-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:.8rem 1rem .3rem;padding-left:.2rem;font-weight:500;}
+.z-progress{margin:.4rem 1rem .2rem;}
+.z-progress-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:.3rem;}
+.z-progress-bar{height:3px;background:var(--border);border-radius:10px;overflow:hidden;}
+.z-progress-fill{height:100%;background:linear-gradient(90deg,var(--crimson),var(--gold));border-radius:10px;transition:width .4s ease;}
+.z-reset{position:fixed;bottom:1.2rem;right:1.2rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:20px;padding:.4rem 1rem;font-size:13px;font-family:"IM Fell English",serif;font-style:italic;cursor:pointer;}
+.z-reset:active{background:var(--crimson-l);color:var(--crimson);}
+.tier-zeile{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:.3rem 1rem;user-select:none;pointer-events:none;overflow:hidden;}
+.tier-zeile .tier{display:inline-block;animation:tier-float 3s ease-in-out infinite;opacity:.5;font-size:.9rem;}
+.tier-zeile .tier:nth-child(2){animation-delay:.4s;}.tier-zeile .tier:nth-child(3){animation-delay:.8s;}.tier-zeile .tier:nth-child(4){animation-delay:1.2s;}.tier-zeile .tier:nth-child(5){animation-delay:1.6s;}
+.tier-linie{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(184,41,74,0.2),transparent);}
+.manege-line{display:flex;align-items:center;gap:.5rem;padding:.1rem 1rem;color:var(--crimson);opacity:.3;font-size:11px;letter-spacing:.3em;user-select:none;}
+.manege-line::before,.manege-line::after{content:'';flex:1;height:1px;background:currentColor;}
+</style>
+
+<style>
+/* App-spezifisches CSS */
+.date-line{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:.4rem;opacity:.85;}
+h1{font-family:'Playfair Display',serif;font-size:26px;font-style:italic;font-weight:400;color:var(--text);text-align:center;margin-bottom:.2rem;}
+h1 em{color:var(--gold);}
+.subtitle{text-align:center;font-size:14px;color:var(--muted);font-style:italic;margin-bottom:1.6rem;}
+
+/* MAIN CARD */
+.wildcard-main{
+  background:linear-gradient(150deg,#f5ede0,#fdf6ee,#f0ede8);
+  border-radius:20px;padding:1.6rem 1.3rem;
+  margin-bottom:1.2rem;
+  border:1px solid rgba(200,148,58,0.2);
+  box-shadow:0 6px 24px rgba(180,120,40,0.1);
+  position:relative;overflow:hidden;
+}
+.wildcard-main::before{
+  content:attr(data-emoji);position:absolute;
+  right:1rem;top:.8rem;font-size:3.5rem;opacity:.12;pointer-events:none;
+}
+.wc-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem;}
+.wc-text{
+  font-family:'Playfair Display',serif;font-size:20px;font-style:italic;
+  font-weight:400;line-height:1.5;color:var(--text);margin-bottom:1.1rem;
+}
+.wc-hint{
+  font-size:14px;color:var(--muted);line-height:1.65;
+  border-left:2px solid var(--gold2);padding-left:.85rem;
+  margin-bottom:1.3rem;font-style:italic;
+}
+.btn-row{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;}
+.btn-done{
+  background:var(--gold);color:#fff;border:none;border-radius:30px;
+  padding:.52rem 1.3rem;font-size:15px;font-weight:400;
+  font-family:'Cormorant Garamond',serif;cursor:pointer;
+  display:inline-flex;align-items:center;gap:.4rem;transition:all .2s;
+}
+.btn-done.done{background:var(--sage);}
+.btn-new{
+  background:transparent;border:1.5px solid var(--border);color:var(--muted);
+  border-radius:30px;padding:.52rem 1rem;font-size:14px;
+  font-family:'Cormorant Garamond',serif;cursor:pointer;transition:all .2s;
+}
+.btn-new:active{color:var(--gold);border-color:var(--gold);}
+
+/* MINDFUL CARD */
+.mindful-card{
+  background:linear-gradient(135deg,#edf5e8,#f5f0e8);
+  border-radius:16px;padding:1.1rem 1.2rem;margin-bottom:1.2rem;
+  border:1px solid rgba(122,154,90,0.2);
+}
+.section-label{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--sage);margin-bottom:.6rem;}
+.mindful-text{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;font-weight:400;color:var(--text);line-height:1.6;}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:1.3rem 0;}
+
+/* CATEGORY FILTER */
+.cats{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.1rem;}
+.cat-btn{
+  background:var(--white);border:1.5px solid var(--border);color:var(--muted);
+  border-radius:20px;padding:.32rem .85rem;font-size:13px;
+  font-family:'Cormorant Garamond',serif;cursor:pointer;transition:all .2s;
+}
+.cat-btn.active{background:var(--gold);border-color:var(--gold);color:#fff;}
+
+/* ALL TITLE */
+.all-title{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--muted);margin-bottom:.9rem;}
+
+/* ITEM LIST */
+.wc-list{display:flex;flex-direction:column;gap:.5rem;}
+.wc-item{
+  background:var(--white);border:1px solid var(--border);border-radius:13px;
+  padding:.85rem 1rem;display:flex;align-items:flex-start;gap:.75rem;
+  cursor:pointer;transition:all .15s;
+  box-shadow:0 1px 6px rgba(180,120,40,0.04);
+}
+.wc-item.done-item{opacity:.4;}
+.wc-item:active{border-color:var(--gold);}
+.wc-emoji{font-size:1.3rem;flex-shrink:0;line-height:1;margin-top:.1rem;}
+.wc-item-text{font-size:15px;color:var(--text);line-height:1.5;flex:1;}
+.wc-item-cat{font-size:12px;color:var(--muted);margin-top:.2rem;font-style:italic;}
+.wc-check{flex-shrink:0;width:21px;height:21px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;margin-top:.15rem;}
+.wc-item.done-item .wc-check{background:var(--sage);border-color:var(--sage);color:#fff;}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.wildcard-main{animation:fadeIn .4s ease;}
+</style>
+</head>
+<body>
+<div class="wimpelkette" aria-hidden="true"><svg viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,7 Q50,11 100,9 Q150,7 200,10 Q250,13 300,9 Q350,7 400,9" stroke="#1a2744" stroke-width="1" fill="none" opacity="0.3"/><g class="wimpel-1" transform-origin="30 9"><polygon points="23,9 37,9 30,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-2" transform-origin="67 9"><polygon points="60,9 74,9 67,28" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-3" transform-origin="104 9"><polygon points="97,9 111,9 104,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-4" transform-origin="141 9"><polygon points="134,9 148,9 141,28" fill="#6a3f7a" opacity="0.75"/></g><g class="wimpel-5" transform-origin="178 10"><polygon points="171,10 185,10 178,29" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-6" transform-origin="215 9"><polygon points="208,9 222,9 215,28" fill="#5e8a5a" opacity="0.7"/></g><g class="wimpel-7" transform-origin="252 10"><polygon points="245,10 259,10 252,29" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-8" transform-origin="289 9"><polygon points="282,9 296,9 289,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-9" transform-origin="326 9"><polygon points="319,9 333,9 326,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-1" transform-origin="363 9"><polygon points="356,9 370,9 363,28" fill="#6a3f7a" opacity="0.75"/></g></svg></div>
+<header>
+<div class="rainbow-stripe"></div>
+<div class="header-eyebrow">Seele & Inspiration</div>
+<div class="header-title">Wildcard</div>
+<div class="header-sub">Dein täglicher Impuls</div>
+</header>
+
+<div class="date-line" id="dateLine">–</div>
+<p class="subtitle">Ein kleiner Impuls für heute — ganz ohne Zwang</p>
+
+<div class="wildcard-main" id="wildcardMain" data-emoji="✨">
+  <div class="wc-label">✦ Heute darf ich</div>
+  <div class="wc-text" id="wcText">–</div>
+  <div class="wc-hint" id="wcHint">–</div>
+  <div class="btn-row">
+    <button class="btn-done" id="btnDone" onclick="markDone()">🌿 Hab ich gemacht</button>
+    <button class="btn-new" onclick="newCard()">↻ Anderer Impuls</button>
+  </div>
+</div>
+
+<div class="mindful-card">
+  <div class="section-label">✦ Kleiner Achtsamkeits-Moment</div>
+  <div class="mindful-text" id="mindfulText">–</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="cats" id="catFilter">
+  <button class="cat-btn active" onclick="filterCat('alle', this)">Alle</button>
+  <button class="cat-btn" onclick="filterCat('kreativ', this)">🎨 Kreativ</button>
+  <button class="cat-btn" onclick="filterCat('natur', this)">🌿 Natur</button>
+  <button class="cat-btn" onclick="filterCat('sozial', this)">💛 Sozial</button>
+  <button class="cat-btn" onclick="filterCat('koerper', this)">🌸 Körper</button>
+  <button class="cat-btn" onclick="filterCat('geist', this)">✨ Geist</button>
+</div>
+
+<div class="all-title">Alle Impulse</div>
+<div class="wc-list" id="wcList"></div>
+
+<script>
+var WILDCARDS = [
+  // KREATIV
+  { id:1, cat:'kreativ', emoji:'🎨', text:'Zeichne heute etwas, das du siehst — nicht was du dir vorstellst.', hint:'Schau aus dem Fenster oder in den Raum. Zeichne 3 Minuten lang, was dein Auge gerade trifft. Nicht schön, sondern wahr.' },
+  { id:2, cat:'kreativ', emoji:'📷', text:'Fotografiere etwas Hässliches, das du trotzdem schön findest.', hint:'Alte Farbe, Risse im Asphalt, ein schiefer Zaun. Schönheit versteckt sich in der Textur.' },
+  { id:3, cat:'kreativ', emoji:'✍️', text:'Schreib drei Sätze über den gestrigen Tag — aber aus Lottes Perspektive.', hint:'Was hat sie gerochen? Was hat sie beobachtet? Was hat sie genossen?' },
+  { id:4, cat:'kreativ', emoji:'🎵', text:'Such heute einen Song, den du seit Jahren nicht gehört hast.', hint:'Lass ihn ganz durch. Was kommt zurück — ein Bild, ein Gefühl, ein Ort?' },
+  { id:5, cat:'kreativ', emoji:'🖌️', text:'Mische heute zwei Farben, die du normalerweise nicht kombinieren würdest.', hint:'Im Zeichnen, beim Anziehen, beim Kochen. Lass das Unerwartete passieren.' },
+  { id:6, cat:'kreativ', emoji:'📖', text:'Öffne ein Buch zufällig und lies den ersten Satz, auf den du schaust.', hint:'Nimm ihn als heutiges Motto mit — auch wenn er keinen Sinn ergibt.' },
+  { id:7, cat:'kreativ', emoji:'🌀', text:'Schreib 5 Minuten lang, ohne aufzuhören. Kein Thema, kein Ziel.', hint:'Lass die Hand einfach schreiben. Was auch immer kommt, darf kommen.' },
+
+  // NATUR
+  { id:8, cat:'natur', emoji:'🌿', text:'Steh beim Spaziergang mit Lotte einmal still und zähle, was du hörst.', hint:'Schließ die Augen. Zähl jeden einzelnen Klang. Vögel, Wind, Schritte, Stimmen. Wie viele sind es?' },
+  { id:9, cat:'natur', emoji:'🌱', text:'Such heute eine Pflanze in deiner Wohnung, die du länger nicht angeschaut hast.', hint:'Schau sie wirklich an. Neue Blätter? Veränderte Farbe? Was braucht sie gerade?' },
+  { id:10, cat:'natur', emoji:'☁️', text:'Schau heute einmal eine Minute lang einfach in den Himmel.', hint:'Kein Handy, kein Ziel. Nur du und das, was sich dort oben bewegt.' },
+  { id:11, cat:'natur', emoji:'🌸', text:'Bring heute eine Blume oder einen Zweig in deine Wohnung.', hint:'Vom Spaziergang, vom Markt, aus dem Garten. Etwas Lebendiges ins Zimmer holen.' },
+  { id:12, cat:'natur', emoji:'🐾', text:'Geh mit Lotte eine Route, die du noch nie gegangen bist.', hint:'Biege einfach irgendwo ab, wo du sonst nicht abbiegen würdest. Lass dich überraschen.' },
+  { id:13, cat:'natur', emoji:'🌊', text:'Setz dich heute 5 Minuten ans offene Fenster und atme bewusst.', hint:'Frische Luft, Stadtgeräusche, Licht. Alles darf sein, wie es ist.' },
+
+  // SOZIAL
+  { id:14, cat:'sozial', emoji:'💌', text:'Schreib heute einer Person, an die du schon lange nicht gedacht hast.', hint:'Kein langer Brief nötig. "Ich hab heute an dich gedacht" ist genug.' },
+  { id:15, cat:'sozial', emoji:'😊', text:'Sag heute einer fremden Person ein ehrliches Kompliment.', hint:'Der Kassierin, dem Nachbarn, jemandem auf der Straße. Einfach so.' },
+  { id:16, cat:'sozial', emoji:'📞', text:'Ruf heute jemanden an, statt zu schreiben.', hint:'Eine Stimme trägt mehr als Text. Wem würde ein Anruf heute gut tun?' },
+  { id:17, cat:'sozial', emoji:'🍵', text:'Trink deinen nächsten Kaffee oder Tee bewusst mit jemandem — oder allein, aber ohne Handy.', hint:'Nur das Gespräch oder nur die Stille. Kein Scrollen dabei.' },
+  { id:18, cat:'sozial', emoji:'💛', text:'Erzähl heute Thomas etwas, das du normalerweise für dich behältst.', hint:'Einen Gedanken, eine Beobachtung, etwas Kleines das dich beschäftigt hat.' },
+
+  // KÖRPER
+  { id:19, cat:'koerper', emoji:'🌸', text:'Mach heute 5 Minuten lang nur für dich — ohne Zweck.', hint:'Nicht dehnen um gesünder zu werden. Nicht spazieren um Schritte zu zählen. Einfach sein.' },
+  { id:20, cat:'koerper', emoji:'💆', text:'Massiere heute Abend deine Hände bewusst — jede einzelne.', hint:'Nimm dir Zeit für jeden Finger. Die Hände machen so viel und werden selten bedankt.' },
+  { id:21, cat:'koerper', emoji:'🧘', text:'Atme heute dreimal tief durch, bevor du dein Handy in die Hand nimmst.', hint:'Nicht als Übung — als Übergang. Vom Nichts ins Tun.' },
+  { id:22, cat:'koerper', emoji:'🚶', text:'Geh heute irgendwo barfuß, auch nur kurz.', hint:'Boden unter den Füßen erdet. Parkett, Gras, Fliesen — alles fühlt sich anders an.' },
+  { id:23, cat:'koerper', emoji:'🌙', text:'Geh heute 15 Minuten früher schlafen als geplant.', hint:'Kein Scrolling, kein "nur noch das". Einfach früher ins Dunkel.' },
+
+  // GEIST
+  { id:24, cat:'geist', emoji:'🧠', text:'Lern heute ein einziges neues Wort — auf Deutsch, Englisch oder einer anderen Sprache.', hint:'Nur eines. Aber such es dir bewusst aus. Etwas, das sich schön anfühlt.' },
+  { id:25, cat:'geist', emoji:'🔍', text:'Frag dich heute: Was habe ich in letzter Zeit vermieden?', hint:'Keine Antwort nötig. Die Frage allein ist schon genug.' },
+  { id:26, cat:'geist', emoji:'📚', text:'Lies heute 10 Seiten in einem Buch — ohne Zweck, nur zum Genießen.', hint:'Nicht um klüger zu werden. Einfach weil Lesen schön ist.' },
+  { id:27, cat:'geist', emoji:'✨', text:'Schreib heute Abend drei Dinge auf, die dich heute überrascht haben.', hint:'Groß oder klein. Ein Licht, ein Satz, ein Gefühl. Was hat dich kurz aus dem Alltag geholt?' },
+  { id:28, cat:'geist', emoji:'🌀', text:'Stell dir heute eine Frage, auf die du keine Antwort kennst — und lass sie offen.', hint:'Das Aushalten von Nicht-Wissen ist auch eine Form von Freiheit.' },
+  { id:29, cat:'geist', emoji:'🎯', text:'Mach heute eine Sache vollständig, die du schon lange vor dir herschiebst.', hint:'Nicht alles. Nur diese eine. Dann lass es wirklich los.' },
+  { id:30, cat:'geist', emoji:'🌟', text:'Erinnere dich heute an eine Situation, in der du stolz auf dich warst.', hint:'Nicht um dich zu bewerten. Nur um dir selbst zuzuhören.' },
+];
+
+var MINDFUL = [
+  'Beim nächsten Kaffee: beide Hände um die Tasse, drei Atemzüge, dann erst trinken.',
+  'Wenn du heute die Tür aufmachst — mach kurz Pause. Wo gehst du gerade hin?',
+  'Rudi oder Timmy streicheln, ohne gleichzeitig ans Handy zu denken.',
+  'Beim Kochen: einmal bewusst riechen, bevor du abschmeckst.',
+  'Bevor du heute schlafen gehst: eine Minute Stille. Kein Handy, kein Licht.',
+  'Beim Spaziergang mit Lotte: einmal stehen bleiben und drei Dinge hören.',
+  'Heute beim Essen: den ersten Bissen wirklich schmecken.',
+  'Wenn du heute angespannt bist: Schultern fallen lassen und dreimal ausatmen.',
+  'Schau heute einmal jemandem wirklich in die Augen, wenn er spricht.',
+  'Bevor du die App öffnest: frag dich kurz, warum du sie gerade öffnest.',
+  'Heute eine Aufgabe zu Ende bringen, bevor du die nächste anfängst.',
+  'Beim Tee: nur Tee. Kein Lesen, kein Scrollen. Nur warm, nur jetzt.',
+  'Wenn Lotte dich anschaut — schau zurück. Wirklich.',
+  'Bevor du antwortest: einen Atemzug Pause.',
+  'Heute etwas Schönes berühren — und kurz dabei bleiben.',
+];
+
+var todayKey = 'wc_' + new Date().toISOString().slice(0,10);
+var doneKey = 'wc_done_' + new Date().toISOString().slice(0,10);
+var allDoneKey = 'wc_alldone';
+
+function getDoneIds() {
+  try { return JSON.parse(localStorage.getItem(allDoneKey) || '[]'); } catch(e) { return []; }
+}
+
+function saveDoneIds(ids) {
+  localStorage.setItem(allDoneKey, JSON.stringify(ids));
+}
+
+function getTodayCard() {
+  var saved = localStorage.getItem(todayKey);
+  if (saved) return parseInt(saved);
+  // Zufällige Karte, die heute noch nicht erledigt ist
+  var done = getDoneIds();
+  var avail = WILDCARDS.filter(function(w){ return done.indexOf(w.id) < 0; });
+  if (avail.length === 0) { saveDoneIds([]); avail = WILDCARDS; }
+  var pick = avail[Math.floor(Math.random() * avail.length)];
+  localStorage.setItem(todayKey, pick.id);
+  return pick.id;
+}
+
+function getMindful() {
+  var idx = new Date().getDay() + new Date().getDate();
+  return MINDFUL[idx % MINDFUL.length];
+}
+
+function renderMain(id) {
+  var w = WILDCARDS.find(function(x){ return x.id === id; });
+  if (!w) return;
+  var done = getDoneIds().indexOf(id) >= 0;
+  var main = document.getElementById('wildcardMain');
+  main.setAttribute('data-emoji', w.emoji);
+  document.getElementById('wcText').textContent = w.text;
+  document.getElementById('wcHint').textContent = w.hint;
+  var btn = document.getElementById('btnDone');
+  if (done) {
+    btn.className = 'btn-done done';
+    btn.textContent = '🌿 Hab ich gemacht!';
+  } else {
+    btn.className = 'btn-done';
+    btn.textContent = '🌿 Hab ich gemacht';
+  }
+}
+
+function markDone() {
+  var id = parseInt(localStorage.getItem(todayKey));
+  var done = getDoneIds();
+  if (done.indexOf(id) < 0) done.push(id);
+  saveDoneIds(done);
+  renderMain(id);
+  renderList(currentCat);
+}
+
+function newCard() {
+  var done = getDoneIds();
+  var avail = WILDCARDS.filter(function(w){ return done.indexOf(w.id) < 0; });
+  if (avail.length === 0) { alert('Wunderbar — du hast alle Impulse ausprobiert! 🌿\nIch starte die Liste neu.'); saveDoneIds([]); avail = WILDCARDS; }
+  var current = parseInt(localStorage.getItem(todayKey));
+  avail = avail.filter(function(w){ return w.id !== current; });
+  if (avail.length === 0) avail = WILDCARDS.filter(function(w){ return w.id !== current; });
+  var pick = avail[Math.floor(Math.random() * avail.length)];
+  localStorage.setItem(todayKey, pick.id);
+  var main = document.getElementById('wildcardMain');
+  main.style.animation = 'none';
+  setTimeout(function(){ main.style.animation = 'fadeIn .4s ease'; renderMain(pick.id); }, 10);
+}
+
+var currentCat = 'alle';
+
+function filterCat(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderList(cat);
+}
+
+function renderList(cat) {
+  var done = getDoneIds();
+  var list = cat === 'alle' ? WILDCARDS : WILDCARDS.filter(function(w){ return w.cat === cat; });
+  var el = document.getElementById('wcList');
+  el.innerHTML = '';
+  list.forEach(function(w) {
+    var isDone = done.indexOf(w.id) >= 0;
+    var item = document.createElement('div');
+    item.className = 'wc-item' + (isDone ? ' done-item' : '');
+    item.innerHTML =
+      '<div class="wc-emoji">' + w.emoji + '</div>' +
+      '<div style="flex:1">' +
+        '<div class="wc-item-text">' + w.text + '</div>' +
+        '<div class="wc-item-cat">' + ({kreativ:'🎨 Kreativ',natur:'🌿 Natur',sozial:'💛 Sozial',koerper:'🌸 Körper',geist:'🧠 Geist'}[w.cat]) + '</div>' +
+      '</div>' +
+      '<div class="wc-check">' + (isDone ? '✓' : '') + '</div>';
+    item.onclick = (function(ww){ return function(){
+      var d = getDoneIds();
+      var idx = d.indexOf(ww.id);
+      if (idx >= 0) d.splice(idx,1); else d.push(ww.id);
+      saveDoneIds(d);
+      renderList(currentCat);
+      var todayId = parseInt(localStorage.getItem(todayKey));
+      if (ww.id === todayId) renderMain(todayId);
+    }; })(w);
+    el.appendChild(item);
+  });
+}
+
+function init() {
+  var days = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+  var months = ['Jänner','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  var now = new Date();
+  document.getElementById('dateLine').textContent =
+    days[now.getDay()] + ', ' + now.getDate() + '. ' + months[now.getMonth()] + ' ' + now.getFullYear();
+
+  var id = getTodayCard();
+  renderMain(id);
+  document.getElementById('mindfulText').textContent = getMindful();
+  renderList('alle');
+}
+
+init();
+</script>
+</body>
+</html>

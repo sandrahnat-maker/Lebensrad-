@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>Morgenroutine</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IM+Fell+English:ital@0;1&family=Raleway:wght@400;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,.12);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,.10);
+  --violet:#6a3f7a;--border-col:rgba(184,41,74,.15);--shadow:rgba(30,18,8,.08);}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);font-family:'Raleway',sans-serif;color:var(--text);min-height:100vh;
+  background-image:repeating-linear-gradient(-4deg,rgba(184,41,74,.022) 0px,rgba(184,41,74,.022) 32px,transparent 32px,transparent 64px,rgba(201,137,58,.018) 64px,rgba(201,137,58,.018) 96px,transparent 96px,transparent 128px);}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 0%,rgba(201,137,58,.05) 0%,transparent 55%),radial-gradient(ellipse at 85% 100%,rgba(94,138,90,.05) 0%,transparent 55%);pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,#b8294a 0,#b8294a 20%,#c9893a 20%,#c9893a 40%,#1a2744 40%,#1a2744 60%,#6a3f7a 60%,#6a3f7a 80%,#5e8a5a 80%,#5e8a5a 100%);z-index:100;opacity:.7;}
+.app{max-width:420px;margin:0 auto;padding-bottom:60px;position:relative;z-index:1;}
+.header{padding:.9rem 1.2rem .8rem;border-bottom:1px solid var(--border-col);position:sticky;top:0;background:rgba(255,251,245,.95);backdrop-filter:blur(4px);z-index:10;}
+.header::before{content:'✦  ·  ✦  ·  ✦  ·  ✦  ·  ✦  ·  ✦  ·  ✦  ·  ✦';display:block;font-size:8px;letter-spacing:.3em;color:var(--crimson);opacity:.3;text-align:center;margin-bottom:.5rem;}
+.date-label{font-family:'Raleway',sans-serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;}
+.title{font-family:'Playfair Display',serif;font-size:1.6rem;font-style:italic;color:var(--text);line-height:1.2;}
+.title em{color:var(--crimson);font-style:italic;}
+.progress-row{display:flex;align-items:center;gap:10px;margin-top:.6rem;}
+.progress-bar{flex:1;height:3px;background:rgba(30,18,8,.08);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--sage));border-radius:2px;transition:width .5s ease;width:0%;}
+.progress-text{font-family:'Raleway',sans-serif;font-size:.6rem;color:var(--muted);white-space:nowrap;font-weight:600;}
+.phase{padding:.9rem 1.2rem .3rem;display:flex;align-items:center;gap:.6rem;}
+.phase-label{font-family:'Raleway',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--crimson);white-space:nowrap;font-weight:700;opacity:.8;}
+.phase-line{flex:1;height:1px;background:var(--border-col);}
+.phase-icon{font-size:13px;}
+.step{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem 1.2rem;cursor:pointer;transition:background .15s;border-bottom:1px dashed rgba(30,18,8,.08);}
+.step:active{background:var(--crimson-l);}
+.step.done{opacity:.35;}
+.step.done .step-name{text-decoration:line-through;text-decoration-color:var(--crimson);}
+.step-check{width:20px;height:20px;border:1px solid rgba(30,18,8,.2);border-radius:50%;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .25s;background:var(--card);}
+.step.done .step-check{background:var(--sage);border-color:var(--sage);}
+.step.done .step-check::after{content:'✓';color:white;font-size:11px;}
+.step-emoji{font-size:16px;flex-shrink:0;margin-top:2px;}
+.step-content{flex:1;}
+.step-name{font-size:.95rem;font-weight:700;color:var(--text);line-height:1.3;font-family:'Raleway',sans-serif;}
+.step-note{font-family:'IM Fell English',serif;font-size:.88rem;font-style:italic;color:var(--muted);margin-top:2px;line-height:1.4;}
+.med-badge{font-family:'Raleway',sans-serif;font-size:.6rem;letter-spacing:.08em;background:var(--gold-l);color:var(--gold);border:1px solid rgba(201,137,58,.35);border-radius:4px;padding:1px 6px;margin-top:3px;display:inline-block;font-weight:700;}
+.flow-dot{text-align:center;padding:1px 0;color:rgba(30,18,8,.15);font-size:9px;letter-spacing:4px;pointer-events:none;}
+.fokus-wrap{margin:1.2rem 1rem .5rem;background:var(--card);border:1px solid var(--border-col);border-radius:14px;overflow:hidden;box-shadow:0 2px 12px var(--shadow);}
+.fokus-head{background:var(--navy);color:var(--card);padding:.6rem 1rem;font-family:'Raleway',sans-serif;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:8px;font-weight:700;}
+.fokus-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.fokus-body{padding:.9rem 1rem;}
+.fokus-row{display:flex;gap:8px;margin-bottom:.6rem;}
+.fokus-input{flex:1;font-family:'IM Fell English',serif;font-size:.95rem;font-style:italic;border:none;border-bottom:1px solid var(--border-col);padding:4px 0;background:transparent;color:var(--text);outline:none;}
+.fokus-input::placeholder{color:var(--muted);}
+.fokus-btn{font-family:'Raleway',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.1em;background:var(--crimson);color:white;border:none;padding:.4rem .8rem;cursor:pointer;border-radius:20px;align-self:flex-end;transition:opacity .2s;white-space:nowrap;}
+.fokus-btn:hover{opacity:.85;}
+.fokus-btn:disabled{opacity:.35;cursor:not-allowed;}
+.fokus-result{font-family:'IM Fell English',serif;font-size:.95rem;font-style:italic;color:var(--text);line-height:1.65;padding:.7rem .8rem;background:var(--bg);border-radius:8px;display:none;}
+.fokus-result.visible{display:block;}
+@keyframes dots{0%,20%{content:'.'}40%{content:'..'}60%,100%{content:'...'}}
+.loading::after{content:'...';animation:dots 1.2s steps(4,end) infinite;}
+.celebration{text-align:center;padding:2rem 1.2rem;display:none;}
+.celebration.visible{display:block;}
+.celebration-icon{font-size:44px;animation:bloom .6s ease-out;margin-bottom:.6rem;}
+@keyframes bloom{0%{transform:scale(0);opacity:0}70%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
+.celebration-text{font-family:'Playfair Display',serif;font-size:1.4rem;font-style:italic;color:var(--text);}
+.celebration-sub{font-family:'Raleway',sans-serif;font-size:.62rem;color:var(--muted);letter-spacing:.12em;margin-top:.4rem;text-transform:uppercase;}
+.reset-btn{display:block;width:calc(100% - 2rem);margin:.4rem 1rem 0;padding:.65rem;font-family:'Raleway',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:transparent;border:1px solid var(--border-col);color:var(--crimson);cursor:pointer;border-radius:20px;transition:all .2s;}
+.reset-btn:hover{background:var(--crimson-l);}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="date-label" id="dateLabel"></div>
+    <div class="title">Morgen<em>routine</em></div>
+    <div class="progress-row">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText"></div>
+    </div>
+  </div>
+
+  <div id="stepsList"></div>
+
+  <div class="fokus-wrap">
+    <div class="fokus-head"><div class="fokus-dot"></div>Fokus für heute</div>
+    <div class="fokus-body">
+      <div class="fokus-row">
+        <input class="fokus-input" id="fokusInput" placeholder="Was liegt mir heute am Herzen?" maxlength="200">
+        <button class="fokus-btn" id="fokusBtn" onclick="getFokus()">Impuls ✦</button>
+      </div>
+      <div class="fokus-result" id="fokusResult"></div>
+    </div>
+  </div>
+
+  <div class="celebration" id="celebration">
+    <div class="celebration-icon">🌿</div>
+    <div class="celebration-text">Routine abgeschlossen</div>
+    <div class="celebration-sub">Der Tag gehört dir.</div>
+  </div>
+
+  <button class="reset-btn" onclick="resetAll()">↺ Neu starten</button>
+</div>
+
+<script>
+const PHASES = [
+  {
+    label:'Im Bett', icon:'🌙',
+    steps:[
+      { id:1, emoji:'💊', name:'Euthyrox',           note:'nüchtern, noch im Bett', med:true },
+      { id:2, emoji:'🤸', name:'Rückenübungen',      note:'sanft, noch liegend' },
+    ]
+  },
+  {
+    label:'Aufstehen', icon:'🌅',
+    steps:[
+      { id:3, emoji:'🐱', name:'Rudi – Magenschutz', note:'erstes nach dem Aufstehen, vor dem Futter', med:true },
+      { id:4, emoji:'🩺', name:'Blutdruck messen',   note:'ruhig sitzen, notieren' },
+      { id:5, emoji:'⚖️', name:'Wiegen',             note:'nüchtern, vor dem Trinken' },
+      { id:6, emoji:'🦷', name:'Knirscherschiene',   note:'rausnehmen & spülen' },
+    ]
+  },
+  {
+    label:'Frühstück', icon:'🍵',
+    steps:[
+      { id:7,  emoji:'💧', name:'Wasser trinken',    note:'warmes Wasser, ggf. mit Zitrone' },
+      { id:8,  emoji:'🍵', name:'Tee kochen',        note:'nach Wochenplan' },
+      { id:9,  emoji:'🥣', name:'Frühstück',         note:'bewusst & ungestört' },
+      { id:10, emoji:'💊', name:'Medikamente',       note:'zum Frühstück – Liste prüfen', med:true },
+    ]
+  },
+  {
+    label:'Tierrunde', icon:'🐾',
+    steps:[
+      { id:11, emoji:'🐱', name:'Rudi & Timmy',      note:'Futter, kurze Schmusezeit' },
+    ]
+  },
+  {
+    label:'Bad', icon:'🪥',
+    steps:[
+      { id:12, emoji:'🪥', name:'Bad Früh',          note:'Gesicht, Zähne, Körperpflege' },
+    ]
+  },
+  {
+    label:'Lotte & Abschluss', icon:'🐕',
+    steps:[
+      { id:13, emoji:'🐕', name:'Lotte raus',        note:'erste Runde, ruhiges Tempo' },
+      { id:14, emoji:'💊', name:'Medikamente Tiere', note:'Lotte + Rudi nach Plan', med:true },
+      { id:15, emoji:'🎨', name:'Ins Atelier',       note:'alles bereit?' },
+    ]
+  },
+];
+
+const ALL_STEPS = PHASES.flatMap(p => p.steps);
+let done = JSON.parse(localStorage.getItem('morgen_v5') || '[]');
+
+function render() {
+  const list = document.getElementById('stepsList');
+  list.innerHTML = '';
+  PHASES.forEach(phase => {
+    const ph = document.createElement('div');
+    ph.className = 'phase';
+    ph.innerHTML = `<span class="phase-icon">${phase.icon}</span><span class="phase-label">${phase.label}</span><div class="phase-line"></div>`;
+    list.appendChild(ph);
+    phase.steps.forEach((s, idx) => {
+      const div = document.createElement('div');
+      div.className = 'step' + (done.includes(s.id) ? ' done' : '');
+      div.innerHTML = `
+        <div class="step-check"></div>
+        <div class="step-emoji">${s.emoji}</div>
+        <div class="step-content">
+          <div class="step-name">${s.name}</div>
+          <div class="step-note">${s.note}</div>
+          ${s.med ? '<span class="med-badge">Medikament</span>' : ''}
+        </div>`;
+      div.onclick = () => toggle(s.id);
+      list.appendChild(div);
+      if (idx < phase.steps.length - 1) {
+        const dot = document.createElement('div');
+        dot.className = 'flow-dot';
+        dot.textContent = '· · ·';
+        list.appendChild(dot);
+      }
+    });
+  });
+  const n = done.length, total = ALL_STEPS.length;
+  document.getElementById('progressFill').style.width = Math.round(n/total*100) + '%';
+  document.getElementById('progressText').textContent = n + ' / ' + total;
+  document.getElementById('celebration').classList.toggle('visible', n === total);
+  const d = new Date();
+  document.getElementById('dateLabel').textContent = d.toLocaleDateString('de-AT', { weekday:'long', day:'numeric', month:'long' });
+}
+
+function toggle(id) {
+  done = done.includes(id) ? done.filter(x => x !== id) : [...done, id];
+  localStorage.setItem('morgen_v5', JSON.stringify(done));
+  render();
+}
+
+function resetAll() {
+  done = [];
+  localStorage.removeItem('morgen_v5');
+  document.getElementById('fokusResult').classList.remove('visible');
+  document.getElementById('fokusInput').value = '';
+  render();
+}
+
+async function getFokus() {
+  const input = document.getElementById('fokusInput').value.trim();
+  const result = document.getElementById('fokusResult');
+  const btn = document.getElementById('fokusBtn');
+  if (!input) return;
+  btn.disabled = true;
+  result.className = 'fokus-result visible loading';
+  result.textContent = 'Einen Moment';
+  const n = done.length, total = ALL_STEPS.length;
+  const pct = Math.round(n/total*100);
+  const donenames = ALL_STEPS.filter(s => done.includes(s.id)).map(s=>s.name).join(', ') || 'noch nichts';
+  const offen = ALL_STEPS.filter(s => !done.includes(s.id)).map(s=>s.name).join(', ') || 'alles erledigt';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514', max_tokens:1000,
+        system:`Du bist ein ruhiger, warmherziger Morgenbegleiter für Sandra – DaZ-Lehrerin in Wien, Yogini, Tierliebhaberin (Hund Lotte, Katzen Rudi & Timmy). Sandra hat ein Atelier.\nMorgenablauf: Euthyrox + Rückenübungen im Bett, dann Rudi Magenschutz, Blutdruck, wiegen, Schiene, Wasser, Tee, Frühstück mit Medikamenten, Katzen, Bad Früh, Lotte raus, Tiermedikamente, Atelier.\nGib einen kurzen persönlichen Fokus-Impuls: 2–4 Sätze, deutsch. Ton: ruhig, direkt, wie eine kluge Freundin. Kein "Ich wünsche dir". Einen konkreten Ankersatz mitgeben.`,
+        messages:[{ role:'user', content:`Heute liegt mir am Herzen: "${input}"\nRoutine: ${pct}% – erledigt: ${donenames}.\nNoch offen: ${offen}.` }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.find(b=>b.type==='text')?.text || '–';
+    result.className = 'fokus-result visible';
+    result.textContent = text;
+  } catch {
+    result.className = 'fokus-result visible';
+    result.textContent = 'Keine Verbindung – schreib deinen Fokus einfach selbst hier hinein. ✦';
+  }
+  btn.disabled = false;
+}
+
+document.getElementById('fokusInput').addEventListener('keydown', e => { if (e.key==='Enter') getFokus(); });
+render();
+</script>
+</body>
+</html>

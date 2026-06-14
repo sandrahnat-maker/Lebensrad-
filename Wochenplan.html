@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Wochenplan Abnehmen</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IM+Fell+English:ital@0;1&family=Raleway:wght@400;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,.12);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,.10);
+  --violet:#6a3f7a;--border-col:rgba(184,41,74,.15);--shadow:rgba(30,18,8,.08);
+  --up-col:#b8294a;--down-col:#5e8a5a;--same-col:#888;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);font-family:'Raleway',sans-serif;color:var(--text);background-image:repeating-linear-gradient(-4deg,rgba(184,41,74,.022) 0px,rgba(184,41,74,.022) 32px,transparent 32px,transparent 64px,rgba(201,137,58,.018) 64px,rgba(201,137,58,.018) 96px,transparent 96px,transparent 128px);min-height:100vh;padding-bottom:5rem;background-image:repeating-linear-gradient(-4deg,rgba(184,41,74,.022) 0px,rgba(184,41,74,.022) 32px,transparent 32px,transparent 64px,rgba(201,137,58,.018) 64px,rgba(201,137,58,.018) 96px,transparent 96px,transparent 128px);}
+body::after{content:'';position:fixed;bottom:0;left:0;right:0;height:6px;background:repeating-linear-gradient(90deg,#FF6B35 0,#FF6B35 28px,#FFD93D 28px,#FFD93D 56px,#E84855 56px,#E84855 84px,#3D87CB 84px,#3D87CB 112px,#4CAF72 112px,#4CAF72 140px);z-index:100;}
+@keyframes reingehupft{from{transform:scale(.96) translateY(8px);opacity:0;}to{transform:scale(1) translateY(0);opacity:1;}}
+@keyframes fallen{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+.vk-header{background:#4CAF72;border-bottom:var(--border);padding:.8rem 1.1rem .7rem;}
+.vk-header::before{content:'';display:block;height:7px;margin-bottom:.5rem;background:repeating-linear-gradient(90deg,#E84855 0,#E84855 20%,#FF6B35 20%,#FF6B35 40%,#4CAF72 40%,#4CAF72 60%,#3D87CB 60%,#3D87CB 80%,#9B5DE5 80%,#9B5DE5 100%);border-radius:3px;}
+.vk-back{display:inline-flex;align-items:center;gap:.3rem;font-family:'Caveat',cursive;font-size:1rem;color:white;text-decoration:none;background:none;border:none;cursor:pointer;opacity:.8;margin-bottom:.3rem;padding:0;}
+.vk-eyebrow{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:.15rem;color:white;}
+.vk-title{font-family:'Playfair Display',serif;font-size:1.8rem;line-height:1.1;color:white;}
+.vk-sub{font-family:'Caveat',cursive;font-size:1rem;opacity:.75;margin-top:.1rem;color:white;}
+.kcal-strip{display:flex;margin:1rem 1rem 0;gap:.5rem;}
+.kcal-tile{flex:1;background:var(--card);border:var(--border);border-radius:14px;box-shadow:0 2px 8px var(--shadow);padding:.6rem .3rem;text-align:center;}
+.kcal-num{font-family:'Playfair Display',serif;font-size:1.15rem;color:#4CAF72;}
+.kcal-num.rot{color:#E84855;}
+.kcal-num.blau{color:#3D87CB;}
+.kcal-lbl{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;opacity:.5;font-weight:700;margin-top:.1rem;}
+.tipp-karte{background:var(--card);border:var(--border);border-radius:16px;box-shadow:0 2px 12px var(--shadow);margin:1rem 1rem 0;overflow:hidden;}
+.tipp-stripe{height:5px;background:repeating-linear-gradient(90deg,#FFD93D 0,#FFD93D 20%,#FF6B35 20%,#FF6B35 40%,#FFD93D 40%,#FFD93D 60%,#FF6B35 60%,#FF6B35 80%,#FFD93D 80%,#FFD93D 100%);}
+.tipp-head{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem .2rem;}
+.tipp-tradition{font-family:'Playfair Display',serif;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:#FF6B35;opacity:.9;}
+.tipp-refresh{background:none;border:none;font-family:'Caveat',cursive;font-size:.95rem;color:rgba(30,18,8,.4);cursor:pointer;}
+.tipp-deko{padding:.1rem 1rem .2rem;font-size:1.5rem;}
+.tipp-text{font-family:'Playfair Display',serif;font-size:1rem;padding:.0rem 1rem .3rem;line-height:1.35;color:var(--text);}
+.tipp-uebung{font-family:'Caveat',cursive;font-size:.95rem;padding:.4rem 1rem .8rem;color:rgba(30,18,8,.6);line-height:1.5;border-top:2px dashed rgba(30,18,8,.07);margin-top:.1rem;}
+.vk-card{background:var(--card);border:var(--border);border-radius:16px;box-shadow:0 2px 12px var(--shadow);margin:1rem 1rem 0;overflow:hidden;}
+.stripe-gruen{height:5px;background:repeating-linear-gradient(90deg,#4CAF72 0,#4CAF72 25%,#FFD93D 25%,#FFD93D 50%,#4CAF72 50%,#4CAF72 75%,#FFD93D 75%,#FFD93D 100%);}
+.stripe-blau{height:5px;background:repeating-linear-gradient(90deg,#3D87CB 0,#3D87CB 25%,#9B5DE5 25%,#9B5DE5 50%,#3D87CB 50%,#3D87CB 75%,#9B5DE5 75%,#9B5DE5 100%);}
+.stripe-orange{height:5px;background:repeating-linear-gradient(90deg,#FF6B35 0,#FF6B35 25%,#E84855 25%,#E84855 50%,#FF6B35 50%,#FF6B35 75%,#E84855 75%,#E84855 100%);}
+.card-title{font-family:'Playfair Display',serif;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;padding:.7rem 1rem .3rem;opacity:.9;}
+.title-gruen{color:#4CAF72;}
+.title-blau{color:#3D87CB;}
+.title-orange{color:#FF6B35;}
+.wg-stats{display:flex;padding:.5rem 1rem .8rem;gap:.5rem;}
+.wg-stat{flex:1;background:var(--bg);border:2px solid rgba(30,18,8,.1);border-radius:12px;padding:.5rem .3rem;text-align:center;}
+.wg-stat-val{font-family:'Playfair Display',serif;font-size:1.1rem;}
+.wg-stat-lbl{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;opacity:.5;font-weight:700;margin-top:.1rem;}
+.wg-list{padding:0 1rem .6rem;}
+.wg-row{display:flex;justify-content:space-between;align-items:center;padding:.38rem 0;border-bottom:2px dashed rgba(30,18,8,.06);font-size:.88rem;}
+.wg-row:last-child{border-bottom:none;}
+.wg-date{font-family:'Caveat',cursive;color:rgba(30,18,8,.5);}
+.wg-val{font-family:'Playfair Display',serif;}
+.wg-empty{font-family:'Caveat',cursive;color:rgba(30,18,8,.4);text-align:center;padding:1.2rem 1rem;font-size:1rem;}
+.habits-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;padding:.5rem 1rem .8rem;}
+.habit-pill{background:var(--bg);border:2px solid rgba(30,18,8,.12);border-radius:12px;padding:.5rem .65rem;font-size:.82rem;display:flex;align-items:flex-start;gap:.4rem;line-height:1.4;cursor:pointer;transition:all .15s;}
+.habit-pill.done{background:rgba(76,175,114,.15);border-color:#4CAF72;}
+.habit-pill.done .habit-txt{text-decoration:line-through;opacity:.5;}
+.tee-row{display:flex;align-items:flex-start;gap:.7rem;padding:.52rem 1rem;border-bottom:2px dashed rgba(30,18,8,.06);}
+.tee-row:last-child{border-bottom:none;}
+.tee-row.heute{background:rgba(255,217,61,.2);}
+.tee-tag{font-family:'Playfair Display',serif;font-size:.8rem;min-width:80px;padding-top:.1rem;}
+.tee-name{font-size:.88rem;font-weight:700;line-height:1.3;}
+.tee-note{font-family:'Caveat',cursive;font-size:.85rem;color:rgba(30,18,8,.5);margin-top:.05rem;}
+.tee-badge{font-size:.62rem;background:#FFD93D;border:2px solid var(--text);border-radius:8px;padding:.05rem .4rem;font-family:'Playfair Display',serif;margin-left:.3rem;}
+.wochen-tabs{display:flex;gap:.4rem;margin:1rem 1rem 0;}
+.wochen-tab{flex:1;background:var(--card);border:var(--border);border-radius:12px;padding:.45rem .3rem;text-align:center;cursor:pointer;box-shadow:0 2px 8px var(--shadow);font-family:'Playfair Display',serif;font-size:.82rem;transition:all .15s;}
+.wochen-tab.aktiv{background:#FF6B35;color:white;transform:translateY(-2px);box-shadow:3px 5px 0 var(--text);}
+.tag-tabs{display:flex;gap:.3rem;margin:.6rem 1rem 0;overflow-x:auto;padding-bottom:.15rem;}
+.tag-tabs::-webkit-scrollbar{display:none;}
+.tag-tab{flex-shrink:0;background:var(--card);border:var(--border);border-radius:14px 14px 8px 8px;padding:.4rem .5rem;text-align:center;cursor:pointer;box-shadow:0 2px 8px var(--shadow);min-width:42px;transition:all .15s;}
+.tag-tab.aktiv{transform:translateY(-3px);box-shadow:3px 6px 0 var(--text);}
+.tag-tab.as{background:#4CAF72;color:white;}
+.tag-tab.ar{background:#9B5DE5;color:white;}
+.tag-tab.ag{background:#FF6B35;color:white;}
+.tab-k{font-family:'Playfair Display',serif;font-size:.78rem;display:block;}
+.tab-t{font-size:.58rem;display:block;margin-top:.05rem;}
+.tag-karte{margin:.5rem 1rem 0;background:var(--card);border:var(--border);border-radius:16px;box-shadow:0 2px 12px var(--shadow);overflow:hidden;animation:reingehupft .3s cubic-bezier(.34,1.2,.64,1);}
+.tag-kopf{padding:.7rem 1rem .5rem;display:flex;align-items:center;justify-content:space-between;}
+.tag-kopf.sport{background:#4CAF72;}
+.tag-kopf.ruhe{background:#9B5DE5;}
+.tag-kopf.genuss{background:#FF6B35;}
+.tag-kopf-name{font-family:'Playfair Display',serif;font-size:1.1rem;color:white;}
+.tag-kopf-meta{text-align:right;}
+.tag-kopf-kcal{font-family:'Caveat',cursive;font-size:.9rem;color:rgba(255,255,255,.75);display:block;}
+.tag-kopf-badge{font-size:.65rem;background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.4);border-radius:10px;padding:.08rem .5rem;font-family:'Playfair Display',serif;color:white;}
+.mahlzeit{border-bottom:2px dashed rgba(30,18,8,.08);padding:.65rem 1rem .7rem;}
+.mahlzeit:last-of-type{border-bottom:none;}
+.mz-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.28rem;}
+.mz-label{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:#E84855;font-weight:700;}
+.mz-kcal{font-family:'Caveat',cursive;font-size:.85rem;color:rgba(30,18,8,.35);}
+.mz-name{font-size:.93rem;font-weight:700;margin-bottom:.3rem;line-height:1.3;}
+.portion{font-family:'Caveat',cursive;font-size:.95rem;color:rgba(30,18,8,.6);display:flex;gap:.4rem;margin-bottom:.1rem;line-height:1.4;}
+.portion::before{content:'·';color:#4CAF72;font-weight:700;flex-shrink:0;}
+.tipp-hint{font-family:'Caveat',cursive;font-size:.9rem;color:#3D87CB;margin-top:.35rem;padding:.3rem .6rem;background:rgba(61,135,203,.08);border-left:3px solid #3D87CB;border-radius:0 8px 8px 0;}
+.sport-bl{border-left:4px solid #4CAF72;margin:.6rem 1rem .7rem;background:rgba(76,175,114,.1);border-radius:0 10px 10px 0;padding:.5rem .8rem;}
+.sport-bl.lila{border-left-color:#9B5DE5;background:rgba(155,93,229,.1);}
+.sport-titel{font-family:'Playfair Display',serif;font-size:.88rem;color:#4CAF72;margin-bottom:.1rem;}
+.sport-titel.lila{color:#9B5DE5;}
+.sport-text{font-family:'Caveat',cursive;font-size:.95rem;color:rgba(30,18,8,.7);}
+.sport-note{font-family:'Caveat',cursive;font-size:.8rem;color:rgba(30,18,8,.4);margin-top:.1rem;}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:.48rem 1rem;border-bottom:2px dashed rgba(30,18,8,.07);font-size:.88rem;}
+.summary-row:last-child{border-bottom:none;}
+.summary-lbl{color:rgba(30,18,8,.6);}
+.summary-val{font-family:'Playfair Display',serif;color:#4CAF72;}
+.progress-karte{background:var(--card);border:var(--border);border-radius:16px;box-shadow:0 2px 12px var(--shadow);margin:1rem 1rem 0;padding:.8rem 1rem 1rem;}
+.w-dots{display:flex;gap:.35rem;flex-wrap:wrap;margin:.5rem 0 .7rem;}
+.w-dot{width:33px;height:33px;border-radius:50%;border:var(--border);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.72rem;background:var(--card);box-shadow:0 1px 6px var(--shadow);cursor:pointer;transition:all .15s;}
+.w-dot.aktiv{background:#FFD93D;}
+.w-dot.done{background:#4CAF72;color:white;border-color:#4CAF72;}
+.pb-outer{height:14px;background:rgba(30,18,8,.08);border:2px solid var(--text);border-radius:20px;overflow:hidden;box-shadow:0 1px 6px var(--shadow);}
+.pb-inner{height:100%;background:repeating-linear-gradient(90deg,#4CAF72 0,#4CAF72 18px,rgba(255,255,255,.35) 18px,rgba(255,255,255,.35) 22px);border-radius:20px;width:8.33%;transition:width .5s ease;}
+.pb-label{font-family:'Caveat',cursive;font-size:.9rem;color:rgba(30,18,8,.5);margin-top:.35rem;text-align:right;}
+.vk-toast{position:fixed;bottom:4.5rem;left:50%;transform:translateX(-50%) translateY(10px);background:var(--text);color:#FFD93D;font-family:'Caveat',cursive;font-size:1.1rem;padding:.4rem 1.2rem;border-radius:20px;opacity:0;transition:all .3s;z-index:200;white-space:nowrap;pointer-events:none;}
+.vk-toast.sichtbar{opacity:1;transform:translateX(-50%) translateY(0);}
+.konfetti-wrap{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;display:none;}
+.kdot{position:absolute;animation:fallen 1.5s ease-in forwards;}
+.vk-sep{text-align:center;padding:.8rem;font-size:1rem;opacity:.3;letter-spacing:.3em;user-select:none;}
+</style>
+</head>
+<body>
+<div class="vk-toast" id="vkToast"></div>
+<div class="konfetti-wrap" id="konfettiWrap"></div>
+
+<div class="vk-header">
+  <button class="vk-back" onclick="history.back()">&#8592; zurück</button>
+  <div class="vk-eyebrow">Ernährung &amp; Bewegung</div>
+  <div class="vk-title">&#x1F957; Wochenplan Abnehmen</div>
+  <div class="vk-sub">5 kg · ohne viel zu verzichten · Start: Freitag</div>
+</div>
+
+<div class="kcal-strip">
+  <div class="kcal-tile"><div class="kcal-num">~1.650</div><div class="kcal-lbl">Erhalt kcal</div></div>
+  <div class="kcal-tile"><div class="kcal-num blau">~1.400</div><div class="kcal-lbl">Ziel kcal</div></div>
+  <div class="kcal-tile"><div class="kcal-num rot">-250</div><div class="kcal-lbl">Defizit/Tag</div></div>
+  <div class="kcal-tile"><div class="kcal-num">-0,4</div><div class="kcal-lbl">kg/Woche</div></div>
+</div>
+
+<div class="tipp-karte">
+  <div class="tipp-stripe"></div>
+  <div class="tipp-head">
+    <div class="tipp-tradition" id="tippTradition">Tipp des Tages</div>
+    <button class="tipp-refresh" onclick="naechsterTipp()">&#8635; anderer Tipp</button>
+  </div>
+  <div class="tipp-deko" id="tippDeko">&#x1F957;</div>
+  <div class="tipp-text" id="tippText"></div>
+  <div class="tipp-uebung" id="tippUebung"></div>
+</div>
+
+<div class="vk-sep">&#11088; · &#x2696; · &#11088;</div>
+<div class="vk-card">
+  <div class="stripe-gruen"></div>
+  <div class="card-title title-gruen">&#x2696; Mein Gewichtsverlauf</div>
+  <div id="wgInhalt"><div class="wg-empty">Noch keine Einträge in der Wiegen-App</div></div>
+</div>
+
+<div class="vk-sep">&#x1F434; · &#10022; · &#x1F434;</div>
+<div class="vk-card">
+  <div class="stripe-blau"></div>
+  <div class="card-title title-blau">&#10022; Tägliche Gewohnheiten</div>
+  <div class="habits-grid">
+    <div class="habit-pill" onclick="toggleHabit(this,0)"><span>&#x1F4A7;</span><span class="habit-txt">400 ml Wasser vor dem Frühstück</span></div>
+    <div class="habit-pill" onclick="toggleHabit(this,1)"><span>&#x1F319;</span><span class="habit-txt">Nach Abendessen nichts mehr essen</span></div>
+    <div class="habit-pill" onclick="toggleHabit(this,2)"><span>&#x2696;</span><span class="habit-txt">Nüchtern wiegen (Wiegen-App)</span></div>
+    <div class="habit-pill" onclick="toggleHabit(this,3)"><span>&#x1F957;</span><span class="habit-txt">Teller: ½ Gemüse · ¼ Protein · ¼ KH</span></div>
+    <div class="habit-pill" onclick="toggleHabit(this,4)"><span>&#x1F375;</span><span class="habit-txt">Tee statt Snack am Nachmittag</span></div>
+    <div class="habit-pill" onclick="toggleHabit(this,5)"><span>&#x1F43E;</span><span class="habit-txt">Lotte-Runde min. 30 min</span></div>
+  </div>
+</div>
+
+<div class="vk-card" style="margin-top:.8rem;">
+  <div class="stripe-orange"></div>
+  <div class="card-title title-orange">&#x1F375; Tee-Wochenplan</div>
+  <div id="teeListe"></div>
+</div>
+
+<div class="vk-sep">&#10022; · &#x1F957; · &#10022;</div>
+<div class="wochen-tabs">
+  <div class="wochen-tab aktiv" id="wtab-0" onclick="zeigeWoche(0)">Diese Woche<br><span style="font-family:'Caveat',cursive;font-size:.8rem;font-weight:400;opacity:.8;">Fr · Sa · So</span></div>
+  <div class="wochen-tab" id="wtab-1" onclick="zeigeWoche(1)">Ab Montag<br><span style="font-family:'Caveat',cursive;font-size:.8rem;font-weight:400;opacity:.8;">Mo–So</span></div>
+</div>
+<div class="tag-tabs" id="tagTabs"></div>
+<div id="tagKarte"></div>
+
+<div class="vk-sep">&#x1F434; · &#11088; · &#x1F434;</div>
+<div class="vk-card">
+  <div class="stripe-gruen"></div>
+  <div class="card-title title-gruen">&#x1F4CB; Wochenüberblick</div>
+  <div class="summary-row"><span class="summary-lbl">Ø Kalorien/Tag</span><span class="summary-val">~1.390 kcal</span></div>
+  <div class="summary-row"><span class="summary-lbl">Lauf-Geh Einheiten</span><span class="summary-val">Mo · Mi · Fr</span></div>
+  <div class="summary-row"><span class="summary-lbl">Yoga / Muskeltraining</span><span class="summary-val">Di · Do</span></div>
+  <div class="summary-row"><span class="summary-lbl">Lotte-Spaziergänge</span><span class="summary-val">täglich 30–60 min</span></div>
+  <div class="summary-row"><span class="summary-lbl">Tee statt Snack</span><span class="summary-val">täglich</span></div>
+  <div class="summary-row"><span class="summary-lbl">Gesamtziel</span><span class="summary-val">-5 kg / 12 Wochen</span></div>
+</div>
+
+<div class="progress-karte">
+  <div class="card-title title-gruen" style="padding:.2rem 0 .1rem;">&#x1F3AF; 12-Wochen-Fortschritt</div>
+  <div class="w-dots" id="wDots"></div>
+  <div class="pb-outer"><div class="pb-inner" id="pbInner"></div></div>
+  <div class="pb-label" id="pbLabel">Woche 1 von 12 · 0,0 kg abgenommen</div>
+</div>
+
+<div style="height:2rem;"></div>
+
+<script>
+var today = new Date();
+var todayDow = today.getDay();
+var habitKey = 'habits_wp_' + today.toISOString().slice(0,10);
+var habitState = {};
+try { habitState = JSON.parse(localStorage.getItem(habitKey) || '{}'); } catch(e) {}
+
+var TIPPS = [
+  {tradition:'Koerper', deko:'🥗', text:'Ich esse das nicht, weil ich mir etwas Gutes tue.', uebung:'Nicht Verbot — sondern Fürsorge. Sag es heute einmal laut, wenn du etwas weglässt. Selbstbestimmung statt Kontrolle — das ist der Unterschied.'},
+  {tradition:'Zen', deko:'🍽️', text:'Langsam essen ist auch eine Form der Achtsamkeit.', uebung:'Leg heute beim Essen einmal das Besteck hin. Kaue bewusst. Der Körper braucht 15–20 Minuten, um Sattheit zu melden — gib ihm die Zeit.'},
+  {tradition:'Koerper', deko:'😴', text:'Schlaf ist kein Luxus. Er ist Stoffwechsel.', uebung:'Unter 7 Stunden erhöht sich Ghrelin — das Hungerhormon. Heute Abend: eine Stunde früher ins Bett. Kein Handy. Nur Dunkelheit und Stille.'},
+  {tradition:'Bewegung', deko:'🐾', text:'Jeder Schritt zählt — auch der unscheinbare.', uebung:'NEAT: alles was du im Alltag bewegst summiert sich auf 200–400 kcal extra — ohne dass es sich wie Sport anfühlt. Wo kannst du heute einen kleinen Umweg wählen?'},
+  {tradition:'Koerper', deko:'🧠', text:'Stress speichert. Ruhe löst.', uebung:'Cortisol fördert Fetteinlagerung. Deine Kunstzeit und Meditation wirken direkt auf den Stoffwechsel. Was tust du heute bewusst für dein Nervensystem?'},
+  {tradition:'Ernaehrung', deko:'🥚', text:'Protein am Morgen dämpft Heißhunger den ganzen Tag.', uebung:'Eier, Hülsenfrüchte, Joghurt — schon beim Frühstück. Nicht weil du musst, sondern weil du merkst: du bist länger satt, ruhiger, fokussierter.'},
+  {tradition:'Ernaehrung', deko:'🥣', text:'Kleiner Teller, volle Wirkung.', uebung:'22 cm statt 28 cm — das Gehirn sieht eine volle Portion und meldet Zufriedenheit. Probier es heute Abend einfach mal aus.'},
+  {tradition:'Koerper', deko:'🥤', text:'Hunger ist oft Durst.', uebung:'Bevor du zum Snack greifst: ein großes Glas Wasser trinken und 10 Minuten warten. Oft ist der Hunger dann weg — wirklich.'}
+];
+var tippIdx = Math.floor(today.getDate()) % TIPPS.length;
+
+function zeigeAktuellenTipp() {
+  var t = TIPPS[tippIdx];
+  var el1 = document.getElementById('tippTradition');
+  var el2 = document.getElementById('tippDeko');
+  var el3 = document.getElementById('tippText');
+  var el4 = document.getElementById('tippUebung');
+  if (el1) el1.textContent = t.tradition;
+  if (el2) el2.textContent = t.deko;
+  if (el3) el3.textContent = t.text;
+  if (el4) el4.textContent = t.uebung;
+}
+function naechsterTipp() {
+  tippIdx = (tippIdx + 1) % TIPPS.length;
+  zeigeAktuellenTipp();
+}
+
+var TEE = [
+  {tag:'Montag', dow:1, name:'🌺 Hibiskus', note:'Blutdrucksenkend, stoffwechselanregend'},
+  {tag:'Dienstag', dow:2, name:'🍵 Grüner Tee', note:'Stoffwechsel-Boost, antioxidativ'},
+  {tag:'Mittwoch', dow:3, name:'🌿 Weißdorn', note:'Herzstärkend, kreislauffördernd'},
+  {tag:'Donnerstag', dow:4, name:'🌼 Artischocken-Löwenzahn', note:'Verdauungsfördernd'},
+  {tag:'Freitag', dow:5, name:'🍂 Rooibos', note:'Koffeinfrei, sättigend'},
+  {tag:'Samstag', dow:6, name:'🫚 Ingwer-Kurkuma', note:'Entzündungshemmend, wärmend'},
+  {tag:'Sonntag', dow:0, name:'🍃 Oolong', note:'Leicht koffeinhaltig, fettstoffwechselfördernd'}
+];
+
+var WOCHEN = [
+  [
+    {name:'Freitag', k:'Fr', typ:'sport', badge:'Lauf-Geh 🏃', kcal:1420,
+     mz:[
+      {label:'Frühstück', kcal:320, name:'Porridge mit Birne & Kardamom',
+       p:['50 g Haferflocken + 200 ml Hafermilch','½ Birne (80 g), gewürfelt + Prise Kardamom + Zimt'], tip:''},
+      {label:'Mittagessen', kcal:350, name:'Gemüsesuppe mit Vollkornbrot',
+       p:['350 ml Gemüsesuppe mit Einlage','1 Scheibe Vollkornbrot (40 g)'], tip:'Guter Einstieg — leicht und sättigend'},
+      {label:'Abendessen mit Thomas', kcal:620, name:'Selbstgemachte Pizza + Blattsalat',
+       p:['2 Stück Pizza (ca. 200 g)', 'Belag: Tomatensauce, viel Gemüse, 30 g Mozzarella','Großer Blattsalat: 100 g + Dressing 1 TL Öl'], tip:'Freitag = Genuss! 2 Stück + Salat ist völlig im Plan 🍕'}
+     ],
+     sport:{titel:'🏃 Lauf-Geh Einheit 1', text:'20 min (1 min laufen / 2 min gehen, 6–7×) + Lotte 30 min', note:'Erster Schritt — der wichtigste!', lila:false}},
+    {name:'Samstag', k:'Sa', typ:'genuss', badge:'Aktiv 🚶', kcal:1450,
+     mz:[
+      {label:'Frühstück', kcal:340, name:'Porridge nach Wahl',
+       p:['50 g Haferflocken + 200 ml Hafermilch','Topping frei wählen: Beeren, Nüsse, Obst'], tip:''},
+      {label:'Mittagessen — Genuss!', kcal:680, name:'Germknödel mit Mohn & Puderzucker',
+       p:['1 Germknödel (ca. 180 g)','1 EL Mohn-Zucker-Mischung (15 g) + 1 TL Puderzucker','Kein Butter-Überguss (spart ~150 kcal)'], tip:'Mittags der große Genuss — abends dann leicht halten 🌟'},
+      {label:'Abendessen', kcal:320, name:'Leichte Gemüsesuppe oder Salat',
+       p:['300 ml Suppe oder 200 g Salat','1 Scheibe Vollkornbrot (40 g)'], tip:''}
+     ],
+     sport:{titel:'🚶 Längere Lotte-Runde', text:'45–60 min (Naschmarkt, Wienfluss) + optional Muskeltraining 15 min', note:'Extra-Spaziergang gleicht Germknödel-Genuss aus', lila:false}},
+    {name:'Sonntag', k:'So', typ:'ruhe', badge:'Ruhe & Kunst 🎨', kcal:1400,
+     mz:[
+      {label:'Frühstück (ausgiebig)', kcal:420, name:'Porridge + Vollkornbrot mit Hummus',
+       p:['40 g Haferflocken + 160 ml Hafermilch + Obst','1 Scheibe Vollkornbrot (40 g) + 2 EL Hummus (40 g)','Gurke oder Tomate als Beilage'], tip:''},
+      {label:'Mittagessen mit Thomas', kcal:580, name:'Gemüse-Risotto oder Kartoffeleintopf',
+       p:['Risotto: 60 g Reis (trocken) + 200 g Gemüse + 20 g Parmesan','Eintopf: 200 g Kartoffeln + 150 g Gemüse + 1 TL Öl'], tip:'Sonntag = gemeinsam kochen. Genuss ist Teil des Plans! 🍳'},
+      {label:'Abendessen', kcal:280, name:'Brotzeit: Vollkornbrot mit Aufstrich & Rohkost',
+       p:['2 Scheiben Vollkornbrot (80 g)','2 EL Hummus oder Frischkäse (40 g)','Rohkost: Gurke, Paprika, Radieschen'], tip:''}
+     ],
+     sport:{titel:'🌲 Waldspaziergang', text:'60 min nachmittags (Türkenschanzpark / Wienerwald) + Kunstzeit + Wochenrückblick', note:'', lila:true}}
+  ],
+  [
+    {name:'Montag', k:'Mo', typ:'sport', badge:'Lauf-Geh 🏃', kcal:1380,
+     mz:[
+      {label:'Frühstück', kcal:340, name:'Haferflocken-Porridge mit Beeren & Leinsamen',
+       p:['50 g Haferflocken (Trockengewicht)','200 ml Hafermilch','80 g gemischte Beeren (TK ist ok)','1 EL Leinsamen (10 g)'], tip:''},
+      {label:'Mittagessen', kcal:420, name:'Linsensuppe mit Vollkornbrot',
+       p:['350 ml Linsensuppe (ca. 1,5 Schöpfer)','1 Scheibe Vollkornbrot (40 g)','1 TL Olivenöl'], tip:'Linsen = Protein + Ballaststoffe, sehr sättigend'},
+      {label:'Abendessen mit Thomas', kcal:500, name:'Käsespätzle mit grünem Salat',
+       p:['150 g Spätzle (gekocht, gewogen)','30 g Bergkäse, gerieben','1 EL Röstzwiebeln (10 g)','100 g Blattsalat + Gurke + Tomate','Dressing: 1 TL Olivenöl + Essig + Senf'], tip:'Salat zuerst essen — dann isst du die Spätzle automatisch weniger'},
+      {label:'Snack (falls nötig)', kcal:120, name:'Walnüsse oder Apfel mit Mandelmus',
+       p:['max. 20 g Walnüsse (ca. 4–5 halbe Kerne)'], tip:''}
+     ],
+     sport:{titel:'🏃 Lauf-Geh Einheit 2', text:'22 min (1 min laufen / 2 min gehen) + Lotte 30 min', note:'Verbrauch ca. +180 kcal', lila:false}},
+    {name:'Dienstag', k:'Di', typ:'ruhe', badge:'Erholung 🧘', kcal:1360,
+     mz:[
+      {label:'Frühstück', kcal:320, name:'Porridge mit Zimt, Apfel & Walnüssen',
+       p:['50 g Haferflocken + 200 ml Hafermilch','½ Apfel (80 g), klein gewürfelt','10 g Walnüsse (ca. 3 halbe Kerne) + ½ TL Zimt'], tip:''},
+      {label:'Mittagessen', kcal:380, name:'Gemüse-Frittata mit Salat',
+       p:['3 Eier (Größe M)','150 g Gemüse (Zucchini, Paprika, Spinat)','1 TL Olivenöl + 80 g Blattsalat'], tip:'Kein Brot nötig — Eier + Gemüse sättigt bis zum Abend'},
+      {label:'Abendessen mit Thomas', kcal:530, name:'Gemüsecurry mit Basmati-Reis & Raita',
+       p:['200 g Gemüse (Karotte, Zucchini, Kichererbsen)','100 ml Kokosmilch light','60 g Basmati-Reis (Trockengewicht)','Raita: 50 g Naturjoghurt + Gurke + Kreuzkümmel'], tip:'Reis vor dem Kochen abwiegen — 60 g reicht wirklich!'}
+     ],
+     sport:{titel:'🧘 Aktive Erholung', text:'Yoga 20–30 min + Lotte 30 min + Balanceboard 10 min optional', note:'', lila:true}},
+    {name:'Mittwoch', k:'Mi', typ:'sport', badge:'Lauf-Geh 🏃', kcal:1390,
+     mz:[
+      {label:'Frühstück', kcal:330, name:'Porridge mit Heidelbeeren & Mandelmus',
+       p:['50 g Haferflocken + 200 ml Hafermilch','80 g Heidelbeeren + 1 TL Mandelmus (10 g)'], tip:''},
+      {label:'Mittagessen', kcal:380, name:'Tomatensuppe mit Dinkelbrot',
+       p:['350 ml Tomatensuppe','1 Scheibe Dinkelbrot (40 g) + 1 TL Olivenöl'], tip:''},
+      {label:'Abendessen mit Thomas', kcal:560, name:'Gemüseknödel mit Pilzrahmsauce & Blattsalat',
+       p:['2 Gemüseknödel (ca. 160 g gesamt)','3 EL Pilzrahmsauce (60 ml) — Sauce sparsam!','100 g Blattsalat, Dressing: 1 TL Öl + Essig'], tip:'Sauce ist die Kalorienbombe: gut gewürzt braucht man wenig davon'}
+     ],
+     sport:{titel:'🏃 Lauf-Geh Einheit 3', text:'25 min + Lotte 30 min', note:'', lila:false}},
+    {name:'Donnerstag', k:'Do', typ:'ruhe', badge:'Erholung 💪', kcal:1350,
+     mz:[
+      {label:'Frühstück', kcal:340, name:'Porridge mit Granatapfelkernen & Kokosraspeln',
+       p:['50 g Haferflocken + 200 ml Hafermilch','50 g Granatapfelkerne + 1 EL Kokosraspeln (8 g)'], tip:''},
+      {label:'Mittagessen', kcal:360, name:'Großer Kichererbsen-Salat',
+       p:['120 g Kichererbsen (aus Dose, abgetropft)','100 g Gurke + 100 g Tomate + 50 g rote Zwiebel','1 EL Olivenöl + Zitronensaft + Kreuzkümmel + Petersilie'], tip:'Kein Brot nötig — Kichererbsen machen sehr satt'},
+      {label:'Abendessen mit Thomas', kcal:520, name:'Tofu-Gemüsepfanne mit Glasnudeln (20 min)',
+       p:['150 g Tofu (fest, gut ausgepresst)','200 g Gemüse (Paprika, Brokkoli, Karotte)','50 g Glasnudeln (Trockengewicht)','1 EL Sesamöl + 2 EL Sojasoße + Ingwer + Knoblauch'], tip:'Tofu 30 min in Sojasoße marinieren — macht den Geschmack!'}
+     ],
+     sport:{titel:'💪 Muskeltraining', text:'20 min + Lotte 30 min', note:'', lila:true}},
+    {name:'Freitag', k:'Fr', typ:'sport', badge:'Lauf-Geh 🏃', kcal:1420,
+     mz:[
+      {label:'Frühstück', kcal:320, name:'Porridge mit Birne & Kardamom',
+       p:['50 g Haferflocken + 200 ml Hafermilch','½ Birne (80 g), gewürfelt + Prise Kardamom + Zimt'], tip:''},
+      {label:'Mittagessen', kcal:350, name:'Restessen Do. oder Gemüsesuppe',
+       p:['350 ml Gemüsesuppe mit Nudel- oder Linseneinlage','1 Scheibe Vollkornbrot (40 g) falls Suppe ohne Einlage'], tip:''},
+      {label:'Abendessen mit Thomas', kcal:620, name:'Selbstgemachte Pizza + Blattsalat',
+       p:['2 Stück Pizza (ca. 200 g)','Belag: Tomatensauce, viel Gemüse, 30 g Mozzarella','Großer Blattsalat: 100 g + leichtes Dressing (1 TL Öl)'], tip:'Freitag = Genuss! 2 Stück + Salat ist völlig im Plan 🍕'}
+     ],
+     sport:{titel:'🏃 Lauf-Geh Einheit 4', text:'27 min + Lotte 30 min', note:'', lila:false}},
+    {name:'Samstag', k:'Sa', typ:'genuss', badge:'Aktiv 🚶', kcal:1450,
+     mz:[
+      {label:'Frühstück', kcal:340, name:'Porridge nach Wahl',
+       p:['50 g Haferflocken + 200 ml Hafermilch','Topping frei wählen'], tip:''},
+      {label:'Mittagessen — Genuss!', kcal:680, name:'Germknödel mit Mohn & Puderzucker',
+       p:['1 Germknödel (ca. 180 g)','1 EL Mohn-Zucker-Mischung (15 g) + 1 TL Puderzucker','Kein Butter-Überguss (spart ~150 kcal)'], tip:'Mittags der große Genuss — abends dann leicht halten 🌟'},
+      {label:'Abendessen', kcal:320, name:'Leichte Gemüsesuppe oder Salat',
+       p:['300 ml Suppe oder 200 g Salat','1 Scheibe Vollkornbrot (40 g)'], tip:''}
+     ],
+     sport:{titel:'🚶 Längere Lotte-Runde', text:'45–60 min + optional Muskeltraining 15 min', note:'', lila:false}},
+    {name:'Sonntag', k:'So', typ:'ruhe', badge:'Ruhe & Kunst 🎨', kcal:1400,
+     mz:[
+      {label:'Frühstück (ausgiebig)', kcal:420, name:'Porridge + Vollkornbrot mit Hummus',
+       p:['40 g Haferflocken + 160 ml Hafermilch + Obst','1 Scheibe Vollkornbrot (40 g) + 2 EL Hummus (40 g)','Gurke oder Tomate als Beilage'], tip:''},
+      {label:'Mittagessen mit Thomas', kcal:580, name:'Gemüse-Risotto oder Kartoffeleintopf',
+       p:['Risotto: 60 g Reis (trocken) + 200 g Gemüse + 20 g Parmesan','Eintopf: 200 g Kartoffeln + 150 g Gemüse + 1 TL Öl'], tip:'Sonntag = gemeinsam kochen 🍳'},
+      {label:'Abendessen', kcal:280, name:'Brotzeit: Vollkornbrot mit Aufstrich & Rohkost',
+       p:['2 Scheiben Vollkornbrot (80 g)','2 EL Hummus oder Frischkäse (40 g)','Rohkost: Gurke, Paprika, Radieschen'], tip:''}
+     ],
+     sport:{titel:'🌲 Waldspaziergang', text:'60 min nachmittags (Türkenschanzpark / Wienerwald) + Kunstzeit + Wochenrückblick', note:'', lila:true}}
+  ]
+];
+
+var aktiveWoche = 0;
+var aktiveTag = 0;
+
+function zeigeWoche(w) {
+  aktiveWoche = w; aktiveTag = 0;
+  document.getElementById('wtab-0').classList.toggle('aktiv', w === 0);
+  document.getElementById('wtab-1').classList.toggle('aktiv', w === 1);
+  renderTagTabs(); renderTagKarte();
+}
+
+function renderTagTabs() {
+  var el = document.getElementById('tagTabs');
+  if (!el) return;
+  var tage = WOCHEN[aktiveWoche];
+  var html = '';
+  for (var i = 0; i < tage.length; i++) {
+    var t = tage[i];
+    var ac = i === aktiveTag ? (' aktiv ' + (t.typ==='sport'?'as':t.typ==='ruhe'?'ar':'ag')) : '';
+    var sym = t.typ==='sport'?'🏃':t.typ==='ruhe'?'🌿':'🌟';
+    html += '<div class="tag-tab' + ac + '" onclick="zeigeTag(' + i + ')">';
+    html += '<span class="tab-k">' + t.k + '</span>';
+    html += '<span class="tab-t">' + sym + '</span></div>';
+  }
+  el.innerHTML = html;
+}
+
+function zeigeTag(i) { aktiveTag = i; renderTagTabs(); renderTagKarte(); }
+
+function renderTagKarte() {
+  var el = document.getElementById('tagKarte');
+  if (!el) return;
+  var t = WOCHEN[aktiveWoche][aktiveTag];
+  var kl = t.typ === 'sport' ? 'sport' : t.typ === 'ruhe' ? 'ruhe' : 'genuss';
+  var h = '<div class="tag-karte">';
+  h += '<div class="tag-kopf ' + kl + '">';
+  h += '<div class="tag-kopf-name">' + t.name + '</div>';
+  h += '<div class="tag-kopf-meta"><span class="tag-kopf-kcal">ca. ' + t.kcal + ' kcal</span>';
+  h += '<span class="tag-kopf-badge">' + t.badge + '</span></div></div>';
+  for (var i = 0; i < t.mz.length; i++) {
+    var m = t.mz[i];
+    h += '<div class="mahlzeit">';
+    h += '<div class="mz-head"><div class="mz-label">' + m.label + '</div><div class="mz-kcal">~' + m.kcal + ' kcal</div></div>';
+    h += '<div class="mz-name">' + m.name + '</div>';
+    for (var j = 0; j < m.p.length; j++) { h += '<div class="portion">' + m.p[j] + '</div>'; }
+    if (m.tip) { h += '<div class="tipp-hint">' + m.tip + '</div>'; }
+    h += '</div>';
+  }
+  var s = t.sport;
+  h += '<div class="sport-bl' + (s.lila ? ' lila' : '') + '">';
+  h += '<div class="sport-titel' + (s.lila ? ' lila' : '') + '">' + s.titel + '</div>';
+  h += '<div class="sport-text">' + s.text + '</div>';
+  if (s.note) { h += '<div class="sport-note">' + s.note + '</div>'; }
+  h += '</div></div>';
+  el.innerHTML = h;
+}
+
+function renderTee() {
+  var el = document.getElementById('teeListe');
+  if (!el) return;
+  var h = '';
+  for (var i = 0; i < TEE.length; i++) {
+    var t = TEE[i];
+    var ist = t.dow === todayDow;
+    h += '<div class="tee-row' + (ist ? ' heute' : '') + '">';
+    h += '<div class="tee-tag">' + t.tag + (ist ? '<span class="tee-badge">heute</span>' : '') + '</div>';
+    h += '<div><div class="tee-name">' + t.name + '</div><div class="tee-note">' + t.note + '</div></div></div>';
+  }
+  el.innerHTML = h;
+}
+
+function toggleHabit(el, idx) {
+  el.classList.toggle('done');
+  habitState[idx] = el.classList.contains('done');
+  try { localStorage.setItem(habitKey, JSON.stringify(habitState)); } catch(e) {}
+  var alle = 0;
+  for (var k in habitState) { if (habitState[k]) alle++; }
+  if (alle === 6) { konfetti(); zeigeToast('Alle Gewohnheiten heute! 🎉'); }
+}
+function ladeHabits() {
+  var pills = document.querySelectorAll('.habit-pill');
+  for (var i = 0; i < pills.length; i++) { if (habitState[i]) pills[i].classList.add('done'); }
+}
+
+function ladeGewicht() {
+  var el = document.getElementById('wgInhalt');
+  if (!el) return;
+  var raw = null;
+  try { raw = localStorage.getItem('wg_entries_v1'); } catch(e) {}
+  if (!raw) try { raw = localStorage.getItem('wg_backup_v1'); } catch(e) {}
+  var entries = [];
+  try { entries = raw ? JSON.parse(raw) : []; } catch(e) { entries = []; }
+  if (!Array.isArray(entries) || !entries.length) {
+    el.innerHTML = '<div class="wg-empty">Noch keine Einträge in der Wiegen-App — <a href="Wiegen.html" style="color:#3D87CB;">jetzt eintragen</a></div>';
+    return;
+  }
+  entries.sort(function(a,b) { return a.d < b.d ? 1 : -1; });
+  var latest = entries[0];
+  var startW = entries[entries.length-1].w;
+  var diff = Math.round((latest.w - startW) * 10) / 10;
+  var ziel5 = (latest.w - 5).toFixed(1);
+  var diffStr = (diff > 0 ? '+' : '') + diff.toFixed(1);
+  var diffCol = diff <= 0 ? '#5e8a5a' : '#b8294a';
+  var h = '<div class="wg-stats">';
+  h += '<div class="wg-stat"><div class="wg-stat-val">' + latest.w.toFixed(1) + ' kg</div><div class="wg-stat-lbl">Aktuell</div></div>';
+  h += '<div class="wg-stat"><div class="wg-stat-val" style="color:' + diffCol + '">' + diffStr + ' kg</div><div class="wg-stat-lbl">Seit Start</div></div>';
+  h += '<div class="wg-stat"><div class="wg-stat-val" style="color:#3D87CB">' + ziel5 + ' kg</div><div class="wg-stat-lbl">Ziel -5 kg</div></div>';
+  h += '</div><div class="wg-list">';
+  var recent = entries.slice(0, 7);
+  for (var i = 0; i < recent.length; i++) {
+    var e = recent[i];
+    var prev = recent[i+1];
+    var arrow = '';
+    if (prev) {
+      var d = e.w - prev.w;
+      arrow = d < -0.05 ? '<span style="color:#4CAF72">&#8595;</span>' : d > 0.05 ? '<span style="color:#E84855">&#8593;</span>' : '<span style="color:#aaa">&#8594;</span>';
+    }
+    var parts = e.d.split('-');
+    var ds = parts[2] + '.' + parts[1] + '.' + parts[0].slice(2);
+    h += '<div class="wg-row"><span class="wg-date">' + ds + '</span><span class="wg-val">' + e.w.toFixed(1) + ' kg ' + arrow + '</span></div>';
+  }
+  h += '</div>';
+  el.innerHTML = h;
+}
+
+function renderFortschritt() {
+  var el = document.getElementById('wDots');
+  if (!el) return;
+  el.innerHTML = '';
+  for (var w = 1; w <= 12; w++) {
+    var d = document.createElement('div');
+    d.className = 'w-dot' + (w === 1 ? ' aktiv' : '');
+    d.textContent = w;
+    (function(ww, dd) {
+      dd.onclick = function() {
+        var all = document.querySelectorAll('.w-dot');
+        for (var i = 0; i < all.length; i++) all[i].classList.remove('aktiv');
+        dd.classList.add('aktiv');
+        document.getElementById('pbInner').style.width = ((ww/12)*100) + '%';
+        document.getElementById('pbLabel').textContent = 'Woche ' + ww + ' von 12 · ' + ((ww-1)*0.4).toFixed(1).replace('.',',') + ' kg abgenommen';
+      };
+    })(w, d);
+    el.appendChild(d);
+  }
+}
+
+var toastTimer = null;
+function zeigeToast(txt) {
+  var t = document.getElementById('vkToast');
+  t.textContent = txt || '✓';
+  t.classList.add('sichtbar');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { t.classList.remove('sichtbar'); }, 2400);
+}
+function konfetti() {
+  var farben = ['#b8294a','#c9893a','#3D87CB','#5e8a5a','#9B5DE5','#c9893a'];
+  var k = document.getElementById('konfettiWrap');
+  k.style.display = 'block'; k.innerHTML = '';
+  for (var i = 0; i < 50; i++) {
+    var s = document.createElement('div'); s.className = 'kdot';
+    s.style.cssText = 'left:'+Math.random()*100+'%;top:-10px;background:'+farben[Math.floor(Math.random()*farben.length)]+';border-radius:'+(Math.random()>.5?'50%':'2px')+';animation-delay:'+Math.random()*.8+'s;animation-duration:'+(1+Math.random())+'s;width:'+(8+Math.random()*8)+'px;height:'+(8+Math.random()*8)+'px;';
+    k.appendChild(s);
+  }
+  setTimeout(function() { k.style.display = 'none'; }, 2500);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  zeigeAktuellenTipp();
+  renderTee();
+  ladeHabits();
+  ladeGewicht();
+  renderFortschritt();
+  zeigeWoche(0);
+});
+</script>
+</body>
+</html>

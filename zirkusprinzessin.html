@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zirkusprinzessin</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #8B1A2E;
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --navy: #1A2744;
+    --ivory: #FAF5EC;
+    --violet: #4A2860;
+    --sage: #6B8C7A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--navy);
+    min-height: 100vh;
+    font-family: 'Raleway', sans-serif;
+    color: var(--ivory);
+    overflow-x: hidden;
+  }
+
+  /* Sternenhintergrund */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(201,168,76,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(201,168,76,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 50% 8%, rgba(201,168,76,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 25%, rgba(201,168,76,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 12%, rgba(201,168,76,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 70%, rgba(201,168,76,0.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 90% 60%, rgba(201,168,76,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 85%, rgba(201,168,76,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 90%, rgba(201,168,76,0.3) 0%, transparent 100%),
+      radial-gradient(2px 2px at 45% 50%, rgba(201,168,76,0.2) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* Wimpelkette */
+  .wimpelkette {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0.5rem 0 1.5rem;
+    animation: sway 4s ease-in-out infinite;
+  }
+  @keyframes sway {
+    0%, 100% { transform: rotate(-0.5deg); }
+    50% { transform: rotate(0.5deg); }
+  }
+  .wimpel {
+    width: 0;
+    height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-top: 28px solid var(--crimson);
+    margin: 0 2px;
+  }
+  .wimpel:nth-child(2n) { border-top-color: var(--gold); }
+  .wimpel:nth-child(3n) { border-top-color: var(--violet); }
+  .wimpel:nth-child(4n) { border-top-color: var(--sage); }
+
+  /* Titel */
+  .title-block {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .crown {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 30px rgba(201,168,76,0.3);
+  }
+  .subtitle {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--gold-light);
+    font-size: 1rem;
+    margin-top: 0.4rem;
+    opacity: 0.8;
+  }
+
+  /* Karten */
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    padding: 1.4rem 1.6rem;
+    position: relative;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    cursor: default;
+  }
+  .card:hover {
+    transform: translateX(4px);
+    border-color: rgba(201,168,76,0.5);
+    background: rgba(255,255,255,0.07);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    border-radius: 4px 0 0 4px;
+  }
+  .card.koerper::before { background: var(--crimson); }
+  .card.bewegung::before { background: var(--gold); }
+  .card.styling::before { background: var(--violet); }
+  .card.seele::before { background: var(--sage); }
+  .card.arbeit::before { background: #5B8DB8; }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+  .card-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .card-body {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: rgba(250,245,236,0.85);
+    font-weight: 300;
+  }
+  .card-body strong {
+    color: var(--gold-light);
+    font-weight: 500;
+  }
+
+  .pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.8rem;
+  }
+  .pill {
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 20px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--gold-light);
+    transition: background 0.2s;
+  }
+  .pill:hover {
+    background: rgba(201,168,76,0.25);
+  }
+
+  /* Mantra */
+  .mantra {
+    text-align: center;
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 4px;
+    background: rgba(139,26,46,0.15);
+    position: relative;
+  }
+  .mantra::before, .mantra::after {
+    content: '✦';
+    color: var(--gold);
+    font-size: 0.9rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .mantra::before { left: 1rem; }
+  .mantra::after { right: 1rem; }
+  .mantra-text {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--gold-light);
+    letter-spacing: 0.03em;
+  }
+
+  /* Fußzeile */
+  .footer-stars {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--gold);
+    letter-spacing: 0.5rem;
+    opacity: 0.5;
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="wimpelkette">
+    <div class="wimpel"></div><div class="wimpel"></div><div class="wimpel"></div>
+    <div class="wimpel"></div><div class="wimpel"></div><div class="wimpel"></div>
+    <div class="wimpel"></div><div class="wimpel"></div><div class="wimpel"></div>
+    <div class="wimpel"></div><div class="wimpel"></div><div class="wimpel"></div>
+    <div class="wimpel"></div><div class="wimpel"></div><div class="wimpel"></div>
+  </div>
+
+  <div class="title-block">
+    <span class="crown">👑</span>
+    <h1>Die Zirkusprinzessin</h1>
+    <p class="subtitle">Ein Leitbild für Körper, Stil & Seele</p>
+  </div>
+
+  <div class="cards">
+
+    <div class="card koerper">
+      <div class="card-header">
+        <span class="card-icon">🎪</span>
+        <span class="card-title">Aufrechte Haltung</span>
+      </div>
+      <div class="card-body">
+        Die Prinzessin tritt in die Manege, als würde eine goldene Kordel ihren Scheitel sanft nach oben ziehen. <strong>Visualisiere das jeden Morgen</strong>, bevor du aufstehst. Dein Balanceboard und Beckenboden-Training sind dein tägliches Artistik-Training — du machst es schon!
+        <div class="pill-list">
+          <span class="pill">Balanceboard täglich</span>
+          <span class="pill">Schulterblatt-Übungen</span>
+          <span class="pill">Kalkschulter-Routine</span>
+          <span class="pill">Scheitel-Visualisierung</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bewegung">
+      <div class="card-header">
+        <span class="card-icon">🤸‍♀️</span>
+        <span class="card-title">Graziöse Stärke</span>
+      </div>
+      <div class="card-body">
+        Artistik-Körper bedeutet nicht Muskelberge — sondern <strong>Stärke, die sich leicht anfühlt</strong>. Hula Hoop ist wunderbar (Hüften, Kern, Rhythmusgefühl!), Seilspringen mit Musik, Tanzen als Trainingsform. Yoga gibt Länge und Geschmeidigkeit. Der Spaziergang mit Lotte ist dein täglicher Auftritt.
+        <div class="pill-list">
+          <span class="pill">Hula Hoop</span>
+          <span class="pill">Seilspringen</span>
+          <span class="pill">Tanzen zur Playlist</span>
+          <span class="pill">Yoga (Länge)</span>
+          <span class="pill">Spaziergang bewusst</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card styling">
+      <div class="card-header">
+        <span class="card-icon">✨</span>
+        <span class="card-title">Süßes Styling</span>
+      </div>
+      <div class="card-body">
+        Nicht kostümhaft — aber mit einer <strong>Prise Magie im Alltag</strong>. Karmoisinrot, Gold, Nachtblau als Akzente. Ein Detail reicht: goldener Haarreifen, rotes Tuch, bestickter Rock. Körperöl morgens ist Ritualzeit — die Prinzessin pflegt sich mit Freude, nicht mit Pflicht.
+        <div class="pill-list">
+          <span class="pill">Goldener Haarreifen</span>
+          <span class="pill">Roter Lippenstift</span>
+          <span class="pill">Körperöl als Ritual</span>
+          <span class="pill">Gesichtsyoga tägl.</span>
+          <span class="pill">Lavera / Benecos</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card seele">
+      <div class="card-header">
+        <span class="card-icon">🌸</span>
+        <span class="card-title">Liebes Wesen & Lächeln</span>
+      </div>
+      <div class="card-body">
+        <em>Fröhlichkeit ist dein Kern</em> — das ist kein Zufall, das ist dein Wesen. Die Prinzessin muss das Lächeln nicht erzwingen, sie findet es in kleinen Dingen: Rudi & Timmy auf dem Schoß, Lottes glücklicher Blick, der erste Kaffee. <strong>Morgenmeditation als Bühneneingang</strong> — du bereitest dich vor, dann trittst du auf.
+        <div class="pill-list">
+          <span class="pill">Liebe · Wunder · Lächeln</span>
+          <span class="pill">Meditation = Bühneneingang</span>
+          <span class="pill">Stoische Morgenreflexion</span>
+          <span class="pill">Dankbarkeit für Kleines</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card arbeit">
+      <div class="card-header">
+        <span class="card-icon">🎭</span>
+        <span class="card-title">Freude an der Arbeit</span>
+      </div>
+      <div class="card-body">
+        Jede Nummer wird mit Leidenschaft gezeigt — auch wenn das Einüben schwer war. <strong>Unterrichtsvorbereitung = Nummer einüben. Unterricht = Auftritt.</strong> Die Zirkusprinzessin ist für ihr Publikum voll da. Du bist das für deine Schüler:innen. Das ist kein Vergleich — das ist dieselbe Energie.
+        <div class="pill-list">
+          <span class="pill">Vorbereitung = Probe</span>
+          <span class="pill">Unterricht = Auftritt</span>
+          <span class="pill">„Ihr dürft so sein, wie ihr seid"</span>
+          <span class="pill">DaZ als Kunst</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mantra">
+    <p class="mantra-text">Aufrecht · Strahlend · Liebevoll · Leicht</p>
+  </div>
+
+  <div class="footer-stars">✦ ✦ ✦ ✦ ✦</div>
+
+</div>
+</body>
+</html>

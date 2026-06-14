@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>Fitnessplan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+@keyframes wimpel-swing{0%,100%{transform:rotate(-4deg) skewX(2deg);}50%{transform:rotate(4deg) skewX(-2deg);}}
+@keyframes wimpel-swing2{0%,100%{transform:rotate(3deg) skewX(-1deg);}50%{transform:rotate(-3deg) skewX(1deg);}}
+@keyframes wimpel-swing3{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(5deg);}}
+@keyframes rope-sway{0%,100%{transform:scaleX(1);}50%{transform:scaleX(1.008);}}
+@keyframes tier-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+@keyframes spotlight{0%{left:-100%;}60%,100%{left:220%;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+:root{
+  --bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,0.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,0.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,0.13);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,0.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,0.12);
+  --violet:#6a3f7a;
+  --border:rgba(184,41,74,0.13);--shadow:rgba(30,18,8,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+body{
+  background:var(--bg);font-family:"Raleway",sans-serif;color:var(--text);
+  min-height:100vh;padding-bottom:4rem;
+  background-image:repeating-linear-gradient(-6deg,rgba(184,41,74,0.022) 0px,rgba(184,41,74,0.022) 28px,transparent 28px,transparent 56px,rgba(201,137,58,0.018) 56px,rgba(201,137,58,0.018) 84px,transparent 84px,transparent 112px);
+}
+.wimpelkette{position:relative;width:100%;height:40px;overflow:hidden;display:block;background:var(--bg);}
+.wimpelkette svg{width:100%;height:40px;overflow:visible;animation:rope-sway 5s ease-in-out infinite;}
+.wimpel-1{animation:wimpel-swing 2.8s ease-in-out infinite;}
+.wimpel-2{animation:wimpel-swing2 3.2s ease-in-out infinite 0.3s;}
+.wimpel-3{animation:wimpel-swing3 2.5s ease-in-out infinite 0.6s;}
+.wimpel-4{animation:wimpel-swing 3.0s ease-in-out infinite 0.9s;}
+.wimpel-5{animation:wimpel-swing2 2.7s ease-in-out infinite 1.2s;}
+.wimpel-6{animation:wimpel-swing3 3.4s ease-in-out infinite 1.5s;}
+.wimpel-7{animation:wimpel-swing 2.9s ease-in-out infinite 1.8s;}
+.wimpel-8{animation:wimpel-swing2 2.6s ease-in-out infinite 2.1s;}
+.wimpel-9{animation:wimpel-swing3 3.1s ease-in-out infinite 2.4s;}
+header{padding:1rem 1.2rem .85rem;border-bottom:2px solid var(--border);background:rgba(255,251,245,0.92);backdrop-filter:blur(3px);position:relative;}
+.back-btn{display:inline-flex;align-items:center;gap:.3rem;font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--crimson);text-decoration:none;opacity:.7;margin-bottom:.4rem;background:none;border:none;cursor:pointer;padding:0;}
+.back-btn:active{opacity:1;}
+.header-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;font-weight:500;}
+.header-title{font-family:"Playfair Display",serif;font-size:22px;font-style:italic;color:var(--text);line-height:1.2;}
+.header-sub{font-family:"IM Fell English",serif;font-size:14px;font-style:italic;color:var(--muted);margin-top:.15rem;}
+.rainbow-stripe{height:5px;background:repeating-linear-gradient(90deg,var(--crimson) 0%,var(--crimson) 20%,var(--gold) 20%,var(--gold) 40%,var(--navy) 40%,var(--navy) 60%,var(--violet) 60%,var(--violet) 80%,var(--sage) 80%,var(--sage) 100%);opacity:.6;margin-bottom:.2rem;}
+.z-card{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:0 3px 16px var(--shadow);margin:.5rem 1rem;overflow:hidden;position:relative;}
+.z-card::after{content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.055),transparent);animation:spotlight 10s ease-in-out infinite;pointer-events:none;}
+.z-item{display:flex;align-items:flex-start;gap:.6rem;padding:.55rem .9rem;border-bottom:1px solid rgba(184,41,74,0.07);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .2s;}
+.z-item:last-child{border-bottom:none;}
+.z-item.done{opacity:.28;}
+.z-item.done .z-name{text-decoration:line-through;text-decoration-color:rgba(184,41,74,0.3);}
+.z-check{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(184,41,74,0.3);flex-shrink:0;margin-top:2px;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;}
+.z-item.done .z-check{background:var(--sage-l);border-color:var(--sage);color:var(--sage);}
+.z-item.done .z-check::after{content:"✦";}
+.z-name{font-size:16px;color:var(--text);line-height:1.35;}
+.z-sub{font-size:13px;font-style:italic;color:var(--muted);margin-top:1px;font-family:"IM Fell English",serif;}
+.z-sec{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);padding:.7rem 1rem .2rem;opacity:.8;font-weight:500;}
+.z-info{margin:.3rem 1rem .4rem;padding:.5rem .8rem;background:var(--gold-l);border-left:2px solid var(--gold);font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--muted);line-height:1.6;}
+.section-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:.8rem 1rem .3rem;padding-left:.2rem;font-weight:500;}
+.z-progress{margin:.4rem 1rem .2rem;}
+.z-progress-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:.3rem;}
+.z-progress-bar{height:3px;background:var(--border);border-radius:10px;overflow:hidden;}
+.z-progress-fill{height:100%;background:linear-gradient(90deg,var(--crimson),var(--gold));border-radius:10px;transition:width .4s ease;}
+.z-reset{position:fixed;bottom:1.2rem;right:1.2rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:20px;padding:.4rem 1rem;font-size:13px;font-family:"IM Fell English",serif;font-style:italic;cursor:pointer;}
+.z-reset:active{background:var(--crimson-l);color:var(--crimson);}
+.tier-zeile{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:.3rem 1rem;user-select:none;pointer-events:none;overflow:hidden;}
+.tier-zeile .tier{display:inline-block;animation:tier-float 3s ease-in-out infinite;opacity:.5;font-size:.9rem;}
+.tier-zeile .tier:nth-child(2){animation-delay:.4s;}.tier-zeile .tier:nth-child(3){animation-delay:.8s;}.tier-zeile .tier:nth-child(4){animation-delay:1.2s;}.tier-zeile .tier:nth-child(5){animation-delay:1.6s;}
+.tier-linie{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(184,41,74,0.2),transparent);}
+.manege-line{display:flex;align-items:center;gap:.5rem;padding:.1rem 1rem;color:var(--crimson);opacity:.3;font-size:11px;letter-spacing:.3em;user-select:none;}
+.manege-line::before,.manege-line::after{content:'';flex:1;height:1px;background:currentColor;}
+</style>
+
+<style>
+/* App-spezifisches CSS */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+  html { font-size:18px; }
+  .page { max-width:520px; margin:0 auto; }
+
+  .header { background:linear-gradient(135deg,#f5ede0,#faf3e8); border:1px solid var(--border); border-radius:16px; padding:1.3rem 1.5rem; margin-bottom:1rem; position:relative; overflow:hidden; box-shadow:0 2px 12px rgba(180,120,40,0.08); }
+  .header::before { content:'🌿'; position:absolute; right:1.2rem; top:0.8rem; font-size:3.5rem; opacity:0.12; }
+  .header-title { font-family:'Playfair Display',serif; font-size:24px; font-style:italic; font-weight:400; color:var(--text); position:relative; z-index:1; }
+  .header-sub { font-size:14px; color:var(--muted); margin-top:0.3rem; font-style:italic; }
+
+  .rotation { display:grid; grid-template-columns:repeat(7,1fr); gap:0.3rem; margin-bottom:1rem; }
+  .day-pill { border-radius:10px; padding:0.5rem 0.3rem; text-align:center; }
+  .day-pill .day-name { font-size:11px; font-weight:700; color:white; margin-bottom:0.3rem; }
+  .day-pill .day-icon { font-size:1.2rem; }
+  .day-pill .day-label { font-size:10px; font-weight:600; color:white; margin-top:0.2rem; opacity:0.9; }
+  .dp-kraft { background:var(--sage); }
+  .dp-surf  { background:var(--blue); }
+  .dp-yoga  { background:var(--purple); }
+  .dp-ruhe  { background:rgba(180,130,70,0.35); }
+
+  .block { background:var(--white); border-radius:16px; margin-bottom:0.9rem; box-shadow:0 2px 10px rgba(180,120,40,0.06); overflow:hidden; border:1px solid var(--border); }
+  .block-header { padding:0.85rem 1.2rem; color:white; display:flex; align-items:center; gap:0.7rem; }
+  .block-icon { font-size:1.4rem; }
+  .block-title { font-family:'Playfair Display',serif; font-size:18px; font-style:italic; font-weight:400; }
+  .block-meta { font-size:13px; opacity:0.9; margin-left:auto; }
+  .block-body { padding:0.5rem 0; }
+
+  .exercise { display:flex; align-items:center; gap:0.7rem; padding:0.6rem 1.1rem; border-bottom:1px solid var(--border); }
+  .exercise:last-child { border-bottom:none; }
+  .ex-num { width:24px; height:24px; border-radius:50%; color:white; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .ex-name { flex:1; font-size:16px; font-weight:600; }
+  .ex-detail { font-size:13px; color:var(--gold); font-weight:600; }
+  .ex-note { font-size:13px; color:var(--muted); margin-top:2px; font-style:italic; }
+
+  .bh-kraft { background:linear-gradient(135deg,#7a9a5a,#5a7a3a); }
+  .bh-surf  { background:linear-gradient(135deg,#2D6A9F,#1A4A7A); }
+  .bh-yoga  { background:linear-gradient(135deg,#7D3C98,#5B2C6F); }
+  .en-kraft { background:var(--sage); }
+  .en-surf  { background:var(--blue); }
+  .en-yoga  { background:var(--purple); }
+
+  .tipp { background:linear-gradient(135deg,#fdf6e0,#f8f0d8); border-left:4px solid var(--gold); border-radius:12px; padding:0.9rem 1rem; margin-bottom:0.9rem; font-size:15px; color:var(--text); line-height:1.6; }
+  .tipp strong { display:block; margin-bottom:0.3rem; color:var(--gold); font-family:'Playfair Display',serif; font-style:italic; font-weight:400; font-size:17px; }
+  .footer { text-align:center; margin-top:1.5rem; font-size:13px; color:var(--muted); font-style:italic; padding-bottom:1rem; }
+</style>
+</head>
+<body>
+<div class="wimpelkette" aria-hidden="true"><svg viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,7 Q50,11 100,9 Q150,7 200,10 Q250,13 300,9 Q350,7 400,9" stroke="#1a2744" stroke-width="1" fill="none" opacity="0.3"/><g class="wimpel-1" transform-origin="30 9"><polygon points="23,9 37,9 30,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-2" transform-origin="67 9"><polygon points="60,9 74,9 67,28" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-3" transform-origin="104 9"><polygon points="97,9 111,9 104,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-4" transform-origin="141 9"><polygon points="134,9 148,9 141,28" fill="#6a3f7a" opacity="0.75"/></g><g class="wimpel-5" transform-origin="178 10"><polygon points="171,10 185,10 178,29" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-6" transform-origin="215 9"><polygon points="208,9 222,9 215,28" fill="#5e8a5a" opacity="0.7"/></g><g class="wimpel-7" transform-origin="252 10"><polygon points="245,10 259,10 252,29" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-8" transform-origin="289 9"><polygon points="282,9 296,9 289,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-9" transform-origin="326 9"><polygon points="319,9 333,9 326,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-1" transform-origin="363 9"><polygon points="356,9 370,9 363,28" fill="#6a3f7a" opacity="0.75"/></g></svg></div>
+<header>
+<div class="rainbow-stripe"></div>
+<div class="header-eyebrow">Sport & Bewegung</div>
+<div class="header-title">Fitnessplan</div>
+<div class="header-sub">Dein persönlicher Plan</div>
+</header>
+<div class="page">
+
+<div class="header">
+  <div class="header-title">💫 Mein Bewegungsplan</div>
+  <div class="header-sub">Körpergewicht · Balance Board · Yoga · in fröhlicher Gelassenheit 🌿</div>
+</div>
+
+<!-- WOCHENROTATION -->
+<div class="rotation">
+  <div class="day-pill dp-kraft"><div class="day-name">Mo</div><div class="day-icon">&#128170;</div><div class="day-label">Kraft</div></div>
+  <div class="day-pill dp-ruhe"><div class="day-name">Di</div><div class="day-icon">&#128564;</div><div class="day-label">Ruhe</div></div>
+  <div class="day-pill dp-surf"><div class="day-name">Mi</div><div class="day-icon">&#127940;</div><div class="day-label">Balance</div></div>
+  <div class="day-pill dp-ruhe"><div class="day-name">Do</div><div class="day-icon">&#128564;</div><div class="day-label">Ruhe</div></div>
+  <div class="day-pill dp-kraft"><div class="day-name">Fr</div><div class="day-icon">&#128170;</div><div class="day-label">Kraft</div></div>
+  <div class="day-pill dp-ruhe"><div class="day-name">Sa</div><div class="day-icon">&#128564;</div><div class="day-label">Uni</div></div>
+  <div class="day-pill dp-yoga"><div class="day-name">So</div><div class="day-icon">&#129496;</div><div class="day-label">Yoga</div></div>
+</div>
+
+<!-- K&#214;RPERGEWICHT -->
+<div class="block">
+  <div class="block-header bh-kraft">
+    <div class="block-icon">&#128170;</div>
+    <div><div class="block-title">K&#246;rpergewicht</div><div style="font-size:0.75rem;opacity:0.85">Mo + Fr &#183; 10:00 &#183; nach Spaziergang</div></div>
+    <div class="block-meta">20 Min &#183; 3 Runden</div>
+  </div>
+  <div class="block-body">
+    <div class="exercise"><div class="ex-num en-kraft">1</div><div><div class="ex-name">Squats</div><div class="ex-note">F&#252;&#223;e schulterbreit &#183; Knie &#252;ber Zehen &#183; tief runtergehen</div></div><div class="ex-detail">40 Sek / 20 Pause</div></div>
+    <div class="exercise"><div class="ex-num en-kraft">2</div><div><div class="ex-name">Wandliegest&#252;tze</div><div class="ex-note">H&#228;nde auf Schulterh&#246;he &#183; K&#246;rper gerade &#183; schonend f&#252;r Gelenke</div></div><div class="ex-detail">40 Sek / 20 Pause</div></div>
+    <div class="exercise"><div class="ex-num en-kraft">3</div><div><div class="ex-name">Beckenheben</div><div class="ex-note">R&#252;cken auf Boden &#183; F&#252;&#223;e aufgestellt &#183; Ges&#228;&#223; langsam heben/senken</div></div><div class="ex-detail">40 Sek / 20 Pause</div></div>
+    <div class="exercise"><div class="ex-num en-kraft">4</div><div><div class="ex-name">Ausfallschritte</div><div class="ex-note">Abwechselnd links/rechts &#183; Knie 90&#176; &#183; aufrecht bleiben</div></div><div class="ex-detail">40 Sek / 20 Pause</div></div>
+    <div class="exercise"><div class="ex-num en-kraft">5</div><div><div class="ex-name">Plank</div><div class="ex-note">Unterarme oder H&#228;nde &#183; K&#246;rper gerade wie ein Brett &#183; atmen!</div></div><div class="ex-detail">40 Sek / 20 Pause</div></div>
+  </div>
+</div>
+
+<!-- SURFBALANCEBOARD -->
+<div class="block">
+  <div class="block-header bh-surf">
+    <div class="block-icon">&#127940;</div>
+    <div><div class="block-title">Surfbalanceboard</div><div style="font-size:0.75rem;opacity:0.85">Mi &#183; 10:00 &#183; nach Spaziergang</div></div>
+    <div class="block-meta">30 Min</div>
+  </div>
+  <div class="block-body">
+    <div class="exercise"><div class="ex-num en-surf">1</div><div><div class="ex-name">Grundbalance</div><div class="ex-note">Beide F&#252;&#223;e mittig &#183; Arme locker ausgestreckt &#183; ruhig atmen &#183; einpendeln lassen</div></div><div class="ex-detail">5 Min Warm-up</div></div>
+    <div class="exercise"><div class="ex-num en-surf">2</div><div><div class="ex-name">Gewichtsverlagerung</div><div class="ex-note">Langsam von links nach rechts &#183; kontrolliert &#183; Board nie ganz aufsetzen lassen</div></div><div class="ex-detail">5 Min</div></div>
+    <div class="exercise"><div class="ex-num en-surf">3</div><div><div class="ex-name">Squats auf dem Board</div><div class="ex-note">Langsam in die Knie &#183; Balance halten &#183; Tiefe langsam steigern</div></div><div class="ex-detail">3 &#215; 10 Wdh</div></div>
+    <div class="exercise"><div class="ex-num en-surf">4</div><div><div class="ex-name">Einbeinstand</div><div class="ex-note">Abwechselnd links/rechts &#183; Blick auf fixen Punkt &#183; 30 Sek pro Seite</div></div><div class="ex-detail">3 &#215; 30 Sek</div></div>
+    <div class="exercise"><div class="ex-num en-surf">5</div><div><div class="ex-name">Dreher / Rotation</div><div class="ex-note">Oberk&#246;rper langsam links/rechts drehen &#183; H&#252;fte stabil &#183; gut f&#252;r Taille!</div></div><div class="ex-detail">3 Min</div></div>
+    <div class="exercise"><div class="ex-num en-surf">6</div><div><div class="ex-name">Freies Balancieren</div><div class="ex-note">Einfach spielen &#183; Musik an &#183; keine Vorgabe &#183; macht das meiste Spa&#223; &#128522;</div></div><div class="ex-detail">Rest der Zeit</div></div>
+  </div>
+</div>
+
+<!-- YOGA -->
+<div class="block">
+  <div class="block-header bh-yoga">
+    <div class="block-icon">&#129496;</div>
+    <div><div class="block-title">Yoga</div><div style="font-size:0.75rem;opacity:0.85">So &#183; 10:00 &#183; nach Waldspaziergang</div></div>
+    <div class="block-meta">30 Min</div>
+  </div>
+  <div class="block-body">
+    <div class="exercise"><div class="ex-num en-yoga">1</div><div><div class="ex-name">Katze-Kuh (Marjaryasana)</div><div class="ex-note">Vierf&#252;&#223;ler &#183; beim Einatmen R&#252;cken hohlmachen, beim Ausatmen w&#246;lben &#183; sanfter Einstieg</div></div><div class="ex-detail">2 Min</div></div>
+    <div class="exercise"><div class="ex-num en-yoga">2</div><div><div class="ex-name">Herabschauender Hund</div><div class="ex-note">Umgekehrtes V &#183; Fersen Richtung Boden &#183; R&#252;cken lang strecken</div></div><div class="ex-detail">3 &#215; 30 Sek</div></div>
+    <div class="exercise"><div class="ex-num en-yoga">3</div><div><div class="ex-name">Krieger I + II</div><div class="ex-note">Kr&#228;ftigt Beine + Ges&#228;&#223; &#183; H&#252;fte &#246;ffnen &#183; ruhig atmen</div></div><div class="ex-detail">Je 45 Sek pro Seite</div></div>
+    <div class="exercise"><div class="ex-num en-yoga">4</div><div><div class="ex-name">Br&#252;cke (Setu Bandha)</div><div class="ex-note">R&#252;cken auf Boden &#183; Becken heben &#183; gut f&#252;r R&#252;cken + Ges&#228;&#223; &#183; lp(a)-freundlich</div></div><div class="ex-detail">3 &#215; 30 Sek</div></div>
+    <div class="exercise"><div class="ex-num en-yoga">5</div><div><div class="ex-name">Sitzende Vorw&#228;rtsbeuge</div><div class="ex-note">Beine gestreckt &#183; sanft nach vorne &#183; nicht zwingen &#183; R&#252;cken lang lassen</div></div><div class="ex-detail">2 Min</div></div>
+    <div class="exercise"><div class="ex-num en-yoga">6</div><div><div class="ex-name">Shavasana (Totenstellung)</div><div class="ex-note">Einfach liegen &#183; loslassen &#183; 5 Min nichts tun &#8212; das wichtigste!</div></div><div class="ex-detail">5 Min</div></div>
+  </div>
+</div>
+
+
+<div class="block" style="background:white;border-radius:14px;margin-bottom:0.8rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);overflow:hidden;">
+  <div class="block-header" style="background:linear-gradient(135deg,#7D3C98,#5B2C6F);padding:0.8rem 1.2rem;color:white;display:flex;align-items:center;gap:0.7rem;">
+    <div style="font-size:1.4rem;">&#9654;</div>
+    <div style="font-family:'Playfair Display',serif;font-size:18px;font-style:italic;font-weight:400;">Mady Morrison &#8211; Sonntagsvideos</div>
+  </div>
+  <div style="padding:0.6rem 0;">
+    <a href="https://www.youtube.com/watch?v=5HswL9z6RgU" target="_blank" style="display:flex;align-items:center;gap:0.8rem;padding:0.7rem 1.1rem;border-bottom:1px solid #F5F5F5;text-decoration:none;color:inherit;">
+      <div style="width:36px;height:36px;background:#1A6B3C;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:1rem;flex-shrink:0;">&#11088;</div>
+      <div>
+        <div style="font-size:0.88rem;font-weight:600;">Selfcare Yoga &#8211; 30 Min</div>
+        <div style="font-size:0.75rem;color:#717D7E;">Gesunder R&#252;cken &#183; Verspannungen l&#246;sen &#183; Anf&#228;nger & Ge&#252;bte &#183; <span style="color:#7D3C98;">&#128279; YouTube</span></div>
+      </div>
+    </a>
+    <a href="https://youtu.be/qH-3MOOYQBw" target="_blank" style="display:flex;align-items:center;gap:0.8rem;padding:0.7rem 1.1rem;border-bottom:1px solid #F5F5F5;text-decoration:none;color:inherit;">
+      <div style="width:36px;height:36px;background:#2D6A9F;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:1rem;flex-shrink:0;">&#127754;</div>
+      <div>
+        <div style="font-size:0.88rem;font-weight:600;">Stretch & Relax &#8211; 30 Min</div>
+        <div style="font-size:0.75rem;color:#717D7E;">Yin inspiriert &#183; Loslassen & Entspannen &#183; H&#252;ften & R&#252;cken &#183; <span style="color:#7D3C98;">&#128279; YouTube</span></div>
+      </div>
+    </a>
+    <a href="https://youtu.be/9VywzXZHXkw" target="_blank" style="display:flex;align-items:center;gap:0.8rem;padding:0.7rem 1.1rem;text-decoration:none;color:inherit;">
+      <div style="width:36px;height:36px;background:#7D3C98;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:1rem;flex-shrink:0;">&#127800;</div>
+      <div>
+        <div style="font-size:0.88rem;font-weight:600;">Yin Yoga Deep Stretch &#8211; 30 Min</div>
+        <div style="font-size:0.75rem;color:#717D7E;">Tiefe Dehnung &#183; Faszien &#183; Schmetterling &#183; sehr entspannend &#183; <span style="color:#7D3C98;">&#128279; YouTube</span></div>
+      </div>
+    </a>
+  </div>
+</div>
+<div class="tipp"><strong>💚 In fröhlicher Gelassenheit</strong>Kein Training muss perfekt sein. Ruhetage sind kein Versagen — sie sind ein bewusster Teil meines Plans. Ich erhöre meinen Körper.</div>
+<div class="tipp"><strong>🌿 Für LP(a) & Blutdruck</strong>Regelmäßige moderate Bewegung ist die wirksamste natürliche Maßnahme. Mein Plan ist genau richtig dosiert — sanft, konsequent, liebevoll.</div>
+
+<div class="footer">Mein Bewegungsplan · sanft · konsequent · in fröhlicher Gelassenheit 🌿</div>
+</div>
+</body>
+</html>

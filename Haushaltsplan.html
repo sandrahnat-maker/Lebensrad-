@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>Haushaltsplan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IM+Fell+English:ital@0;1&family=Raleway:wght@400;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,.12);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,.10);
+  --violet:#6a3f7a;--border-col:rgba(184,41,74,.15);--shadow:rgba(30,18,8,.08);}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+@keyframes reingehüpft{from{transform:scale(.96) translateY(8px);opacity:0;}to{transform:scale(1) translateY(0);opacity:1;}}
+@keyframes fallen{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+body{background:var(--bg);font-family:'Raleway',sans-serif;color:var(--text);min-height:100vh;padding-bottom:5rem;
+  background-image:repeating-linear-gradient(-12deg,transparent 0,transparent 60px,rgba(255,217,61,.05) 60px,rgba(255,217,61,.05) 80px,transparent 80px,transparent 140px,rgba(232,72,85,.03) 140px,rgba(232,72,85,.03) 160px);}
+body::after{content:'';position:fixed;bottom:0;left:0;right:0;height:6px;background:repeating-linear-gradient(90deg,var(--gold) 0,var(--gold) 28px,var(--gold-l) 28px,var(--gold-l) 56px,var(--crimson) 56px,var(--crimson) 84px,var(--navy) 84px,var(--navy) 112px,var(--sage) 112px,var(--sage) 140px);z-index:100;}
+/* HEADER */
+.vk-header{background:var(--gold-l);border-bottom:var(--border);padding:.8rem 1.1rem .7rem;}
+.vk-header::before{content:'';display:block;height:7px;margin-bottom:.5rem;background:repeating-linear-gradient(90deg,var(--crimson) 0,var(--crimson) 20%,var(--gold) 20%,var(--gold) 40%,var(--sage) 40%,var(--sage) 60%,var(--navy) 60%,var(--navy) 80%,var(--violet) 80%,var(--violet) 100%);border-radius:3px;}
+.vk-back{display:inline-flex;align-items:center;gap:.3rem;font-family:'Caveat',cursive;font-size:1rem;color:var(--text);text-decoration:none;background:none;border:none;cursor:pointer;opacity:.7;margin-bottom:.3rem;padding:0;}
+.vk-date{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;opacity:.6;font-weight:700;margin-bottom:.15rem;}
+.vk-title{font-family:'Playfair Display',serif;font-size:1.9rem;line-height:1.1;}
+.vk-sub{font-family:'Caveat',cursive;font-size:1rem;opacity:.65;margin-top:.1rem;}
+/* PROGRESS */
+.progress-wrap{margin:1rem 1rem 0;background:var(--card);border:var(--border);border-radius:14px;box-shadow:0 2px 8px var(--shadow);padding:.8rem 1rem;}
+.progress-row{display:flex;justify-content:space-between;font-family:'Playfair Display',serif;font-size:.9rem;margin-bottom:.4rem;}
+.progress-pct{color:var(--sage);}
+.vk-prog-bar{height:12px;background:rgba(30,18,8,.1);border-radius:20px;overflow:hidden;border:1px solid var(--border-col);}
+.vk-prog-fill{height:100%;background:linear-gradient(90deg,var(--sage),var(--gold-l));border-radius:20px;transition:width .4s;}
+/* MOTTO */
+.motto-card{margin:1rem 1rem 0;background:var(--gold);border:var(--border);border-radius:14px;padding:.7rem .9rem;box-shadow:0 2px 8px var(--shadow);}
+.motto-text{font-family:'Caveat',cursive;font-size:1.05rem;color:white;font-weight:600;}
+/* DAILY TO-DO */
+.daily-wrap{margin:1rem 1rem 0;background:var(--card);border:var(--border);border-radius:16px;box-shadow:0 2px 12px var(--shadow);overflow:hidden;}
+.daily-wrap::before{content:'';display:block;height:6px;background:repeating-linear-gradient(90deg,var(--crimson) 0,var(--crimson) 20%,var(--gold-l) 20%,var(--gold-l) 40%,var(--sage) 40%,var(--sage) 60%,var(--navy) 60%,var(--navy) 80%,var(--violet) 80%,var(--violet) 100%);}
+.daily-header{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;border-bottom:2px dashed rgba(30,18,8,.1);}
+.daily-title{font-family:'Playfair Display',serif;font-size:1rem;}
+.daily-count{font-family:'Caveat',cursive;font-size:.9rem;color:rgba(30,18,8,.45);}
+.daily-add-row{display:flex;gap:.5rem;padding:.5rem .8rem;border-bottom:2px dashed rgba(30,18,8,.08);}
+.daily-input{flex:1;border:1px solid var(--border-col);border-radius:10px;padding:.4rem .7rem;font-family:'Caveat',cursive;font-size:1rem;background:var(--bg);outline:none;color:var(--text);}
+.daily-add-btn{background:var(--crimson);color:white;border:1px solid var(--border-col);border-radius:10px;padding:.4rem .8rem;font-family:'Playfair Display',serif;font-size:.9rem;cursor:pointer;flex-shrink:0;}
+.daily-add-btn:active{transform:translate(1px,1px);}
+.daily-task{display:flex;align-items:center;gap:.55rem;padding:.5rem .7rem .5rem .5rem;border-bottom:1px dashed rgba(30,18,8,.07);transition:background .15s;}
+.daily-task:last-child{border-bottom:none;}
+.daily-task.done{opacity:.28;}
+.daily-task.done .daily-task-name{text-decoration:line-through;}
+.daily-task.dragging{opacity:.4;background:rgba(255,217,61,.3);}
+.daily-task.drag-over{border-top:3px solid var(--crimson);}
+.daily-drag{font-size:1.1rem;color:rgba(30,18,8,.22);padding:.2rem .3rem;cursor:grab;flex-shrink:0;touch-action:none;user-select:none;}
+.daily-drag:active{cursor:grabbing;}
+.daily-check{width:20px;height:20px;border:1px solid var(--border-col);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.65rem;background:var(--card);transition:all .2s;}
+.daily-task.done .daily-check{background:var(--sage);border-color:var(--sage);color:white;}
+.daily-task.done .daily-check::after{content:'✓';}
+.daily-task-name{font-size:.95rem;font-weight:700;flex:1;line-height:1.3;}
+.daily-del{font-size:1rem;color:rgba(30,18,8,.2);padding:.3rem;line-height:1;background:none;border:none;cursor:pointer;}
+.daily-del:active{color:var(--crimson);}
+.daily-empty{padding:.8rem 1rem;font-family:'Caveat',cursive;font-size:.95rem;color:rgba(30,18,8,.35);text-align:center;}
+/* SEPARATOR */
+.vk-sep{text-align:center;padding:.6rem;font-size:1rem;opacity:.25;letter-spacing:.4em;}
+/* BLÖCKE */
+.block-wrap{margin:.8rem 1rem 0;}
+.block-header{display:flex;align-items:center;gap:.6rem;padding:.7rem .9rem;background:var(--card);border:var(--border);border-radius:14px;cursor:pointer;box-shadow:0 2px 8px var(--shadow);transition:transform .1s,border-radius .15s;}
+.block-header:active{transform:translate(1px,1px);box-shadow:0 1px 6px var(--shadow);}
+.block-header.open{border-radius:14px 14px 0 0;}
+.block-header.morgen{background:var(--gold-l);}
+.block-header.schreibtisch{background:var(--navy);color:white;}
+.block-header.mittag{background:var(--gold);color:white;}
+.block-header.haushalt{background:var(--sage);color:white;}
+.block-header.ich{background:var(--violet);color:white;}
+.block-header.abend{background:#1a2744;color:white;}
+.block-icon{font-size:1.3rem;flex-shrink:0;}
+.block-info{flex:1;min-width:0;}
+.block-name{font-family:'Playfair Display',serif;font-size:1rem;line-height:1.2;}
+.block-sub{font-family:'Caveat',cursive;font-size:.9rem;opacity:.75;margin-top:.05rem;}
+.block-badge{font-family:'Playfair Display',serif;font-size:.8rem;background:rgba(30,18,8,.15);border-radius:20px;padding:.15rem .5rem;flex-shrink:0;}
+.block-badge.done-all{background:rgba(76,175,114,.4);}
+.block-arr{font-size:.75rem;opacity:.6;flex-shrink:0;transition:transform .2s;}
+.block-header.open .block-arr{transform:rotate(180deg);}
+.block-content{display:none;background:var(--card);border:var(--border);border-top:none;border-radius:0 0 14px 14px;overflow:hidden;}
+.block-content.open{display:block;animation:reingehüpft .2s ease;}
+.block-mood{font-family:'Caveat',cursive;font-size:1rem;color:rgba(30,18,8,.5);padding:.6rem 1rem .4rem;border-bottom:2px dashed rgba(30,18,8,.08);line-height:1.4;}
+.raum-label{font-family:'Playfair Display',serif;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(30,18,8,.4);padding:.5rem 1rem .2rem;display:flex;align-items:center;gap:.35rem;border-top:1px dashed rgba(30,18,8,.07);}
+.raum-label:first-of-type{border-top:none;}
+.task-item{display:flex;align-items:flex-start;gap:.6rem;padding:.5rem 1rem;border-bottom:1px dashed rgba(30,18,8,.07);cursor:pointer;transition:background .15s;}
+.task-item:last-child{border-bottom:none;}
+.task-item:active{background:rgba(255,217,61,.2);}
+.task-item.done{opacity:.28;}
+.task-item.done .task-name{text-decoration:line-through;}
+.task-check{width:22px;height:22px;border:var(--border);border-radius:50%;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:.75rem;background:var(--card);transition:all .2s;}
+.task-item.done .task-check{background:var(--sage);border-color:var(--sage);color:white;}
+.task-item.done .task-check::after{content:'✓';}
+.task-name{font-size:.95rem;font-weight:700;line-height:1.3;}
+.task-note{font-family:'Caveat',cursive;font-size:.9rem;color:rgba(30,18,8,.45);margin-top:.05rem;}
+/* GROSSE AUFGABEN */
+.gross-wrap{margin:1rem 1rem 0;}
+.gross-label{font-family:'Playfair Display',serif;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(30,18,8,.4);margin-bottom:.5rem;padding-left:.2rem;}
+.gross-item{display:flex;align-items:flex-start;gap:.65rem;padding:.6rem .9rem;background:var(--card);border:var(--border);border-radius:12px;margin-bottom:.5rem;cursor:pointer;box-shadow:0 2px 8px var(--shadow);transition:transform .1s,box-shadow .1s;}
+.gross-item:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--text);}
+.gross-item.done{opacity:.3;}
+.gross-item.done .task-name{text-decoration:line-through;}
+.gross-check{width:22px;height:22px;border:var(--border);border-radius:50%;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:.75rem;background:var(--card);transition:all .2s;}
+.gross-item.done .gross-check{background:var(--violet);border-color:var(--violet);color:white;}
+.gross-item.done .gross-check::after{content:'✓';}
+.gross-raum{font-size:.8rem;color:rgba(30,18,8,.4);font-family:'Caveat',cursive;margin-top:.1rem;}
+/* TOAST */
+#haushalt-toast{position:fixed;bottom:4.5rem;left:50%;transform:translateX(-50%) translateY(10px);background:var(--text);color:var(--gold-l);font-family:'Caveat',cursive;font-size:1.1rem;padding:.5rem 1.3rem;border-radius:20px;opacity:0;transition:all .3s;z-index:200;white-space:nowrap;pointer-events:none;}
+#haushalt-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.confetti-wrap{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;}
+.cdot{position:absolute;border-radius:2px;animation:fallen 3s ease-in forwards;}
+</style>
+</head>
+<body>
+
+<div class="vk-header">
+  <a href="index.html" class="vk-back">← zurück</a>
+  <div class="vk-date" id="headerDate"></div>
+  <div class="vk-title">🏠 Mein Haushalt</div>
+  <div class="vk-sub">Ordnung ist ein Mittel — nicht das Ziel</div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span id="progressText">0 von 0 erledigt</span>
+    <span class="progress-pct" id="progressPct">0 %</span>
+  </div>
+  <div class="vk-prog-bar"><div class="vk-prog-fill" id="progressFill" style="width:0%"></div></div>
+</div>
+
+<div class="motto-card">
+  <div class="motto-text" id="tagesMottoText"></div>
+</div>
+
+<!-- DAILY TO-DO -->
+<div class="daily-wrap">
+  <div class="daily-wrap::before"></div>
+  <div class="daily-header">
+    <div class="daily-title">📋 Mein heutiger Rahmen</div>
+    <div class="daily-count" id="dailyCount"></div>
+  </div>
+  <div class="daily-add-row">
+    <input class="daily-input" id="dailyInput" type="text" placeholder="Aufgabe hinzufügen …" maxlength="80">
+    <button class="daily-add-btn" onclick="addDailyTask()">+ Add</button>
+  </div>
+  <div id="dailyList"><div class="daily-empty">Noch keine Aufgaben — einfach oben eintragen ✨</div></div>
+</div>
+
+<div class="vk-sep">✦ ✦ ✦</div>
+
+<!-- MORGENROUTINE -->
+<div class="block-wrap">
+  <div class="block-header morgen" onclick="toggleBlock('morgen')">
+    <div class="block-icon">🌅</div>
+    <div class="block-info"><div class="block-name">Morgenroutine</div><div class="block-sub">Schlafzimmer · Bad</div></div>
+    <div class="block-badge" id="badge-morgen">0 / 0</div>
+    <div class="block-arr">▼</div>
+  </div>
+  <div class="block-content" id="content-morgen">
+    <div class="block-mood">Der Raum wartet schon auf dich. Alles liegt bereit.</div>
+    <div class="raum-label">🌙 Schlafzimmer</div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="morgen"><div class="task-check"></div><div><div class="task-name">Bettdecke aufschütteln</div><div class="task-note">3× kräftig schütteln, auflegen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="morgen"><div class="task-check"></div><div><div class="task-name">Kissen aufstellen</div><div class="task-note">gerade hinlegen, schön</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="morgen"><div class="task-check"></div><div><div class="task-name">Nachtkästchen abräumen</div><div class="task-note">Glas weg, Knirscherschiene an ihren Platz</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="morgen"><div class="task-check"></div><div><div class="task-name">Medikamente herrichten</div><div class="task-note">Euthyrox, Sertralin, Magenschutz — in Reihenfolge</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="morgen"><div class="task-check"></div><div><div class="task-name">Fenster 5 min kippen</div><div class="task-note">frische Luft, während du ins Bad gehst</div></div></div>
+    <div class="raum-label">🛁 Bad</div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="morgen"><div class="task-check"></div><div><div class="task-name">Waschbecken kurz abwischen</div><div class="task-note">feuchtes Tuch, 30 Sekunden</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="morgen"><div class="task-check"></div><div><div class="task-name">Frisches Handtuch bereit</div><div class="task-note">auf die Stange hängen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="morgen"><div class="task-check"></div><div><div class="task-name">Seife + Zahnbürste griffbereit</div><div class="task-note">alles auf Platz</div></div></div>
+  </div>
+</div>
+
+<!-- SCHREIBTISCH -->
+<div class="block-wrap">
+  <div class="block-header schreibtisch" onclick="toggleBlock('schreibtisch')">
+    <div class="block-icon">📚</div>
+    <div class="block-info"><div class="block-name">Schreibtischblock</div><div class="block-sub">Atelier · kein visuelles Rauschen</div></div>
+    <div class="block-badge" id="badge-schreibtisch">0 / 0</div>
+    <div class="block-arr">▼</div>
+  </div>
+  <div class="block-content" id="content-schreibtisch">
+    <div class="block-mood">Eine freie Fläche. Nicht perfekt — nur klar.</div>
+    <div class="raum-label">🖊️ Schreibtisch</div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="schreibtisch"><div class="task-check"></div><div><div class="task-name">Tasse / Glas wegräumen</div><div class="task-note">direkt in die Küche</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="schreibtisch"><div class="task-check"></div><div><div class="task-name">Papiere sortieren</div><div class="task-note">Uni-Stapel · VHS-Stapel · weg-Stapel</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="schreibtisch"><div class="task-check"></div><div><div class="task-name">Stifte &amp; Utensilien</div><div class="task-note">zurück in den Becher / die Schublade</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="schreibtisch"><div class="task-check"></div><div><div class="task-name">Fläche kurz abwischen</div><div class="task-note">Mikrofasertuch, einmal drüberwischen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="schreibtisch"><div class="task-check"></div><div><div class="task-name">Offene Zettel an ihren Platz</div><div class="task-note">nichts lose herumliegen lassen</div></div></div>
+  </div>
+</div>
+
+<!-- MITTAGSPAUSE -->
+<div class="block-wrap">
+  <div class="block-header mittag" onclick="toggleBlock('mittag')">
+    <div class="block-icon">☀️</div>
+    <div class="block-info"><div class="block-name">Mittagspause</div><div class="block-sub">Küche · kleiner Reset</div></div>
+    <div class="block-badge" id="badge-mittag">0 / 0</div>
+    <div class="block-arr">▼</div>
+  </div>
+  <div class="block-content" id="content-mittag">
+    <div class="block-mood">Direkt weg — damit Nachmittagsstimmung sich nicht mit Unordnung mischt.</div>
+    <div class="raum-label">🍳 Küche</div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="mittag"><div class="task-check"></div><div><div class="task-name">Teller / Schüssel abspülen</div><div class="task-note">oder direkt in den Geschirrspüler</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="mittag"><div class="task-check"></div><div><div class="task-name">Töpfe kurz einweichen</div><div class="task-note">Wasser rein, nicht für später aufheben</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="mittag"><div class="task-check"></div><div><div class="task-name">Arbeitsfläche abwischen</div><div class="task-note">feuchtes Tuch, Krümel weg</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="mittag"><div class="task-check"></div><div><div class="task-name">Reste einpacken oder wegwerfen</div><div class="task-note">nichts offen stehen lassen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="mittag"><div class="task-check"></div><div><div class="task-name">Katzennäpfe spülen</div><div class="task-note">kurz auswaschen, frisches Wasser</div></div></div>
+  </div>
+</div>
+
+<!-- HAUSHALTSBLOCK -->
+<div class="block-wrap">
+  <div class="block-header haushalt" onclick="toggleBlock('haushalt')">
+    <div class="block-icon">🧹</div>
+    <div class="block-info"><div class="block-name">Haushaltsblock</div><div class="block-sub">In der Reihenfolge deines Morgens</div></div>
+    <div class="block-badge" id="badge-haushalt">0 / 0</div>
+    <div class="block-arr">▼</div>
+  </div>
+  <div class="block-content" id="content-haushalt">
+    <div class="block-mood">Du putzt nicht die Wohnung. Du bereitest deinen nächsten Morgen vor.</div>
+
+    <div class="raum-label">🌙 Schlafzimmer</div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Boden saugen</div><div class="task-note">einmal quer, besonders unterm Bett</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Nachtkästchen abwischen</div><div class="task-note">kurz feucht drüber, trocken wischen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Kleidung vom Stuhl / Boden</div><div class="task-note">einräumen, in die Wäsche oder aufhängen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Fenster schließen</div><div class="task-note">Jalousie / Vorhang in Abendposition</div></div></div>
+
+    <div class="raum-label">🛁 Bad</div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Waschbecken schrubben</div><div class="task-note">Essigreiniger, kurz schrubben, trocken wischen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Armatur polieren</div><div class="task-note">Kalkflecken weg, trocken reiben</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">WC innen reinigen</div><div class="task-note">WC-Reiniger rein, kurz schrubben</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">WC außen abwischen</div><div class="task-note">Sitz, Deckel, Außenfläche</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Spiegel abwischen</div><div class="task-note">Glasreiniger oder Essigwasser</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Fensterbrett prüfen</div><div class="task-note">Leere Flaschen weg, Sims abwischen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Badboden fegen</div><div class="task-note">Haare + Staub zusammenkehren</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Badboden wischen</div><div class="task-note">feuchtes Tuch oder Mop, einmal durch</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Handtücher wechseln</div><div class="task-note">frische aufhängen, alte in die Wäsche</div></div></div>
+
+    <div class="raum-label">🍳 Küche</div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Abwasch erledigen</div><div class="task-note">alles spülen oder Geschirrspüler einschalten</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Arbeitsfläche komplett freimachen</div><div class="task-note">alles weg, dann wischen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Herd abwischen</div><div class="task-note">Platten + Rand, Fett weg</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Kühlschrank vorne abwischen</div><div class="task-note">Türgriff, Fronten, kurz</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Küchenboden fegen</div><div class="task-note">besonders unterm Tisch und vor dem Herd</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Teefach kontrollieren</div><div class="task-note">Tee für morgen bereit? Tasse bereitstellen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Mülleimer prüfen</div><div class="task-note">voll? Rausbringen, neuen Sack rein</div></div></div>
+
+    <div class="raum-label">🛋️ Wohnzimmer</div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Kissen aufschütteln &amp; hinlegen</div><div class="task-note">gemütlich, nicht perfekt</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Lottedecke falten</div><div class="task-note">an ihren Platz auf dem Sofa</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Tisch abräumen &amp; abwischen</div><div class="task-note">Tassen, Gläser weg, kurz wischen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Boden kurz saugen</div><div class="task-note">einmal durch, Lottes Haare weg</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="haushalt"><div class="task-check"></div><div><div class="task-name">Kerze bereitstellen</div><div class="task-note">für den Abend — noch nicht anzünden</div></div></div>
+  </div>
+</div>
+
+<!-- ICH-BLOCK -->
+<div class="block-wrap">
+  <div class="block-header ich" onclick="toggleBlock('ich')">
+    <div class="block-icon">🌸</div>
+    <div class="block-info"><div class="block-name">Ich-Block</div><div class="block-sub">Bad für dein Pflegegefühl herrichten</div></div>
+    <div class="block-badge" id="badge-ich">0 / 0</div>
+    <div class="block-arr">▼</div>
+  </div>
+  <div class="block-content" id="content-ich">
+    <div class="block-mood">Körperpflege fühlt sich besser an, wenn der Raum schon bereit ist.</div>
+    <div class="raum-label">🛁 Bad vorbereiten</div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="ich"><div class="task-check"></div><div><div class="task-name">Handtuch bereit hängen</div><div class="task-note">das schöne, das du magst</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="ich"><div class="task-check"></div><div><div class="task-name">Körperöl / Creme griffbereit</div><div class="task-note">nicht suchen müssen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="ich"><div class="task-check"></div><div><div class="task-name">Pflegeprodukte bereitstellen</div><div class="task-note">was heute dran ist: Haarmaske, Peeling, Fußcreme …</div></div></div>
+    <div class="raum-label">🛁 Bad danach</div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="ich"><div class="task-check"></div><div><div class="task-name">Haare aus dem Abfluss</div><div class="task-note">2 Sekunden, nicht bis morgen warten</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="ich"><div class="task-check"></div><div><div class="task-name">Dusche kurz abziehen</div><div class="task-note">Abzieher einmal drüber, Schimmel verhindern</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="ich"><div class="task-check"></div><div><div class="task-name">Produkte zurück an ihren Platz</div><div class="task-note">nichts liegen lassen</div></div></div>
+  </div>
+</div>
+
+<!-- ABENDROUTINE -->
+<div class="block-wrap">
+  <div class="block-header abend" onclick="toggleBlock('abend')">
+    <div class="block-icon">🌙</div>
+    <div class="block-info"><div class="block-name">Abendroutine</div><div class="block-sub">Abschluss geben · nicht aufräumen</div></div>
+    <div class="block-badge" id="badge-abend">0 / 0</div>
+    <div class="block-arr">▼</div>
+  </div>
+  <div class="block-content" id="content-abend">
+    <div class="block-mood">Nicht sauber machen. Den Tag ankommen lassen.</div>
+    <div class="raum-label">🍳 Küche schließen</div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="abend"><div class="task-check"></div><div><div class="task-name">Reste einpacken</div><div class="task-note">alles in Dosen, Kühlschrank zu</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="abend"><div class="task-check"></div><div><div class="task-name">Geschirr in den Spüler</div><div class="task-note">nichts offen stehen lassen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="abend"><div class="task-check"></div><div><div class="task-name">Arbeitsfläche frei machen</div><div class="task-note">für morgen früh</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="abend"><div class="task-check"></div><div><div class="task-name">Tasse für morgen bereitstellen</div><div class="task-note">dein Tee wartet schon</div></div></div>
+    <div class="raum-label">🛋️ Wohnzimmer abschließen</div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="abend"><div class="task-check"></div><div><div class="task-name">Lottes Platz herrichten</div><div class="task-note">Körbchen, Decke — sie freut sich</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="abend"><div class="task-check"></div><div><div class="task-name">Licht dimmen &amp; Kerze anzünden</div><div class="task-note">Abendstimmung herstellen</div></div></div>
+    <div class="task-item" onclick="toggleTask(this)" data-block="abend"><div class="task-check"></div><div><div class="task-name">Vor dem Schlafen: Kerze auspusten</div><div class="task-note">und kurz innehalten</div></div></div>
+  </div>
+</div>
+
+<div class="vk-sep">✦ ✦ ✦</div>
+
+<div class="gross-wrap">
+  <div class="gross-label">🎪 Große Aufgaben · wenn Zeit &amp; Muße da sind</div>
+  <div id="grossContainer"></div>
+</div>
+
+<div id="haushalt-toast"></div>
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<script>
+// ═══ HILFSFUNKTIONEN ═══
+function localDateStr(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function localDateKey(){return 'haushalt_tag_'+localDateStr();}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+var todayKey=localDateKey();
+
+// ═══ DATUM IM HEADER ═══
+(function(){
+  var d=new Date();
+  var wt=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+  var mo=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  document.getElementById('headerDate').textContent=wt[d.getDay()]+', '+d.getDate()+'. '+mo[d.getMonth()]+' '+d.getFullYear();
+})();
+
+// ═══ TAGES-MOTTO ═══
+var TAGES_MOTTOS={0:'Sonntag · Pflanzen gießen & den Raum für die neue Woche vorbereiten',1:'Montag · Küche & Wohnzimmer — frischer Start in die Woche',2:'Dienstag · Bad & WC — das Ritual des Morgens verdient einen sauberen Rahmen',3:'Mittwoch · Vorzimmer & Flur — der erste Blick nach Hause',4:'Donnerstag · Wohnzimmer — Lottes Platz, dein Abend',5:'Freitag · Atelier & Schreibtisch — Woche abschließen, Platz für Neues',6:'Samstag · Schlafzimmer & Wäsche — das Bett, das wartet'};
+document.getElementById('tagesMottoText').textContent=TAGES_MOTTOS[new Date().getDay()];
+
+// ═══ DATEN ═══
+var GROSS_AUFGABEN=[
+  {raum:'🎨 Atelier',text:'Papierberg Schreibtisch (1h): Alle Papiere sortieren: Uni, VHS, privat, weg.'},
+  {raum:'🎨 Atelier',text:'Boden Atelier: Alle Mappen, Ordner, losen Papiere vom Boden.'},
+  {raum:'🚪 Vorzimmer',text:'Ablagebank komplett leeren: Jeden Gegenstand bewusst entscheiden.'},
+  {raum:'🚪 Vorzimmer',text:'Garderobe komplett: Jeden Mantel durchgehen. Weggeben-Sackerl.'},
+  {raum:'🛋️ Wohnzimmer',text:'Bücherwand: Staubwischen hinter Büchern, eine Reihe neu ordnen.'},
+  {raum:'🍳 Küche',text:'Oberschränke: Einen Schrank ausräumen. Abgelaufenes entsorgen.'},
+  {raum:'🍳 Küche',text:'Kühlschrank komplett: Alles raus, alle Fächer abwischen, neu einräumen.'},
+  {raum:'🛁 Bad',text:'Badewannenrand + Fugen: Schimmelentferner, 10 Min einwirken, schrubben.'},
+  {raum:'🌙 Schlafzimmer',text:'Wäsche sortieren: Alle Stapel zusammentragen. Falten, einräumen.'},
+  {raum:'🗃️ Allgemein',text:'Weggeben-Sackerl: Durch die ganze Wohnung, einen großen Sack befüllen.'},
+  {raum:'🌱 Balkon',text:'Balkon-Regal: Alle Töpfe raus, Regal abwischen, neu bepflanzen.'},
+];
+var DAILY_DEFAULTS=['🐱 Katzenklo ausmisten','🍳 Abwasch erledigen','🍳 Arbeitsfläche abwischen','🍳 Herd abwischen','🛁 Waschbecken abwischen','🛁 Handtuch auf die Stange','🛋️ Tisch abräumen','🛋️ Kissen zurechtlegen','🌙 Bett machen','👕 Wäsche waschen','👕 Wäsche aufhängen','🗑️ Müll prüfen','🧹 Boden fegen wenn nötig'];
+
+// ═══ STATE ═══
+var blockState={};
+var grossDone=[];
+
+function getTodayData(){try{return JSON.parse(localStorage.getItem(todayKey)||'{}');}catch(e){return{};}}
+function saveTodayData(obj){try{localStorage.setItem(todayKey,JSON.stringify(obj));}catch(e){}}
+function saveBlockState(){var d=getTodayData();d.blocks=blockState;saveTodayData(d);}
+function saveGross(){try{localStorage.setItem('haushalt_gross',JSON.stringify(grossDone));}catch(e){}}
+
+function loadState(){
+  try{
+    var tag=getTodayData();
+    blockState=tag.blocks||{};
+    Object.keys(localStorage).forEach(function(k){if(k.startsWith('haushalt_tag_')&&k!==todayKey)localStorage.removeItem(k);});
+    var gross=JSON.parse(localStorage.getItem('haushalt_gross')||'null');
+    if(gross)grossDone=gross;
+  }catch(e){}
+}
+
+// ═══ ALLE FUNKTIONEN ═══
+
+function updateProgress(){
+  try{
+    var blockTotal=document.querySelectorAll('.task-item').length;
+    var blockDone=document.querySelectorAll('.task-item.done').length;
+    var dailyArr=getDailyTasks();
+    var dailyTotal=dailyArr?dailyArr.length:0;
+    var dailyDone=dailyArr?dailyArr.filter(function(t){return t&&t.done;}).length:0;
+    var total=blockTotal+dailyTotal+GROSS_AUFGABEN.length;
+    var done=blockDone+dailyDone+grossDone.length;
+    var pct=total>0?Math.round(done/total*100):0;
+    document.getElementById('progressFill').style.width=pct+'%';
+    document.getElementById('progressText').textContent=done+' von '+total+' erledigt';
+    document.getElementById('progressPct').textContent=pct+' %';
+    if(done===total&&total>0){launchConfetti();showToast('🎊 Alles erledigt — was für ein Tag!');}
+  }catch(e){}
+}
+
+function getDailyTasks(){
+  var d=getTodayData();
+  if(!d.daily){d.daily=DAILY_DEFAULTS.map(function(t){return{text:t,done:false};});saveTodayData(d);}
+  return d.daily||[];
+}
+function saveDailyTasks(arr){var d=getTodayData();d.daily=arr;saveTodayData(d);}
+
+function renderDailyList(){
+  var arr=getDailyTasks();
+  var list=document.getElementById('dailyList');
+  var countEl=document.getElementById('dailyCount');
+  if(!list)return;
+  if(arr.length===0){list.innerHTML='<div class="daily-empty">Noch keine Aufgaben — einfach oben eintragen ✨</div>';countEl.textContent='';updateProgress();return;}
+  list.innerHTML='';
+  var done=0;
+  arr.forEach(function(t,i){
+    if(t.done)done++;
+    var div=document.createElement('div');
+    div.className='daily-task'+(t.done?' done':'');
+    div.dataset.idx=i;
+    div.innerHTML='<span class="daily-drag">☰</span><div class="daily-check"></div><div class="daily-task-name">'+esc(t.text)+'</div><button class="daily-del">✕</button>';
+    div.querySelector('.daily-check').addEventListener('click',function(e){e.stopPropagation();toggleDailyTask(i);});
+    div.querySelector('.daily-del').addEventListener('click',function(e){e.stopPropagation();deleteDailyTask(i);});
+    // Touch drag
+    var handle=div.querySelector('.daily-drag');
+    handle.addEventListener('touchstart',onDragStart,{passive:false});
+    list.appendChild(div);
+  });
+  countEl.textContent=done+' / '+arr.length;
+  updateProgress();
+}
+
+// ─── Touch Drag & Drop ───
+var dragEl=null, dragStartY=0, dragStartIdx=0;
+
+function onDragStart(e){
+  e.preventDefault();
+  dragEl=e.target.closest('.daily-task');
+  if(!dragEl)return;
+  dragStartIdx=parseInt(dragEl.dataset.idx);
+  dragStartY=e.touches[0].clientY;
+  dragEl.classList.add('dragging');
+  document.addEventListener('touchmove',onDragMove,{passive:false});
+  document.addEventListener('touchend',onDragEnd);
+}
+
+function onDragMove(e){
+  if(!dragEl)return;
+  e.preventDefault();
+  var y=e.touches[0].clientY;
+  var list=document.getElementById('dailyList');
+  var items=Array.from(list.querySelectorAll('.daily-task:not(.dragging)'));
+  items.forEach(function(el){el.classList.remove('drag-over');});
+  var target=items.find(function(el){
+    var r=el.getBoundingClientRect();
+    return y>=r.top&&y<=r.bottom;
+  });
+  if(target)target.classList.add('drag-over');
+}
+
+function onDragEnd(e){
+  if(!dragEl)return;
+  document.removeEventListener('touchmove',onDragMove);
+  document.removeEventListener('touchend',onDragEnd);
+  var list=document.getElementById('dailyList');
+  var items=Array.from(list.querySelectorAll('.daily-task:not(.dragging)'));
+  var target=items.find(function(el){return el.classList.contains('drag-over');});
+  items.forEach(function(el){el.classList.remove('drag-over');});
+  dragEl.classList.remove('dragging');
+  if(target){
+    var toIdx=parseInt(target.dataset.idx);
+    var arr=getDailyTasks();
+    var moved=arr.splice(dragStartIdx,1)[0];
+    // Adjust for shift after splice
+    if(toIdx>dragStartIdx)toIdx--;
+    arr.splice(toIdx,0,moved);
+    saveDailyTasks(arr);
+  }
+  dragEl=null;
+  renderDailyList();
+}
+function addDailyTask(){
+  var inp=document.getElementById('dailyInput');
+  var text=inp.value.trim();
+  if(!text)return;
+  var arr=getDailyTasks();
+  arr.push({text:text,done:false});
+  saveDailyTasks(arr);
+  inp.value='';
+  renderDailyList();
+}
+function toggleDailyTask(i){var arr=getDailyTasks();if(!arr[i])return;arr[i].done=!arr[i].done;saveDailyTasks(arr);renderDailyList();}
+function deleteDailyTask(i){var arr=getDailyTasks();arr.splice(i,1);saveDailyTasks(arr);renderDailyList();}
+
+function toggleBlock(id){
+  var header=document.querySelector('.block-header.'+id);
+  var content=document.getElementById('content-'+id);
+  if(!header||!content)return;
+  var isOpen=header.classList.contains('open');
+  document.querySelectorAll('.block-header').forEach(function(h){h.classList.remove('open');});
+  document.querySelectorAll('.block-content').forEach(function(c){c.classList.remove('open');});
+  if(!isOpen){header.classList.add('open');content.classList.add('open');}
+}
+
+function toggleTask(item){
+  var block=item.dataset.block;
+  var blockItems=Array.from(document.querySelectorAll('.task-item[data-block="'+block+'"]'));
+  var idx=blockItems.indexOf(item);
+  item.classList.toggle('done');
+  if(!blockState[block])blockState[block]=[];
+  var pos=blockState[block].indexOf(idx);
+  if(item.classList.contains('done')){if(pos<0)blockState[block].push(idx);}
+  else{if(pos>=0)blockState[block].splice(pos,1);}
+  saveBlockState();
+  updateBadge(block);
+  updateProgress();
+}
+
+function updateBadge(block){
+  var items=document.querySelectorAll('.task-item[data-block="'+block+'"]');
+  var done=document.querySelectorAll('.task-item[data-block="'+block+'"].done').length;
+  var badge=document.getElementById('badge-'+block);
+  if(!badge)return;
+  badge.textContent=done+' / '+items.length;
+  badge.classList.toggle('done-all',done===items.length&&items.length>0);
+}
+function updateAllBadges(){['morgen','schreibtisch','mittag','haushalt','ich','abend'].forEach(updateBadge);}
+
+var toastTimer=null;
+function showToast(msg){var t=document.getElementById('haushalt-toast');if(!t)return;t.textContent=msg;t.classList.add('show');if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show');},2800);}
+
+function launchConfetti(){
+  var wrap=document.getElementById('confettiWrap');if(!wrap)return;wrap.innerHTML='';
+  var colors=['#FFD93D','#E84855','#3D87CB','#4CAF72','#FF6B35','#9B5DE5'];
+  for(var i=0;i<60;i++){
+    var d=document.createElement('div');d.className='cdot';
+    d.style.cssText='left:'+Math.random()*100+'%;top:-20px;width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';animation-duration:'+(2+Math.random()*3)+'s;animation-delay:'+Math.random()*1.5+'s;border-radius:'+(Math.random()>.5?'50%':'2px')+';opacity:.9;';
+    wrap.appendChild(d);
+  }
+  setTimeout(function(){wrap.innerHTML='';},6000);
+}
+
+// ═══ INITIALISIERUNG ═══
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&localDateKey()!==todayKey)window.location.reload();});
+document.getElementById('dailyInput').addEventListener('keydown',function(e){if(e.key==='Enter')addDailyTask();});
+
+loadState();
+
+// Große Aufgaben rendern
+var gc=document.getElementById('grossContainer');
+GROSS_AUFGABEN.forEach(function(g,i){
+  var done=grossDone.indexOf(i)>=0;
+  var div=document.createElement('div');
+  div.className='gross-item'+(done?' done':'');
+  div.innerHTML='<div class="gross-check"></div><div><div class="task-name">'+g.text+'</div><div class="gross-raum">'+g.raum+'</div></div>';
+  div.addEventListener('click',function(){
+    var idx=grossDone.indexOf(i);
+    if(idx<0){grossDone.push(i);div.classList.add('done');}
+    else{grossDone.splice(idx,1);div.classList.remove('done');}
+    saveGross();updateProgress();
+  });
+  gc.appendChild(div);
+});
+
+// Block-Tasks wiederherstellen
+document.querySelectorAll('.task-item').forEach(function(item){
+  var block=item.dataset.block;
+  var blockItems=Array.from(document.querySelectorAll('.task-item[data-block="'+block+'"]'));
+  var idx=blockItems.indexOf(item);
+  if(blockState[block]&&blockState[block].indexOf(idx)>=0)item.classList.add('done');
+});
+
+updateAllBadges();
+renderDailyList();
+</script>
+</body>
+</html>

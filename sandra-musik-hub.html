@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>Musikuniversum · Sandra</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+@keyframes wimpel-swing{0%,100%{transform:rotate(-4deg) skewX(2deg);}50%{transform:rotate(4deg) skewX(-2deg);}}
+@keyframes wimpel-swing2{0%,100%{transform:rotate(3deg) skewX(-1deg);}50%{transform:rotate(-3deg) skewX(1deg);}}
+@keyframes wimpel-swing3{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(5deg);}}
+@keyframes rope-sway{0%,100%{transform:scaleX(1);}50%{transform:scaleX(1.008);}}
+@keyframes tier-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+@keyframes spotlight{0%{left:-100%;}60%,100%{left:220%;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(.75);}}
+
+:root{
+  --bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,0.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,0.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,0.13);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,0.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,0.12);
+  --violet:#6a3f7a;
+  --border:rgba(184,41,74,0.13);--shadow:rgba(30,18,8,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+
+body{
+  background:var(--bg);
+  font-family:"Raleway",sans-serif;
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:4rem;
+  background-image:
+    repeating-linear-gradient(
+      -6deg,
+      rgba(184,41,74,0.022) 0px,rgba(184,41,74,0.022) 28px,
+      transparent 28px,transparent 56px,
+      rgba(201,137,58,0.018) 56px,rgba(201,137,58,0.018) 84px,
+      transparent 84px,transparent 112px
+    );
+}
+
+/* ── WIMPELKETTE ── */
+.wimpelkette{
+  position:relative;width:100%;height:48px;
+  overflow:hidden;display:block;background:var(--bg);
+}
+.wimpelkette svg{width:100%;height:48px;overflow:visible;animation:rope-sway 5s ease-in-out infinite;}
+.wimpel-1{animation:wimpel-swing 2.8s ease-in-out infinite;}
+.wimpel-2{animation:wimpel-swing2 3.2s ease-in-out infinite 0.3s;}
+.wimpel-3{animation:wimpel-swing3 2.5s ease-in-out infinite 0.6s;}
+.wimpel-4{animation:wimpel-swing 3.0s ease-in-out infinite 0.9s;}
+.wimpel-5{animation:wimpel-swing2 2.7s ease-in-out infinite 1.2s;}
+.wimpel-6{animation:wimpel-swing3 3.4s ease-in-out infinite 1.5s;}
+.wimpel-7{animation:wimpel-swing 2.9s ease-in-out infinite 1.8s;}
+.wimpel-8{animation:wimpel-swing2 2.6s ease-in-out infinite 2.1s;}
+.wimpel-9{animation:wimpel-swing3 3.1s ease-in-out infinite 2.4s;}
+
+/* ── HEADER ── */
+header{
+  padding:1rem 1.2rem .85rem;
+  border-bottom:2px solid var(--border);
+  background:rgba(255,251,245,0.85);
+  backdrop-filter:blur(3px);
+  position:relative;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-family:"IM Fell English",serif;font-style:italic;
+  font-size:15px;color:var(--crimson);opacity:.7;
+  text-decoration:none;margin-bottom:.5rem;
+  background:none;border:none;cursor:pointer;padding:0;
+}
+.back-btn:active{opacity:1;}
+.header-title-wrap{display:flex;align-items:center;gap:.6rem;}
+.header-icon{font-size:2rem;animation:tier-float 6s ease-in-out infinite;}
+.header-title{font-family:"Playfair Display",serif;font-size:22px;font-style:italic;color:var(--text);}
+.header-sub{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.2rem;font-weight:400;}
+
+/* ── ZIRKUSTIERE ── */
+.tier-zeile{
+  display:flex;align-items:center;justify-content:center;
+  gap:.2rem;padding:.35rem 1rem;
+  font-size:.85rem;user-select:none;pointer-events:none;overflow:hidden;
+}
+.tier-zeile .tier{display:inline-block;animation:tier-float 3s ease-in-out infinite;opacity:.55;font-size:1rem;}
+.tier-zeile .tier:nth-child(2){animation-delay:.4s;}
+.tier-zeile .tier:nth-child(3){animation-delay:.8s;}
+.tier-zeile .tier:nth-child(4){animation-delay:1.2s;}
+.tier-zeile .tier:nth-child(5){animation-delay:1.6s;}
+.tier-linie{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(184,41,74,0.2),transparent);}
+
+/* ── ABSCHNITT ── */
+.section-wrap{margin:.8rem 1rem 0;}
+.section-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem;padding-left:.2rem;font-weight:500;}
+
+/* ── PLAYLIST KARTE (groß, als Link) ── */
+.pl-card{
+  display:flex;align-items:center;gap:.7rem;
+  padding:.7rem 1rem;
+  background:var(--card);
+  border-radius:10px;
+  margin-bottom:.4rem;
+  text-decoration:none;color:var(--text);
+  border:1px solid var(--border);
+  box-shadow:0 2px 10px var(--shadow);
+  transition:all .2s;
+  position:relative;overflow:hidden;
+  animation:fadeIn .4s ease both;
+}
+.pl-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:repeating-linear-gradient(
+    90deg,var(--crimson) 0%,var(--crimson) 25%,
+    var(--gold) 25%,var(--gold) 50%,
+    var(--navy) 50%,var(--navy) 75%,
+    var(--violet) 75%,var(--violet) 100%
+  );
+  opacity:0;transition:opacity .2s;
+}
+.pl-card::after{
+  content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.055),transparent);
+  animation:spotlight 12s ease-in-out infinite;pointer-events:none;
+}
+.pl-card:active{background:var(--crimson-l);}
+.pl-card:active::before{opacity:.8;}
+.pl-card.tag { border-left: 3px solid var(--crimson); }
+
+.pl-icon{font-size:1.5rem;flex-shrink:0;}
+.pl-info{flex:1;min-width:0;}
+.pl-name{font-family:"Playfair Display",serif;font-size:18px;font-style:italic;color:var(--text);line-height:1.2;}
+.pl-desc{font-family:"IM Fell English",serif;font-size:14px;font-style:italic;color:var(--muted);margin-top:.1rem;}
+.pl-time{font-size:11px;letter-spacing:.1em;color:var(--crimson);opacity:.6;margin-top:.15rem;font-weight:500;}
+.pl-arr{color:rgba(184,41,74,0.35);font-size:.8rem;margin-left:auto;flex-shrink:0;}
+
+/* ── TAGESFLUSS BALKEN ── */
+.tagesfluss{
+  margin:0 1rem .8rem;
+  background:var(--card);
+  border-radius:8px;
+  border:1px solid var(--border);
+  padding:.7rem .9rem;
+  box-shadow:0 2px 10px var(--shadow);
+}
+.fluss-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--crimson);margin-bottom:.5rem;opacity:.7;}
+.fluss-bar{display:flex;height:5px;border-radius:3px;overflow:hidden;gap:2px;margin-bottom:.4rem;}
+.fluss-seg{flex:1;border-radius:2px;}
+.fluss-names{display:flex;justify-content:space-between;}
+.fluss-name{font-size:9px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;}
+
+/* ── STIMMUNGS-GRID ── */
+.mood-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;}
+.mood-card{
+  background:var(--card);border-radius:10px;border:1px solid var(--border);
+  padding:.65rem .8rem;text-decoration:none;color:var(--text);
+  transition:all .2s;display:block;position:relative;overflow:hidden;
+  box-shadow:0 2px 8px var(--shadow);
+}
+.mood-card:active{background:var(--crimson-l);}
+.mood-icon{font-size:1.3rem;margin-bottom:.25rem;display:block;}
+.mood-name{font-family:"Playfair Display",serif;font-size:15px;font-style:italic;color:var(--text);margin-bottom:.1rem;}
+.mood-desc{font-family:"IM Fell English",serif;font-size:13px;font-style:italic;color:var(--muted);}
+
+/* ── MANEGE LINIE ── */
+.manege-line{display:flex;align-items:center;gap:.5rem;padding:.1rem 1rem;color:var(--crimson);opacity:.3;font-size:11px;letter-spacing:.3em;user-select:none;}
+.manege-line::before,.manege-line::after{content:'';flex:1;height:1px;background:currentColor;}
+
+/* ── FOOTER ── */
+.footer{text-align:center;padding:1.2rem 1rem 0;}
+.footer-text{font-family:"IM Fell English",serif;font-style:italic;font-size:15px;color:var(--muted);line-height:1.6;}
+.footer-sig{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(184,41,74,0.3);margin-top:.4rem;}
+
+/* Animation delays */
+.pl-card:nth-child(1){animation-delay:.05s;}
+.pl-card:nth-child(2){animation-delay:.1s;}
+.pl-card:nth-child(3){animation-delay:.15s;}
+.pl-card:nth-child(4){animation-delay:.2s;}
+.pl-card:nth-child(5){animation-delay:.25s;}
+</style>
+</head>
+<body>
+
+<!-- WIMPELKETTE -->
+<div class="wimpelkette" aria-hidden="true">
+<svg viewBox="0 0 400 54" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,8 Q50,12 100,10 Q150,8 200,11 Q250,14 300,10 Q350,8 400,10" stroke="#1a2744" stroke-width="1" fill="none" opacity="0.3"/>
+  <g class="wimpel-1" transform-origin="30 10"><polygon points="22,10 38,10 30,34" fill="#b8294a" opacity="0.8"/></g>
+  <g class="wimpel-2" transform-origin="67 10"><polygon points="59,10 75,10 67,34" fill="#c9893a" opacity="0.8"/></g>
+  <g class="wimpel-3" transform-origin="104 10"><polygon points="96,10 112,10 104,34" fill="#1a2744" opacity="0.75"/></g>
+  <g class="wimpel-4" transform-origin="141 10"><polygon points="133,10 149,10 141,34" fill="#6a3f7a" opacity="0.75"/></g>
+  <g class="wimpel-5" transform-origin="178 11"><polygon points="170,11 186,11 178,35" fill="#b8294a" opacity="0.8"/></g>
+  <g class="wimpel-6" transform-origin="215 10"><polygon points="207,10 223,10 215,34" fill="#5e8a5a" opacity="0.7"/></g>
+  <g class="wimpel-7" transform-origin="252 11"><polygon points="244,11 260,11 252,35" fill="#c9893a" opacity="0.8"/></g>
+  <g class="wimpel-8" transform-origin="289 10"><polygon points="281,10 297,10 289,34" fill="#b8294a" opacity="0.8"/></g>
+  <g class="wimpel-9" transform-origin="326 10"><polygon points="318,10 334,10 326,34" fill="#1a2744" opacity="0.75"/></g>
+  <g class="wimpel-1" transform-origin="363 10"><polygon points="355,10 371,10 363,34" fill="#6a3f7a" opacity="0.75"/></g>
+</svg>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-title-wrap">
+    <div class="header-icon">🎵</div>
+    <div>
+      <div class="header-title">Musikuniversum</div>
+      <div class="header-sub">Grand Cirque de Sandra · Alle Playlists</div>
+    </div>
+  </div>
+</header>
+
+<!-- TAGESFLUSS -->
+<div style="margin:.8rem 1rem 0;">
+  <div class="tagesfluss">
+    <div class="fluss-label">✦ Tagesrhythmus</div>
+    <div class="fluss-bar">
+      <div class="fluss-seg" style="background:#f0c060;flex:1.5;"></div>
+      <div class="fluss-seg" style="background:#6db8c8;flex:2;"></div>
+      <div class="fluss-seg" style="background:#5e8a5a;flex:1;"></div>
+      <div class="fluss-seg" style="background:#e8956d;flex:2;"></div>
+      <div class="fluss-seg" style="background:#1a2744;flex:2;"></div>
+    </div>
+    <div class="fluss-names">
+      <span class="fluss-name">☕ Morgen</span>
+      <span class="fluss-name">📚 Vorm.</span>
+      <span class="fluss-name">🍽️ Mittag</span>
+      <span class="fluss-name">🏠 Nachm.</span>
+      <span class="fluss-name">🌙 Nacht</span>
+    </div>
+  </div>
+</div>
+
+<!-- TAGESPLAYLISTS -->
+<div class="tier-zeile" aria-hidden="true">
+  <div class="tier-linie"></div>
+  <span class="tier">🎵</span>
+  <span class="tier">🎶</span>
+  <span class="tier">🎸</span>
+  <span class="tier">🎹</span>
+  <span class="tier">🎺</span>
+  <div class="tier-linie"></div>
+</div>
+
+<div class="section-wrap">
+  <div class="section-label">Durch den Tag</div>
+
+  <a class="pl-card tag" href="https://open.spotify.com/playlist/1RO7Inm2kFd6FLgSJZ8GWe" target="_blank">
+    <span class="pl-icon">☕</span>
+    <div class="pl-info">
+      <div class="pl-name">Guten Morgen</div>
+      <div class="pl-desc">Sanft starten · mit Charakter</div>
+      <div class="pl-time">06 — 09 Uhr</div>
+    </div>
+    <span class="pl-arr">›</span>
+  </a>
+
+  <a class="pl-card tag" href="https://open.spotify.com/playlist/7kb6SPESF6UYOJwE6ELjzq" target="_blank">
+    <span class="pl-icon">📚</span>
+    <div class="pl-info">
+      <div class="pl-name">Vormittag</div>
+      <div class="pl-desc">Fokus · Fließen · Konzentriert</div>
+      <div class="pl-time">09 — 12 Uhr</div>
+    </div>
+    <span class="pl-arr">›</span>
+  </a>
+
+  <a class="pl-card tag" href="https://open.spotify.com/playlist/0rIM0LWeb25zwr5rl7Ijh2" target="_blank">
+    <span class="pl-icon">🍽️</span>
+    <div class="pl-info">
+      <div class="pl-name">Mittag</div>
+      <div class="pl-desc">Bossa · Pause · Mediterran</div>
+      <div class="pl-time">12 — 14 Uhr</div>
+    </div>
+    <span class="pl-arr">›</span>
+  </a>
+
+  <a class="pl-card tag" href="https://open.spotify.com/playlist/6X9u3seoLT0AUXEXdzYcTC" target="_blank">
+    <span class="pl-icon">🏠</span>
+    <div class="pl-info">
+      <div class="pl-name">Nachmittag</div>
+      <div class="pl-desc">Arbeiten · Wohnung · Energie</div>
+      <div class="pl-time">14 — 18 Uhr</div>
+    </div>
+    <span class="pl-arr">›</span>
+  </a>
+
+  <a class="pl-card tag" href="https://open.spotify.com/playlist/3wtSyNFvoSxSarePmVGYkx" target="_blank">
+    <span class="pl-icon">🌙</span>
+    <div class="pl-info">
+      <div class="pl-name">Gute Nacht</div>
+      <div class="pl-desc">Dankbarkeit · Wärme · Einschlafen</div>
+      <div class="pl-time">21 Uhr — ∞</div>
+    </div>
+    <span class="pl-arr">›</span>
+  </a>
+</div>
+
+<!-- GANZTAGSPLAYLIST -->
+<div class="tier-zeile" aria-hidden="true">
+  <div class="tier-linie"></div>
+  <span class="tier">🌍</span>
+  <span class="tier">💃</span>
+  <span class="tier">🌿</span>
+  <span class="tier">🐾</span>
+  <span class="tier">✨</span>
+  <div class="tier-linie"></div>
+</div>
+
+<div class="section-wrap">
+  <div class="section-label">Ganzer Tag</div>
+
+  <a class="pl-card tag" href="https://open.spotify.com/playlist/0ebUOGY3aW80dwWnGBX5CV" target="_blank">
+    <span class="pl-icon">🌍</span>
+    <div class="pl-info">
+      <div class="pl-name">Tanzend die Welt umarmen</div>
+      <div class="pl-desc">Liebe · Phantasie · Lebendigkeit · Fröhlichkeit</div>
+      <div class="pl-time">Den ganzen Tag · 42 Songs · ~4,5 h</div>
+    </div>
+    <span class="pl-arr">›</span>
+  </a>
+</div>
+
+<!-- STIMMUNGSPLAYLISTS -->
+<div class="tier-zeile" aria-hidden="true">
+  <div class="tier-linie"></div>
+  <span class="tier">🐘</span>
+  <span class="tier">🦁</span>
+  <span class="tier">🐆</span>
+  <span class="tier">🎪</span>
+  <span class="tier">🦜</span>
+  <div class="tier-linie"></div>
+</div>
+
+<div class="section-wrap">
+  <div class="section-label">Stimmungsplaylists</div>
+  <div class="mood-grid">
+    <div class="mood-card">
+      <span class="mood-icon">🌀</span>
+      <div class="mood-name">Mein Universum</div>
+      <div class="mood-desc">Psychedelisch · Atelier · Haushalt</div>
+    </div>
+    <div class="mood-card">
+      <span class="mood-icon">☀️</span>
+      <div class="mood-name">Sonnentag</div>
+      <div class="mood-desc">Indie · House · Jazz · Daði Freyr</div>
+    </div>
+    <div class="mood-card">
+      <span class="mood-icon">🪩</span>
+      <div class="mood-name">Funkytown</div>
+      <div class="mood-desc">Disco · Funk · 70s–80s</div>
+    </div>
+    <div class="mood-card">
+      <span class="mood-icon">🔮</span>
+      <div class="mood-name">1970s Trip</div>
+      <div class="mood-desc">Psychedelic Rock · Episch</div>
+    </div>
+  </div>
+</div>
+
+<!-- MINI WIMPELKETTE -->
+<div style="width:100%;padding:0 1rem;margin-top:.6rem;" aria-hidden="true">
+  <svg viewBox="0 0 340 22" style="width:100%;height:18px;display:block;" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,4 Q42,8 85,5 Q127,2 170,5 Q212,8 255,5 Q298,2 340,5" stroke="#1a2744" stroke-width=".8" fill="none" opacity="0.2"/>
+    <polygon points="20,4 28,4 24,16" fill="#b8294a" opacity="0.45"/>
+    <polygon points="55,5 63,5 59,17" fill="#c9893a" opacity="0.45"/>
+    <polygon points="90,4 98,4 94,16" fill="#1a2744" opacity="0.38"/>
+    <polygon points="125,5 133,5 129,17" fill="#6a3f7a" opacity="0.4"/>
+    <polygon points="160,4 168,4 164,16" fill="#b8294a" opacity="0.45"/>
+    <polygon points="195,5 203,5 199,17" fill="#5e8a5a" opacity="0.38"/>
+    <polygon points="230,4 238,4 234,16" fill="#c9893a" opacity="0.45"/>
+    <polygon points="265,5 273,5 269,17" fill="#b8294a" opacity="0.45"/>
+    <polygon points="300,4 308,4 304,16" fill="#1a2744" opacity="0.38"/>
+  </svg>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p class="footer-text">„Musik, die mich trägt —<br>durch jeden Moment des Tages"</p>
+  <p class="footer-sig">Grand Cirque de Sandra · Wien · 2026</p>
+</div>
+
+</body>
+</html>

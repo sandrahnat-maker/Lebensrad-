@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blutdruck</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf3e8;--card:#fffdf8;--text:#2e2010;--muted:rgba(46,32,16,0.5);--gold:#c8943a;--gold-light:#e8c97a;--sage:#7a9a5a;--sage-light:#b8d09a;--rose:#c07060;--border:rgba(180,130,70,0.18);--shadow:rgba(160,100,30,0.10);}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:17px;}
+body{background:var(--bg);font-family:"Cormorant Garamond",serif;color:var(--text);min-height:100vh;padding-bottom:4rem;max-width:480px;margin:0 auto;background-image:radial-gradient(ellipse at 10% 0%,rgba(200,148,58,0.08) 0%,transparent 60%),radial-gradient(ellipse at 90% 100%,rgba(122,154,90,0.07) 0%,transparent 60%);}
+.back{display:inline-flex;align-items:center;gap:.3rem;font-size:13px;color:var(--gold);text-decoration:none;padding:1rem 1.2rem .2rem;opacity:.8;}
+header{padding:.2rem 1.2rem .9rem;border-bottom:1px solid var(--border);}
+.lbl{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.2rem;}
+.ttl{font-family:"Playfair Display",serif;font-size:1.5rem;font-style:italic;font-weight:400;}
+.sub{font-size:13px;color:var(--muted);font-style:italic;margin-top:.2rem;}
+.tabs{display:flex;gap:.4rem;padding:.8rem 1rem .3rem;}
+.tab{flex:1;padding:.4rem;border:1.5px solid var(--border);background:transparent;color:var(--muted);border-radius:20px;font-size:13px;font-family:"Cormorant Garamond",serif;cursor:pointer;transition:all .2s;text-align:center;}
+.tab.on{background:var(--gold);color:#fff;border-color:var(--gold);}
+.card{background:var(--card);border-radius:20px;border:1.5px solid var(--border);box-shadow:0 4px 20px var(--shadow);margin:.5rem 1rem;overflow:hidden;}
+.card-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);padding:.9rem 1.1rem .3rem;}
+.inp-row{display:flex;align-items:center;gap:.6rem;padding:.3rem 1.1rem;}
+.inp-lbl{font-size:13px;color:var(--muted);font-style:italic;width:5.5rem;}
+.inp{flex:1;border:none;border-bottom:1.5px solid var(--border);padding:.3rem 0;font-size:1.1rem;font-family:"Cormorant Garamond",serif;color:var(--text);background:transparent;text-align:center;outline:none;}
+.inp:focus{border-bottom-color:var(--gold);}
+.inp-unit{font-size:12px;color:var(--muted);width:2.5rem;}
+.inp-date{width:calc(100% - 2.2rem);margin:.3rem 1.1rem;border:none;border-bottom:1.5px solid var(--border);padding:.3rem 0;font-size:13px;font-family:"Cormorant Garamond",serif;color:var(--muted);background:transparent;outline:none;}
+.save-btn{display:block;width:calc(100% - 2.2rem);margin:.8rem 1.1rem 1rem;background:var(--gold);color:#fff;border:none;border-radius:30px;padding:.55rem;font-size:15px;font-family:"Cormorant Garamond",serif;cursor:pointer;}
+.rating{font-size:13px;font-style:italic;padding:.4rem .9rem;margin:.2rem 1.1rem .6rem;border-radius:8px;text-align:center;}
+.r-opt{background:rgba(122,154,90,0.12);color:var(--sage);}
+.r-norm{background:rgba(122,154,90,0.08);color:var(--sage);}
+.r-high{background:rgba(200,148,58,0.12);color:var(--gold);}
+.r-vhigh{background:rgba(192,112,96,0.12);color:var(--rose);}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;padding:.5rem 1rem;}
+.stat{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:.7rem;text-align:center;}
+.stat-val{font-family:"Playfair Display",serif;font-size:1.1rem;font-style:italic;color:var(--text);}
+.stat-lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-top:.2rem;}
+.chart-wrap{background:var(--card);border-radius:20px;border:1.5px solid var(--border);box-shadow:0 4px 20px var(--shadow);margin:.5rem 1rem;padding:1rem;}
+canvas{width:100%;height:160px;display:block;}
+.legend{display:flex;gap:1rem;justify-content:center;margin-top:.5rem;font-size:12px;font-style:italic;color:var(--muted);}
+.leg-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:.2rem;}
+.ref-box{margin:.5rem 1rem;padding:.6rem .9rem;background:rgba(200,148,58,0.06);border-left:2.5px solid var(--gold);border-radius:0 10px 10px 0;font-size:13px;line-height:1.8;font-style:italic;color:var(--muted);}
+.hist-item{display:flex;justify-content:space-between;align-items:center;padding:.6rem 1.1rem;border-bottom:1px solid var(--border);}
+.hist-item:last-child{border-bottom:none;}
+.hist-vals{font-family:"Playfair Display",serif;font-size:1rem;font-style:italic;}
+.hist-meta{font-size:11px;color:var(--muted);text-align:right;}
+.hist-badge{font-size:11px;font-style:italic;color:var(--muted);}
+.del-btn{background:none;border:none;color:var(--border);font-size:.9rem;cursor:pointer;padding:.1rem .3rem;margin-left:.3rem;}
+.pdf-btn{display:block;width:calc(100% - 2.2rem);margin:.8rem 1.1rem .4rem;background:var(--sage);color:#fff;border:none;border-radius:30px;padding:.55rem;font-size:15px;font-family:"Cormorant Garamond",serif;cursor:pointer;}
+.pdf-note{font-size:12px;font-style:italic;color:var(--muted);text-align:center;margin-bottom:.8rem;}
+select.inp{text-align:left;font-size:13px;}
+</style>
+</head>
+<body>
+<a class="back" href="index.html">← Mein Fokus</a>
+<header>
+  <div class="lbl">Körper & Gesundheit</div>
+  <div class="ttl">Blutdruck</div>
+  <div class="sub">Täglich messen — Verlauf beobachten</div>
+</header>
+<div class="tabs">
+  <button class="tab on" onclick="setTab(0)">Eintragen</button>
+  <button class="tab" onclick="setTab(1)">Verlauf</button>
+  <button class="tab" onclick="setTab(2)">Alle</button>
+  <button class="tab" onclick="setTab(3)">PDF</button>
+</div>
+
+<div id="tab0">
+  <div class="card">
+    <div class="card-label">Neue Messung</div>
+    <input class="inp-date" type="datetime-local" id="inpDate">
+    <div class="inp-row"><span class="inp-lbl">Systolisch</span><input class="inp" id="sys" type="number" placeholder="120" min="80" max="220"><span class="inp-unit">mmHg</span></div>
+    <div class="inp-row"><span class="inp-lbl">Diastolisch</span><input class="inp" id="dia" type="number" placeholder="80" min="50" max="140"><span class="inp-unit">mmHg</span></div>
+    <div class="inp-row"><span class="inp-lbl">Puls</span><input class="inp" id="puls" type="number" placeholder="70" min="40" max="180"><span class="inp-unit">/min</span></div>
+    <button class="save-btn" onclick="saveEntry()">✓ Eintragen</button>
+    <div id="ratingBox"></div>
+  </div>
+  <div class="stats-grid" id="statsGrid"></div>
+</div>
+
+<div id="tab1" style="display:none">
+  <div class="chart-wrap">
+    <div class="card-label" style="padding:.2rem 0 .5rem;">Meine letzten 30 Messungen</div>
+    <canvas id="chart"></canvas>
+    <div class="legend">
+      <span><span class="leg-dot" style="background:#c07060"></span>Systolisch</span>
+      <span><span class="leg-dot" style="background:#c8943a"></span>Diastolisch</span>
+      <span><span class="leg-dot" style="background:#7a9a5a"></span>Puls</span>
+    </div>
+  </div>
+  <div class="ref-box">
+    Optimal: &lt; 120/80 · Normal: &lt; 130/85 · Hochnormal: &lt; 140/90 · Erhöht: ≥ 140/90 mmHg
+  </div>
+</div>
+
+<div id="tab2" style="display:none">
+  <div class="card"><div id="histList"></div></div>
+</div>
+
+<div id="tab3" style="display:none">
+  <div class="card">
+    <div class="card-label">PDF für den Arzt</div>
+    <div class="inp-row" style="margin-bottom:.4rem;"><span class="inp-lbl">Name</span><input class="inp" id="pdfName" type="text" placeholder="Dein Name" style="text-align:left;font-size:13px;"></div>
+    <div class="inp-row" style="margin-bottom:.4rem;"><span class="inp-lbl">Zeitraum</span>
+      <select class="inp" id="pdfRange" style="text-align:left;font-size:13px;">
+        <option value="7">Letzte 7 Tage</option>
+        <option value="14">Letzte 14 Tage</option>
+        <option value="30" selected>Letzte 30 Tage</option>
+        <option value="90">Letzte 90 Tage</option>
+        <option value="0">Alle</option>
+      </select>
+    </div>
+    <button class="pdf-btn" onclick="generatePDF()">PDF erstellen</button>
+    <p class="pdf-note">Öffnet eine druckfertige Seite</p>
+  </div>
+</div>
+
+<script>
+var KEY='bp_v2';
+var history=[];
+var currentTab=0;
+function load(){try{history=JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){history=[];}var now=new Date();document.getElementById('inpDate').value=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,16);}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(history));}catch(e){}}
+function getRating(sys,dia){if(sys<120&&dia<80)return{text:'Optimal — gut gemacht',cls:'r-opt'};if(sys<130&&dia<85)return{text:'Normal — alles im grünen Bereich',cls:'r-norm'};if(sys<140&&dia<90)return{text:'Leicht erhöht — im Auge behalten',cls:'r-high'};return{text:'Erhöht — bitte mit dem Arzt besprechen',cls:'r-vhigh'};}
+function saveEntry(){var sys=parseInt(document.getElementById('sys').value),dia=parseInt(document.getElementById('dia').value),puls=parseInt(document.getElementById('puls').value)||0,dateStr=document.getElementById('inpDate').value;if(!sys||!dia||sys<60||dia<40){document.getElementById('ratingBox').innerHTML='<div class="rating r-vhigh">Bitte Systolisch und Diastolisch eingeben</div>';return;}history.unshift({dt:dateStr||new Date().toISOString().slice(0,16),sys:sys,dia:dia,puls:puls});if(history.length>365)history=history.slice(0,365);save();var r=getRating(sys,dia);document.getElementById('ratingBox').innerHTML='<div class="rating '+r.cls+'">'+r.text+'</div>';document.getElementById('sys').value='';document.getElementById('dia').value='';document.getElementById('puls').value='';var now=new Date();document.getElementById('inpDate').value=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,16);renderStats();}
+function fmtDt(dt){var d=new Date(dt);return d.toLocaleDateString('de-AT',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'});}
+function renderStats(){var last7=history.filter(function(e){return new Date(e.dt)>=new Date(Date.now()-7*864e5);});if(!last7.length){document.getElementById('statsGrid').innerHTML='';return;}var avgSys=Math.round(last7.reduce(function(s,e){return s+e.sys;},0)/last7.length);var avgDia=Math.round(last7.reduce(function(s,e){return s+e.dia;},0)/last7.length);var pl=last7.filter(function(e){return e.puls;});var avgPuls=pl.length?Math.round(pl.reduce(function(s,e){return s+e.puls;},0)/pl.length):0;var r=getRating(avgSys,avgDia);document.getElementById('statsGrid').innerHTML='<div class="stat"><div class="stat-val">'+avgSys+'/'+avgDia+'</div><div class="stat-lbl">Ø 7 Tage</div></div><div class="stat"><div class="stat-val">'+avgPuls+'</div><div class="stat-lbl">Ø Puls</div></div><div class="stat"><div class="stat-val">'+last7.length+'</div><div class="stat-lbl">Messungen</div></div><div class="stat"><div class="stat-val" style="font-size:.85rem;font-style:italic;">'+r.text.split('—')[0].trim()+'</div><div class="stat-lbl">Bewertung</div></div>';}
+function renderChart(){var canvas=document.getElementById('chart');var data=history.slice(0,30).reverse();if(!data.length)return;var ctx=canvas.getContext('2d');var W=canvas.offsetWidth||320,H=160;canvas.width=W;canvas.height=H;ctx.clearRect(0,0,W,H);var pad={t:10,r:10,b:25,l:35};var cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;var allVals=data.map(function(e){return e.sys;}).concat(data.map(function(e){return e.dia;}));var minV=Math.max(40,Math.min.apply(null,allVals)-10),maxV=Math.min(220,Math.max.apply(null,allVals)+10);function yPos(v){return pad.t+cH-(v-minV)/(maxV-minV)*cH;}function xPos(i){return pad.l+(data.length===1?cW/2:i/(data.length-1)*cW);}ctx.strokeStyle='rgba(200,148,58,0.1)';ctx.lineWidth=1;[80,90,120,140].forEach(function(v){if(v>=minV&&v<=maxV){var y=yPos(v);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();ctx.fillStyle='rgba(200,148,58,0.4)';ctx.font='9px serif';ctx.fillText(v,2,y+3);}});function drawLine(key,color){ctx.strokeStyle=color;ctx.lineWidth=2;ctx.lineJoin='round';ctx.beginPath();data.forEach(function(e,i){var x=xPos(i),y=yPos(e[key]||0);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});ctx.stroke();data.forEach(function(e,i){ctx.beginPath();ctx.arc(xPos(i),yPos(e[key]||0),3,0,2*Math.PI);ctx.fillStyle=color;ctx.fill();});}drawLine('sys','#c07060');drawLine('dia','#c8943a');if(data.some(function(e){return e.puls;}))drawLine('puls','#7a9a5a');ctx.fillStyle='rgba(46,32,16,0.4)';ctx.font='9px serif';ctx.textAlign='center';var step=Math.max(1,Math.floor(data.length/5));data.forEach(function(e,i){if(i%step===0||i===data.length-1){var d=new Date(e.dt);ctx.fillText((d.getDate())+'.'+(d.getMonth()+1)+'.',xPos(i),H-5);}});}
+function renderHistory(){if(!history.length){document.getElementById('histList').innerHTML='<div style="padding:1.5rem;text-align:center;font-style:italic;color:var(--muted);">Noch keine Einträge.</div>';return;}var h='';history.forEach(function(e,i){var r=getRating(e.sys,e.dia);h+='<div class="hist-item"><div><div class="hist-vals">'+e.sys+'/'+e.dia+' mmHg'+(e.puls?' · '+e.puls+'/min':'')+'</div><div class="hist-badge">'+r.text.split('—')[0].trim()+'</div></div><div style="display:flex;align-items:center;gap:.3rem"><div class="hist-meta">'+fmtDt(e.dt)+'</div><button class="del-btn" onclick="delEntry('+i+')">✕</button></div></div>';});document.getElementById('histList').innerHTML=h;}
+function delEntry(i){history.splice(i,1);save();renderHistory();renderStats();}
+function setTab(n){currentTab=n;for(var i=0;i<4;i++){document.getElementById('tab'+i).style.display=i===n?'':'none';document.querySelectorAll('.tab')[i].className='tab'+(i===n?' on':'');}if(n===1)renderChart();if(n===2)renderHistory();}
+function generatePDF(){var name=document.getElementById('pdfName').value||'Sandra Hnat-Gerersdorfer';var days=parseInt(document.getElementById('pdfRange').value);var data=days>0?history.filter(function(e){return new Date(e.dt)>=new Date(Date.now()-days*864e5);}):history;if(!data.length){alert('Keine Messungen im gewählten Zeitraum.');return;}var avgSys=Math.round(data.reduce(function(s,e){return s+e.sys;},0)/data.length);var avgDia=Math.round(data.reduce(function(s,e){return s+e.dia;},0)/data.length);var pl=data.filter(function(e){return e.puls;});var avgPuls=pl.length?Math.round(pl.reduce(function(s,e){return s+e.puls;},0)/pl.length):0;var rows=data.map(function(e){var r=getRating(e.sys,e.dia);return'<tr><td>'+fmtDt(e.dt)+'</td><td>'+e.sys+'</td><td>'+e.dia+'</td><td>'+(e.puls||'–')+'</td><td>'+r.text.split('—')[0].trim()+'</td></tr>';}).join('');var html='<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>Blutdruck-Protokoll</title><style>body{font-family:Georgia,serif;padding:2cm;color:#2e2010}h1{color:#c8943a;font-size:1.4rem;font-style:italic;margin-bottom:.5cm}table{width:100%;border-collapse:collapse;font-size:10pt}th{background:#c8943a;color:#fff;padding:.2cm;text-align:left;font-weight:normal}td{padding:.15cm .2cm;border-bottom:1px solid #f0e0d0}tr:nth-child(even){background:#faf3e8}.footer{margin-top:1cm;font-size:9pt;color:#888;border-top:1px solid #e8ddd0;padding-top:.3cm}</style></head><body><h1>Blutdruck-Protokoll</h1><p style="font-size:10pt;color:#9a7a50;margin-bottom:.5cm">'+name+' · Erstellt: '+new Date().toLocaleDateString('de-AT')+(days>0?' · Letzte '+days+' Tage':' · Alle Messungen')+'</p><table><tr><th>Datum</th><th>Systolisch</th><th>Diastolisch</th><th>Puls</th><th>Bewertung</th></tr>'+rows+'</table><div class="footer">Ø '+avgSys+'/'+avgDia+' mmHg'+(avgPuls?' · Ø Puls: '+avgPuls+'/min':'')+'&nbsp;|&nbsp;Referenz: Optimal &lt;120/80 · Normal &lt;130/85 · Hochnormal &lt;140/90 · Erhöht ≥140/90 mmHg (WHO)</div></body></html>';var w=window.open('','_blank');if(w){w.document.write(html);w.document.close();setTimeout(function(){w.print();},500);}}
+load();renderStats();
+</script>
+</body>
+</html>

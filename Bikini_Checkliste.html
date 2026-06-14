@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>🌺 Sandra erblüht · 1. Juni</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IM+Fell+English:ital@0;1&family=Raleway:wght@400;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdf8ee;--card:#fffdf5;--text:#2a1a08;--muted:rgba(42,26,8,0.45);
+  --crimson:#c0392b;--gold:#c8993a;--navy:#4a7c59;
+  --sage:#7a9e5a;--violet:#b05a2a;
+  --border-col:rgba(192,57,43,0.13);
+  --shadow:rgba(42,26,8,0.07);
+  --border:1px solid var(--border-col);
+  --schatten:0 2px 12px var(--shadow);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);font-family:'Raleway',sans-serif;color:var(--text);min-height:100vh;padding-bottom:5rem;overflow-x:hidden;
+  background-image:repeating-linear-gradient(170deg,rgba(245,233,200,.45) 0px,rgba(245,233,200,.45) 18px,transparent 18px,transparent 36px,rgba(192,57,43,.018) 36px,rgba(192,57,43,.018) 54px,transparent 54px,transparent 72px),radial-gradient(ellipse at 15% 20%,rgba(192,57,43,.06) 0%,transparent 40%),radial-gradient(ellipse at 85% 70%,rgba(192,57,43,.04) 0%,transparent 35%);}
+body::after{content:'';position:fixed;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,#c0392b 0,#c0392b 15%,#e8c96a 15%,#e8c96a 30%,#4a7c59 30%,#4a7c59 45%,#c0392b 45%,#c0392b 60%,#e8c96a 60%,#e8c96a 75%,#4a7c59 75%,#4a7c59 100%);z-index:100;opacity:.45;}
+
+@keyframes slideWimpel{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+@keyframes schaukeln{0%,100%{transform:rotate(-4deg);}50%{transform:rotate(4deg);}}
+@keyframes reingehüpft{from{transform:scale(.96) translateY(8px);opacity:0;}to{transform:scale(1) translateY(0);opacity:1;}}
+@keyframes fallen{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+
+/* WIMPELKETTE */
+.wimpel-banner{background:linear-gradient(90deg,#c0392b,#c8993a,#4a7c59,#c0392b);padding:.5rem 0 0;overflow:hidden;}
+.wimpel-row{display:flex;animation:slideWimpel 70s linear infinite;white-space:nowrap;width:max-content;}
+.wimpel{display:inline-block;width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:28px solid var(--crimson);margin:0 2px;flex-shrink:0;}
+.wimpel:nth-child(2n){border-top-color:var(--gold);}
+.wimpel:nth-child(3n){border-top-color:var(--violet);}
+.wimpel:nth-child(4n){border-top-color:var(--sage);}
+
+/* HEADER */
+.vk-header{background:rgba(255,251,245,.92);border-bottom:1px solid var(--border-col);padding:.9rem 1.2rem .8rem;backdrop-filter:blur(4px);}
+.vk-header::before{content:'🌺  ·  🌿  ·  🌾  ·  🌸  ·  🌺  ·  🌿  ·  🌾  ·  🌸  ·  🌺';display:block;font-size:8px;letter-spacing:.3em;color:var(--crimson);opacity:.35;text-align:center;margin-bottom:.5rem;}
+.vk-date{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;opacity:.45;font-weight:500;margin-bottom:.15rem;}
+.vk-title{font-family:'Playfair Display',serif;font-size:1.8rem;line-height:1.1;color:var(--text);}
+.vk-motto{font-family:'IM Fell English',serif;font-size:.95rem;opacity:.55;margin-top:.15rem;font-style:italic;padding-left:2.1rem;}
+
+/* COUNTDOWN */
+.countdown-card{margin:1rem 1rem 0;background:linear-gradient(135deg,#c0392b,#7a1a0a);border-radius:16px;box-shadow:0 4px 20px rgba(192,57,43,.25);overflow:hidden;position:relative;}
+.countdown-card::before{content:'';position:absolute;top:-30px;right:-30px;width:130px;height:130px;border-radius:50%;background:rgba(184,41,74,.18);}
+.countdown-card::after{content:'';position:absolute;bottom:-20px;left:-20px;width:90px;height:90px;border-radius:50%;background:rgba(201,137,58,.13);}
+.countdown-inner{padding:1.2rem 1.4rem;position:relative;z-index:1;display:flex;align-items:center;gap:1rem;}
+.countdown-emoji{font-size:2.6rem;animation:schaukeln 3s ease-in-out infinite;flex-shrink:0;}
+.countdown-text{flex:1;}
+.countdown-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:white;line-height:1.2;}
+.countdown-sub{font-family:'IM Fell English',serif;font-style:italic;font-size:.85rem;color:rgba(255,255,255,.55);margin-top:.15rem;}
+.countdown-num{font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--gold);font-weight:700;line-height:1;}
+.countdown-label{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:.1rem;}
+
+/* FORTSCHRITT */
+.progress-card{margin:1rem 1rem 0;background:var(--card);border:var(--border);border-radius:16px;box-shadow:var(--schatten);overflow:hidden;}
+.progress-card::before{content:'';display:block;height:3px;background:linear-gradient(90deg,var(--crimson),var(--gold),var(--sage));}
+.progress-inner{padding:.8rem 1.2rem 1rem;}
+.progress-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--crimson);font-weight:700;margin-bottom:.5rem;}
+.progress-bar-wrap{background:rgba(30,18,8,.07);border-radius:10px;height:8px;overflow:hidden;margin-bottom:.4rem;}
+.progress-bar{height:8px;border-radius:10px;background:linear-gradient(90deg,var(--sage),var(--gold));transition:width .5s ease;}
+.progress-stats{display:flex;justify-content:space-between;align-items:center;}
+.progress-text{font-family:'Caveat',cursive;font-size:.9rem;color:var(--muted);}
+.progress-pct{font-family:'Playfair Display',serif;font-size:1rem;color:var(--sage);font-weight:700;}
+
+/* WOCHEN-GRID */
+.week-grid{margin:.8rem 1rem 0;display:grid;grid-template-columns:repeat(9,1fr);gap:.25rem;}
+.week-day{background:var(--card);border-radius:10px;padding:.4rem .1rem;text-align:center;border:1px solid rgba(30,18,8,.07);cursor:pointer;transition:all .2s;box-shadow:0 1px 4px rgba(30,18,8,.04);}
+.week-day.today{border-color:var(--crimson);box-shadow:0 0 0 1px var(--crimson);}
+.week-day.complete{background:var(--sage);border-color:var(--sage);}
+.wday-label{font-size:.5rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#aaa;}
+.week-day.complete .wday-label{color:rgba(255,255,255,.7);}
+.wday-num{font-family:'Playfair Display',serif;font-size:.9rem;color:var(--text);}
+.week-day.complete .wday-num{color:white;}
+.wday-dot{width:5px;height:5px;border-radius:50%;background:var(--crimson);margin:.2rem auto 0;opacity:0;}
+.week-day.today .wday-dot{opacity:1;}
+
+/* TABS */
+.tabs-outer{padding:.8rem 1rem .3rem;overflow-x:auto;scrollbar-width:none;}
+.tabs-outer::-webkit-scrollbar{display:none;}
+.tabs-inner{display:flex;gap:.3rem;min-width:max-content;}
+.tab-btn{padding:.3rem .75rem;border-radius:20px;font-size:.72rem;font-weight:600;font-family:'Raleway',sans-serif;cursor:pointer;border:1px solid rgba(184,41,74,.2);background:var(--card);color:var(--muted);transition:all .2s;}
+.tab-btn.active{background:var(--navy);color:white;border-color:var(--navy);}
+.tab-btn.done{background:var(--sage);color:white;border-color:var(--sage);}
+
+/* KATEGORIEN */
+.cat-section{margin:.5rem 1rem;background:var(--card);border:var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--schatten);}
+.cat-head{padding:.7rem 1rem;display:flex;align-items:center;gap:.6rem;}
+.cat-icon-el{font-size:1.1rem;}
+.cat-name{font-family:'Playfair Display',serif;font-size:.95rem;flex:1;}
+.cat-badge{font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:8px;letter-spacing:.04em;}
+.cat-ernährung .cat-head{background:#FEF6E8;}
+.cat-ernährung .cat-badge{background:#FDEBD0;color:var(--gold);}
+.cat-bewegung .cat-head{background:#E8F5EE;}
+.cat-bewegung .cat-badge{background:#D5F5E3;color:var(--sage);}
+.cat-wasser .cat-head{background:#EAF4FB;}
+.cat-wasser .cat-badge{background:#D6EAF8;color:#2471A3;}
+.cat-seele .cat-head{background:#F3EAF8;}
+.cat-seele .cat-badge{background:#E8DAEF;color:var(--violet);}
+
+.task-item{display:flex;align-items:flex-start;gap:.7rem;padding:.6rem 1rem;border-top:1px dashed rgba(30,18,8,.08);cursor:pointer;transition:background .15s;}
+.task-item:active{background:rgba(30,18,8,.03);}
+.task-item.checked{opacity:.5;}
+.task-check{width:22px;height:22px;border-radius:50%;border:2px solid rgba(184,41,74,.3);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:.75rem;transition:all .2s;}
+.task-item.checked .task-check{background:var(--sage);border-color:var(--sage);color:white;}
+.task-body{flex:1;min-width:0;}
+.task-name{font-size:.85rem;font-weight:600;color:var(--text);line-height:1.3;}
+.task-item.checked .task-name{text-decoration:line-through;color:var(--muted);}
+.task-note{font-family:'IM Fell English',serif;font-size:.82rem;color:var(--muted);margin-top:.1rem;font-style:italic;line-height:1.3;}
+.task-sandra{font-size:.8rem;color:var(--gold);margin-top:.25rem;font-family:'Caveat',cursive;line-height:1.4;display:block;}
+
+
+/* ZITAT */
+.zitat-card{margin:1rem 1rem 0;background:linear-gradient(135deg,#4a7c59 0%,#2a5a3a 100%);border-radius:16px;padding:1.2rem 1.4rem;text-align:center;position:relative;overflow:hidden;}
+.zitat-card::before{content:'✦';position:absolute;top:.6rem;left:1rem;font-size:.9rem;color:rgba(255,255,255,.12);}
+.zitat-card::after{content:'✦';position:absolute;bottom:.6rem;right:1rem;font-size:.9rem;color:rgba(255,255,255,.12);}
+.zitat-text{font-family:'IM Fell English',serif;font-style:italic;font-size:1rem;line-height:1.6;color:rgba(253,246,238,.9);margin-bottom:.4rem;}
+.zitat-author{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.32);}
+
+.back-btn{display:block;margin:.8rem 1rem 0;text-align:center;background:none;border:1px solid rgba(184,41,74,.25);border-radius:20px;padding:.4rem;font-size:.72rem;color:var(--muted);font-family:'Raleway',sans-serif;font-weight:600;text-decoration:none;letter-spacing:.06em;}
+
+/* KONFETTI */
+.konfetti-piece{position:fixed;top:-10px;border-radius:2px;pointer-events:none;animation:fallen linear forwards;z-index:9999;}
+</style>
+</head>
+<body>
+
+<div class="wimpel-banner">
+  <div class="wimpel-row" id="wimpelRow"></div>
+</div>
+
+<div class="vk-header">
+  <div class="vk-date" id="vkDate"></div>
+  <div class="vk-title">🌺 Sandra erblüht</div>
+  <div class="vk-motto">fröhlich · schrullig · lebendig · 1. Juni 2026</div>
+</div>
+
+<div class="countdown-card">
+  <div class="countdown-inner">
+    <div class="countdown-emoji">👙</div>
+    <div class="countdown-text">
+      <div class="countdown-title">Noch ein paar Tage... 👙</div>
+      <div class="countdown-sub">Du schaffst das. Wirklich.</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0;">
+      <div class="countdown-num" id="countdownDays">–</div>
+      <div class="countdown-label">Tage noch</div>
+    </div>
+  </div>
+</div>
+
+<div class="week-grid" id="weekGrid"></div>
+
+<div class="progress-card">
+  <div class="progress-inner">
+    <div class="progress-label">🌺 Heute — Sandra macht das</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progressBar" style="width:0%"></div>
+    </div>
+    <div class="progress-stats">
+      <span class="progress-text" id="progressText">Die Bühne wartet …</span>
+      <span class="progress-pct" id="progressPct">0 %</span>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-outer">
+  <div class="tabs-inner" id="tabsRow"></div>
+</div>
+
+<div id="tasksContainer"></div>
+
+<div class="zitat-card">
+  <div class="zitat-text" id="zitatText">„Fröhlichkeit ist mein Kern."</div>
+  <div class="zitat-author">Sandra · fröhliche Lehrerin &amp; Künstlerin</div>
+</div>
+
+<a href="index.html" class="back-btn">← zurück zu Sandras Welt</a>
+
+<div style="height:4rem;"></div>
+
+<script>
+const KATEGORIEN=[
+  {id:'ernährung',icon:'🍽️',titel:'Ernährung',cls:'cat-ernährung',aufgaben:[
+    {id:'e1',name:'Frühstück ≤ 350 kcal',note:'Porridge oder Ei + Gemüse',sandra:'Porridge. Schon wieder. Aber du weißt, dass du es danach gut findest.'},
+    {id:'e2',name:'Hülsenfrüchte zum Mittagessen',note:'Linsen, Kichererbsen, Bohnen',sandra:'Hülsenfrüchte. Das Gold der Erde. Sagt zumindest niemand spontan.'},
+    {id:'e3',name:'Abendessen leicht & proteinreich',note:'Wenig Brot/Nudeln/Reis abends',sandra:'Kein Brot. Kein Käse. Kein Drama. Du kannst das.'},
+    {id:'e4',name:'Kein Snacken nach dem Abendessen',note:'Tee statt Naschen 🍵',sandra:'Tee. Nicht die Schokolade. Die Schokolade schaut nur so unschuldig.'},
+    {id:'e5',name:'Wenig Salz heute',note:'Kräuter statt Salz würzen',sandra:'Wenig Salz. Dein Blutdruck sagt danke — und er sagt es laut.'},
+  ]},
+  {id:'bewegung',icon:'🐾',titel:'Bewegung',cls:'cat-bewegung',aufgaben:[
+    {id:'b1',name:'Lotte-Spaziergang ≥ 30 Min.',note:'Zügiges Tempo wenn möglich',sandra:'Sie liebt dich so sehr! Das willst du ihr doch nicht antun, oder!?'},
+    {id:'b2',name:'10 Min. Körperspannung',note:'Plank, Beckenboden, Bauch',sandra:'10 Minuten. Im Vergleich zu einer Schulstunde ist das ein Witz.'},
+    {id:'b3',name:'Yoga / Balanceboard / Muskeltraining',note:'Was heute dransteht',sandra:'Du wirst dich einfach großartig fühlen! ❤️'},
+  ]},
+  {id:'wasser',icon:'💧',titel:'Wasser',cls:'cat-wasser',aufgaben:[
+    {id:'w1',name:'Morgens 500 ml Wasser',note:'Nach Euthyrox, vor dem Frühstück',sandra:'Wasser. Ja, vor dem Kaffee. Ja, wirklich.'},
+    {id:'w2',name:'2 Liter Wasser gesamt',note:'Tees zählen mit!',sandra:'2 Liter. Tee zählt mit. Weißwein nicht. Leider.'},
+    {id:'w3',name:'Tee am Nachmittag',note:'Statt Snack — bewusste Pause',sandra:'Der ist gut für dich und deinen Blutdruck!!!'},
+  ]},
+  {id:'seele',icon:'🌸',titel:'Seele',cls:'cat-seele',aufgaben:[
+    {id:'s1',name:'Mindful Moment heute',note:'Meditation oder bewusstes Innehalten',sandra:'Innehalten. Epiktet wartet. Er hat Zeit — er ist seit 1900 Jahren tot.'},
+    {id:'s2',name:'Magnesium abends',note:'Glycinat/Malat vor dem Schlafen',sandra:'Magnesium. Dann schlafen. Nicht andersrum — du weißt warum.'},
+    {id:'s3',name:'1 schöner Moment notiert',note:'Was hat mich heute zum Lächeln gebracht?',sandra:'Was hat dich heute zum Lächeln gebracht? Und nein, Feierabend zählt nicht allein.'},
+  ]},
+];
+
+const ZITATE=[
+  'Fröhlichkeit ist mein Kern.',
+  'Liebe · Phantasie · Lebendigkeit',
+  'Handle ich gerade aus Freiheit — oder aus Angst?',
+  'Ich darf bei mir so sein, wie ich bin.',
+  'Ich bin die fröhliche, schrullige Lehrerin — und das ist gut so.',
+  'Mach doch was du willst!',
+  'Sanft und beständig — das ist mein Weg.',
+  'Ich bin die Künstlerin meines eigenen Lebens.',
+  'Eh! Ich mach das jetzt einfach.',
+  'Mein Körper trägt mich — ich wähle, ihn zu pflegen.',
+];
+
+const START=new Date('2026-05-15'),ENDE=new Date('2026-06-01');
+const TAGE=Math.round((ENDE-START)/86400000)+1;
+const WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+const MO=['Jänner','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const WDAY=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+
+function heuteKey(){return new Date().toISOString().slice(0,10);}
+function loadState(){try{return JSON.parse(localStorage.getItem('bikini_sandra')||'{}');}catch{return{};}}
+function saveState(s){try{localStorage.setItem('bikini_sandra',JSON.stringify(s));}catch{}}
+
+let state=loadState(),aktTag=heuteKey();
+
+function baueWimpel(){
+  const r=document.getElementById('wimpelRow');
+  const s=Array.from({length:80},()=>'<span class="wimpel"></span>').join('');
+  r.innerHTML=s+s;
+}
+
+function aktualisiereHeader(){
+  const n=new Date();
+  document.getElementById('vkDate').textContent=WDAY[n.getDay()]+', '+n.getDate()+'. '+MO[n.getMonth()]+' '+n.getFullYear();
+}
+
+function aktualisiereCountdown(){
+  const d=Math.ceil((ENDE-new Date())/86400000);
+  document.getElementById('countdownDays').textContent=Math.max(0,d);
+}
+
+function alleAufgaben(){return KATEGORIEN.flatMap(k=>k.aufgaben);}
+
+function baueGrid(){
+  const g=document.getElementById('weekGrid'),h=heuteKey();
+  let html='';
+  for(let i=0;i<TAGE;i++){
+    const d=new Date(START);d.setDate(d.getDate()+i);
+    const key=d.toISOString().slice(0,10);
+    const done=(state[key]||[]).length===alleAufgaben().length;
+    const isH=key===h;
+    html+=`<div class="week-day ${isH?'today':''} ${done?'complete':''}" onclick="wechsle('${key}')">
+      <div class="wday-label">${WD[d.getDay()]}</div>
+      <div class="wday-num">${d.getDate()}</div>
+      <div class="wday-dot"></div>
+    </div>`;
+  }
+  g.innerHTML=html;
+}
+
+function baueTabs(){
+  const r=document.getElementById('tabsRow');
+  const alle=alleAufgaben();
+  let html='';
+  for(let i=0;i<TAGE;i++){
+    const d=new Date(START);d.setDate(d.getDate()+i);
+    const key=d.toISOString().slice(0,10);
+    const done=(state[key]||[]).length===alle.length;
+    const aktiv=key===aktTag;
+    html+=`<button class="tab-btn ${aktiv?'active':''} ${done&&!aktiv?'done':''}" onclick="wechsle('${key}')">${d.getDate()}.${d.getMonth()+1}.</button>`;
+  }
+  r.innerHTML=html;
+}
+
+function baueAufgaben(){
+  const c=document.getElementById('tasksContainer');
+  const erl=state[aktTag]||[];
+  let html='';
+  for(const kat of KATEGORIEN){
+    const n=kat.aufgaben.filter(a=>erl.includes(a.id)).length;
+    html+=`<div class="cat-section ${kat.cls}"><div class="cat-head"><span class="cat-icon-el">${kat.icon}</span><span class="cat-name">${kat.titel}</span><span class="cat-badge">${n}/${kat.aufgaben.length}</span></div>`;
+    for(const a of kat.aufgaben){
+      const done=erl.includes(a.id);
+      html+=`<div class="task-item ${done?'checked':''}" onclick="toggle('${a.id}')">
+        <div class="task-check">${done?'✓':''}</div>
+        <div class="task-body">
+          <div class="task-name">${a.name}</div>
+          <div class="task-note">${a.note}</div>
+          <div class="task-sandra">${a.sandra}</div>
+        </div>
+      </div>`;
+    }
+    html+=`</div>`;
+  }
+  c.innerHTML=html;
+  aktualisiereProgress();
+}
+
+function toggle(id){
+  const set=new Set(state[aktTag]||[]);
+  const alle=alleAufgaben();
+  const war=set.size===alle.length;
+  set.has(id)?set.delete(id):set.add(id);
+  state[aktTag]=[...set];
+  saveState(state);
+  if(!war&&set.size===alle.length)konfetti();
+  baueAufgaben();baueTabs();baueGrid();
+}
+
+function aktualisiereProgress(){
+  const alle=alleAufgaben(),erl=state[aktTag]||[];
+  const pct=alle.length?Math.round(erl.length/alle.length*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  const tx=['Nichts. Na bravo.','Immerhin. Der Körper hat es bemerkt.','Halbzeit. Nicht schlecht für jemanden der Haushalt hasst.','Fast. Wirklich fast.','Alles erledigt. Das war offensichtlich kein Problem. 🌺'];
+  document.getElementById('progressText').textContent=tx[pct===100?4:Math.floor(pct/25)];
+  document.getElementById('progressPct').textContent=pct+' %';
+}
+
+function wechsle(key){aktTag=key;baueTabs();baueAufgaben();}
+
+function setzeZitat(){
+  const q=ZITATE[Math.floor(Math.random()*ZITATE.length)];
+  document.getElementById('zitatText').textContent='„'+q+'"';
+}
+
+function konfetti(){
+  const farben=['#b8294a','#c9893a','#1a2744','#6a3f7a','#5e8a5a','#fdf6ee'];
+  for(let i=0;i<40;i++){
+    const el=document.createElement('div');
+    el.className='konfetti-piece';
+    el.style.cssText=`left:${Math.random()*100}vw;width:${6+Math.random()*6}px;height:${10+Math.random()*8}px;background:${farben[Math.floor(Math.random()*farben.length)]};animation-duration:${1.2+Math.random()*1.4}s;animation-delay:${Math.random()*.5}s;transform:rotate(${Math.random()*360}deg);`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),2500);
+  }
+}
+
+baueWimpel();aktualisiereHeader();aktualisiereCountdown();
+baueGrid();baueTabs();baueAufgaben();setzeZitat();
+setInterval(aktualisiereCountdown,60000);
+</script>
+</body>
+</html>

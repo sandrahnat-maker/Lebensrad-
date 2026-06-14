@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>Mein Kochbuch</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+@keyframes wimpel-swing{0%,100%{transform:rotate(-4deg) skewX(2deg);}50%{transform:rotate(4deg) skewX(-2deg);}}
+@keyframes wimpel-swing2{0%,100%{transform:rotate(3deg) skewX(-1deg);}50%{transform:rotate(-3deg) skewX(1deg);}}
+@keyframes wimpel-swing3{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(5deg);}}
+@keyframes rope-sway{0%,100%{transform:scaleX(1);}50%{transform:scaleX(1.008);}}
+@keyframes tier-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+@keyframes spotlight{0%{left:-100%;}60%,100%{left:220%;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+:root{
+  --bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,0.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,0.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,0.13);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,0.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,0.12);
+  --violet:#6a3f7a;
+  --border:rgba(184,41,74,0.13);--shadow:rgba(30,18,8,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+body{
+  background:var(--bg);font-family:"Raleway",sans-serif;color:var(--text);
+  min-height:100vh;padding-bottom:4rem;
+  background-image:repeating-linear-gradient(-6deg,rgba(184,41,74,0.022) 0px,rgba(184,41,74,0.022) 28px,transparent 28px,transparent 56px,rgba(201,137,58,0.018) 56px,rgba(201,137,58,0.018) 84px,transparent 84px,transparent 112px);
+}
+.wimpelkette{position:relative;width:100%;height:40px;overflow:hidden;display:block;background:var(--bg);}
+.wimpelkette svg{width:100%;height:40px;overflow:visible;animation:rope-sway 5s ease-in-out infinite;}
+.wimpel-1{animation:wimpel-swing 2.8s ease-in-out infinite;}
+.wimpel-2{animation:wimpel-swing2 3.2s ease-in-out infinite 0.3s;}
+.wimpel-3{animation:wimpel-swing3 2.5s ease-in-out infinite 0.6s;}
+.wimpel-4{animation:wimpel-swing 3.0s ease-in-out infinite 0.9s;}
+.wimpel-5{animation:wimpel-swing2 2.7s ease-in-out infinite 1.2s;}
+.wimpel-6{animation:wimpel-swing3 3.4s ease-in-out infinite 1.5s;}
+.wimpel-7{animation:wimpel-swing 2.9s ease-in-out infinite 1.8s;}
+.wimpel-8{animation:wimpel-swing2 2.6s ease-in-out infinite 2.1s;}
+.wimpel-9{animation:wimpel-swing3 3.1s ease-in-out infinite 2.4s;}
+header{padding:1rem 1.2rem .85rem;border-bottom:2px solid var(--border);background:rgba(255,251,245,0.92);backdrop-filter:blur(3px);position:relative;}
+.back-btn{display:inline-flex;align-items:center;gap:.3rem;font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--crimson);text-decoration:none;opacity:.7;margin-bottom:.4rem;background:none;border:none;cursor:pointer;padding:0;}
+.back-btn:active{opacity:1;}
+.header-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;font-weight:500;}
+.header-title{font-family:"Playfair Display",serif;font-size:22px;font-style:italic;color:var(--text);line-height:1.2;}
+.header-sub{font-family:"IM Fell English",serif;font-size:14px;font-style:italic;color:var(--muted);margin-top:.15rem;}
+.rainbow-stripe{height:5px;background:repeating-linear-gradient(90deg,var(--crimson) 0%,var(--crimson) 20%,var(--gold) 20%,var(--gold) 40%,var(--navy) 40%,var(--navy) 60%,var(--violet) 60%,var(--violet) 80%,var(--sage) 80%,var(--sage) 100%);opacity:.6;margin-bottom:.2rem;}
+.z-card{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:0 3px 16px var(--shadow);margin:.5rem 1rem;overflow:hidden;position:relative;}
+.z-card::after{content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.055),transparent);animation:spotlight 10s ease-in-out infinite;pointer-events:none;}
+.z-item{display:flex;align-items:flex-start;gap:.6rem;padding:.55rem .9rem;border-bottom:1px solid rgba(184,41,74,0.07);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .2s;}
+.z-item:last-child{border-bottom:none;}
+.z-item.done{opacity:.28;}
+.z-item.done .z-name{text-decoration:line-through;text-decoration-color:rgba(184,41,74,0.3);}
+.z-check{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(184,41,74,0.3);flex-shrink:0;margin-top:2px;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;}
+.z-item.done .z-check{background:var(--sage-l);border-color:var(--sage);color:var(--sage);}
+.z-item.done .z-check::after{content:"✦";}
+.z-name{font-size:16px;color:var(--text);line-height:1.35;}
+.z-sub{font-size:13px;font-style:italic;color:var(--muted);margin-top:1px;font-family:"IM Fell English",serif;}
+.z-sec{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);padding:.7rem 1rem .2rem;opacity:.8;font-weight:500;}
+.z-info{margin:.3rem 1rem .4rem;padding:.5rem .8rem;background:var(--gold-l);border-left:2px solid var(--gold);font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--muted);line-height:1.6;}
+.section-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:.8rem 1rem .3rem;padding-left:.2rem;font-weight:500;}
+.z-progress{margin:.4rem 1rem .2rem;}
+.z-progress-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:.3rem;}
+.z-progress-bar{height:3px;background:var(--border);border-radius:10px;overflow:hidden;}
+.z-progress-fill{height:100%;background:linear-gradient(90deg,var(--crimson),var(--gold));border-radius:10px;transition:width .4s ease;}
+.z-reset{position:fixed;bottom:1.2rem;right:1.2rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:20px;padding:.4rem 1rem;font-size:13px;font-family:"IM Fell English",serif;font-style:italic;cursor:pointer;}
+.z-reset:active{background:var(--crimson-l);color:var(--crimson);}
+.tier-zeile{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:.3rem 1rem;user-select:none;pointer-events:none;overflow:hidden;}
+.tier-zeile .tier{display:inline-block;animation:tier-float 3s ease-in-out infinite;opacity:.5;font-size:.9rem;}
+.tier-zeile .tier:nth-child(2){animation-delay:.4s;}.tier-zeile .tier:nth-child(3){animation-delay:.8s;}.tier-zeile .tier:nth-child(4){animation-delay:1.2s;}.tier-zeile .tier:nth-child(5){animation-delay:1.6s;}
+.tier-linie{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(184,41,74,0.2),transparent);}
+.manege-line{display:flex;align-items:center;gap:.5rem;padding:.1rem 1rem;color:var(--crimson);opacity:.3;font-size:11px;letter-spacing:.3em;user-select:none;}
+.manege-line::before,.manege-line::after{content:'';flex:1;height:1px;background:currentColor;}
+</style>
+
+<style>
+/* App-spezifisches CSS */
+/* COVER */
+.cover{
+  background:linear-gradient(160deg,#f5ede0 0%,#faf3e8 50%,#f0ede8 100%);
+  padding:2.5rem 1.5rem 2rem;text-align:center;
+  border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.cover::before{
+  content:'🌿';position:absolute;right:-1rem;top:-1rem;
+  font-size:8rem;opacity:.06;pointer-events:none;
+}
+.cover-label{font-size:11px;text-transform:uppercase;letter-spacing:.2em;color:var(--gold);margin-bottom:.5rem;}
+.cover-title{font-family:'Playfair Display',serif;font-size:28px;font-style:italic;font-weight:400;color:var(--text);line-height:1.2;margin-bottom:.4rem;}
+.cover-sub{font-size:14px;color:var(--muted);font-style:italic;line-height:1.6;}
+.cover-divider{width:60px;height:1px;background:var(--gold2);margin:1rem auto;}
+
+/* INHALTSVERZEICHNIS */
+.toc{padding:1.2rem 1rem;}
+.toc-title{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:var(--muted);margin-bottom:1rem;text-align:center;letter-spacing:.05em;}
+.toc-item{
+  display:flex;align-items:center;gap:1rem;
+  background:var(--white);border-radius:14px;
+  margin-bottom:.7rem;padding:.9rem 1.1rem;
+  border:1px solid var(--border);
+  box-shadow:0 2px 10px rgba(180,120,40,0.05);
+  cursor:pointer;transition:all .2s;
+}
+.toc-item:active{transform:scale(.98);}
+.toc-icon{font-size:1.8rem;flex-shrink:0;}
+.toc-text{flex:1;}
+.toc-name{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--text);}
+.toc-count{font-size:13px;color:var(--muted);font-style:italic;margin-top:.1rem;}
+.toc-arr{color:var(--gold2);font-size:1.1rem;}
+
+/* Seele item special */
+.toc-item.seele{background:linear-gradient(135deg,#fdf0e8,#faf3e8);border-color:rgba(196,112,74,.2);}
+.toc-item.seele .toc-name{color:var(--terra);}
+
+/* CHAPTER VIEW */
+.chapter{display:none;padding:0 0 2rem;}
+.chapter.active{display:block;}
+
+.chapter-header{
+  padding:1.3rem 1.2rem 1rem;
+  background:linear-gradient(135deg,#f5ede0,#faf3e8);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:5;
+}
+.back-btn{
+  display:flex;align-items:center;gap:.4rem;
+  font-size:14px;color:var(--gold);cursor:pointer;
+  margin-bottom:.7rem;background:none;border:none;
+  font-family:'Cormorant Garamond',serif;padding:0;
+}
+.chapter-title{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;font-weight:400;}
+.chapter-sub{font-size:13px;color:var(--muted);font-style:italic;margin-top:.2rem;}
+
+.affirmation{
+  margin:.9rem 1rem .4rem;padding:.85rem 1rem;
+  border-radius:13px;font-style:italic;font-size:14px;
+  color:var(--text);line-height:1.65;text-align:center;
+  border-left:3px solid var(--sage);
+  background:linear-gradient(135deg,#edf5e8,#f5f0e8);
+}
+.affirmation.seele-aff{
+  border-left-color:var(--terra);
+  background:linear-gradient(135deg,#fdf0e8,#faf3e8);
+}
+.affirmation-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--sage);margin-bottom:.35rem;font-style:normal;display:block;}
+.affirmation.seele-aff .affirmation-lbl{color:var(--terra);}
+
+/* RECIPE CARDS */
+.recipes{padding:.4rem 1rem;}
+.recipe-card{
+  background:var(--white);border-radius:16px;margin-bottom:.8rem;
+  border:1px solid var(--border);overflow:hidden;
+  box-shadow:0 2px 10px rgba(180,120,40,0.06);
+  padding:1rem 1.1rem;
+}
+.recipe-card.seele-card{
+  background:linear-gradient(135deg,#fffdf8,#fdf6ee);
+  border-color:rgba(196,112,74,.15);
+}
+.recipe-name{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--text);margin-bottom:.3rem;}
+.recipe-card.seele-card .recipe-name{color:var(--terra);}
+.recipe-detail{font-size:13px;color:var(--muted);line-height:1.55;font-style:italic;}
+.recipe-heart{float:right;font-size:1.1rem;margin-left:.5rem;margin-top:.1rem;}
+</style>
+</head>
+<body>
+<div class="wimpelkette" aria-hidden="true"><svg viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,7 Q50,11 100,9 Q150,7 200,10 Q250,13 300,9 Q350,7 400,9" stroke="#1a2744" stroke-width="1" fill="none" opacity="0.3"/><g class="wimpel-1" transform-origin="30 9"><polygon points="23,9 37,9 30,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-2" transform-origin="67 9"><polygon points="60,9 74,9 67,28" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-3" transform-origin="104 9"><polygon points="97,9 111,9 104,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-4" transform-origin="141 9"><polygon points="134,9 148,9 141,28" fill="#6a3f7a" opacity="0.75"/></g><g class="wimpel-5" transform-origin="178 10"><polygon points="171,10 185,10 178,29" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-6" transform-origin="215 9"><polygon points="208,9 222,9 215,28" fill="#5e8a5a" opacity="0.7"/></g><g class="wimpel-7" transform-origin="252 10"><polygon points="245,10 259,10 252,29" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-8" transform-origin="289 9"><polygon points="282,9 296,9 289,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-9" transform-origin="326 9"><polygon points="319,9 333,9 326,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-1" transform-origin="363 9"><polygon points="356,9 370,9 363,28" fill="#6a3f7a" opacity="0.75"/></g></svg></div>
+<header>
+<div class="rainbow-stripe"></div>
+<div class="header-eyebrow">Ernährung</div>
+<div class="header-title">Mein Kochbuch</div>
+<div class="header-sub">4 Wochen · LP(a)-freundlich</div>
+</header>
+
+<!-- COVER + INHALTSVERZEICHNIS -->
+<div id="tocView">
+  <div class="cover">
+    <div class="cover-label">Mein persönliches</div>
+    <div class="cover-title">Kochbuch</div>
+    <div class="cover-divider"></div>
+    <div class="cover-sub">vegetarisch · LP(a)-bewusst<br>mit Liebe gekocht</div>
+  </div>
+  <div class="toc">
+    <div class="toc-title">— Inhaltsverzeichnis —</div>
+    <div class="toc-item" onclick="openChapter('frueh')">
+      <div class="toc-icon">🌅</div>
+      <div class="toc-text">
+        <div class="toc-name">Frühstück</div>
+        <div class="toc-count" id="cnt-frueh"></div>
+      </div>
+      <div class="toc-arr">›</div>
+    </div>
+    <div class="toc-item" onclick="openChapter('jause')">
+      <div class="toc-icon">🍎</div>
+      <div class="toc-text">
+        <div class="toc-name">Jause & Snacks</div>
+        <div class="toc-count" id="cnt-jause"></div>
+      </div>
+      <div class="toc-arr">›</div>
+    </div>
+    <div class="toc-item" onclick="openChapter('mittag')">
+      <div class="toc-icon">🌿</div>
+      <div class="toc-text">
+        <div class="toc-name">Mittagessen</div>
+        <div class="toc-count" id="cnt-mittag"></div>
+      </div>
+      <div class="toc-arr">›</div>
+    </div>
+    <div class="toc-item" onclick="openChapter('abend')">
+      <div class="toc-icon">🌙</div>
+      <div class="toc-text">
+        <div class="toc-name">Abendessen</div>
+        <div class="toc-count" id="cnt-abend"></div>
+      </div>
+      <div class="toc-arr">›</div>
+    </div>
+    <div class="toc-item seele" onclick="openChapter('seele')">
+      <div class="toc-icon">🫀</div>
+      <div class="toc-text">
+        <div class="toc-name">Speisen für die Seele</div>
+        <div class="toc-count" id="cnt-seele"></div>
+      </div>
+      <div class="toc-arr">›</div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER VIEWS -->
+<div class="chapter" id="ch-frueh">
+  <div class="chapter-header">
+    <button class="back-btn" onclick="goBack()">‹ Zurück zum Kochbuch</button>
+    <div class="chapter-title">🌅 Frühstück</div>
+    <div class="chapter-sub">Ein sanfter Start in den Tag</div>
+  </div>
+  <div class="affirmation"><span class="affirmation-lbl">Mein Morgen</span>Ich starte meinen Tag mit Fürsorge für mich — nährend, warm und ohne Hast.</div>
+  <div class="recipes" id="recipes-frueh"></div>
+</div>
+
+<div class="chapter" id="ch-jause">
+  <div class="chapter-header">
+    <button class="back-btn" onclick="goBack()">‹ Zurück zum Kochbuch</button>
+    <div class="chapter-title">🍎 Jause & Snacks</div>
+    <div class="chapter-sub">Kleine Auszeiten zwischendurch</div>
+  </div>
+  <div class="affirmation"><span class="affirmation-lbl">Meine Pause</span>Ich gönne mir kleine Momente der Fürsorge — mein Körper freut sich über jeden bewussten Bissen.</div>
+  <div class="recipes" id="recipes-jause"></div>
+</div>
+
+<div class="chapter" id="ch-mittag">
+  <div class="chapter-header">
+    <button class="back-btn" onclick="goBack()">‹ Zurück zum Kochbuch</button>
+    <div class="chapter-title">🌿 Mittagessen</div>
+    <div class="chapter-sub">Die Mitte des Tages — bunt & nährend</div>
+  </div>
+  <div class="affirmation"><span class="affirmation-lbl">Meine Mitte</span>Kochen ist Kunst. Anrichten ist Liebe an mich selbst. Jedes Mittagessen darf eine kleine Feier sein.</div>
+  <div class="recipes" id="recipes-mittag"></div>
+</div>
+
+<div class="chapter" id="ch-abend">
+  <div class="chapter-header">
+    <button class="back-btn" onclick="goBack()">‹ Zurück zum Kochbuch</button>
+    <div class="chapter-title">🌙 Abendessen</div>
+    <div class="chapter-sub">Leicht & wärmend — der Abend gehört mir</div>
+  </div>
+  <div class="affirmation"><span class="affirmation-lbl">Mein Abend</span>Der Abend gehört mir. Ich esse leicht, bewusst und mit Genuss — und lasse den Tag sanft los.</div>
+  <div class="recipes" id="recipes-abend"></div>
+</div>
+
+<div class="chapter" id="ch-seele">
+  <div class="chapter-header">
+    <button class="back-btn" onclick="goBack()">‹ Zurück zum Kochbuch</button>
+    <div class="chapter-title">🫀 Speisen für die Seele</div>
+    <div class="chapter-sub">Wohlfühlküche — weil das Leben auch Genuss braucht</div>
+  </div>
+  <div class="affirmation seele-aff"><span class="affirmation-lbl">Mit Liebe & ohne schlechtes Gewissen</span>Manchmal braucht meine Seele mehr als Nährstoffe. Diese Gerichte dürfen einfach gut tun — warm, tröstlich und mit Freude genossen.</div>
+  <div class="recipes" id="recipes-seele"></div>
+</div>
+
+<script>
+var DATA = {"frueh": [["Haferbrei mit Apfel & Zimt", "1 EL Leinsamen · 1 EL Mandelmus"], ["Joghurt mit Beeren & Haferflocken", "1 EL Leinsamen · 1 TL Hanfsamen"], ["Porridge mit Beeren & Walnüssen", "1 EL Chiasamen · Zimt"], ["Haferbrei mit Birne & Leinsamen", "1 EL Walnüsse · ungesüßt"], ["Haferbrei mit Birne & Walnüssen", "1 EL Leinsamen · Zimt"], ["Joghurt mit Himbeeren & Haferflocken", "1 EL Chiasamen · 1 EL Hanfsamen"], ["Porridge mit Apfel & Chiasamen", "1 EL Mandelmus"], ["Haferbrei mit Apfel & Leinsamen", "1 TL Hanfsamen · ungesüßt"], ["Haferbrei mit Mango & Chiasamen", "1 EL Leinsamen · Kardamom"], ["Porridge mit Birne & Walnüssen", "1 EL Chiasamen · Vanille"], ["Haferbrei mit Beeren & Hanfsamen", "1 EL Leinsamen · Zimt"], ["Haferbrei mit Walnüssen & Leinsamen", "1 Kiwi dazu · ungesüßt"], ["Porridge mit Chiasamen & Aprikose", "1 EL Mandelmus · Zimt"], ["Vegetarisches English Breakfast", "Rührei oder Spiegelei · Baked Beans · gegrillte Tomaten · Champignons · Vollkorntoast"], ["Rührei mit Schnittlauch", "Ei · Schnittlauch · Vollkornbrot · Radieschen"], ["Weichgekochtes Ei mit Toast", "Ei · Vollkorntoast · Butter · Schnittlauch oder Kresse"]], "jause": [["Birne + Walnüsse", ""], ["Apfel + Chiasamen", ""], ["Orange + Mandeln", ""], ["Kiwi + Joghurt", ""], ["Apfel + Mandelmus", ""], ["Beeren + Chiasamen", ""], ["Beeren + Joghurt", ""], ["Orange + Walnüsse", ""], ["Kiwi + Chiasamen", ""], ["Birne + Mandelmus", ""], ["Apfel + Walnüsse", ""], ["Orange + Chiasamen", ""], ["Kiwi + Mandeln", ""], ["Kiwi + Leinsamen", ""], ["Birne + Chiasamen", ""], ["Orange + Leinsamen", ""], ["Birne + Joghurt", ""], ["Apfel + Mandeln", ""]], "mittag": [["Erdäpfelgulasch mit Vollkornbrot", "Kartoffeln · Zwiebel · Paprikapulver · Kümmel · Majoran"], ["Pasta e Fagioli", "Vollkornnudeln · weiße Bohnen · Tomate · Rosmarin · Knoblauch · Olivenöl"], ["Gebratener Gemüsereis", "Vollkornreis · Brokkoli · Karotte · Ei · Ingwer · Sojasoße (wenig) · Sesam"], ["Veggie-Wrap mit schwarzen Bohnen", "Vollkorntortilla · schwarze Bohnen · Mais · Paprika · Tomate · Koriander · Limette"], ["Rotes Linsen-Dal", "Basmati · rote Linsen · Kurkuma · Ingwer · Koriander · Kokosmilch light"], ["Ramen-Suppe (vegetarisch)", "Soba-Nudeln · Tofu · Pak Choi · Ei · Ingwer · Miso-Brühe · Sesam"], ["Käsespätzle (leichte Version)", "Vollkornspätzle · wenig Bergkäse · Röstzwiebeln · grüner Salat"], ["Veggie-Burrito", "Vollkorntortilla · Vollkornreis · Kidneybohnen · Paprika · Mais · Joghurt-Limetten-Sauce"], ["Gnocchi mit Tomatensauce & Spinat", "Kartoffelgnocchi · frische Tomaten · Spinat · Knoblauch · Basilikum"], ["Spinatknödel mit Butterröstzwiebeln", "Spinat · Vollkornbrot · Ei · wenig Käse · Röstzwiebeln · Sauerrahm"], ["Palak Paneer (Spinat-Käse)", "Basmati · Spinat · Paneer · Kurkuma · Ingwer · Garam Masala"], ["Tiroler Gröstl (vegetarisch)", "Bratkartoffeln · Ei · Zwiebel · Kümmel · Petersilie · Radieschen"], ["Vollkorn-Penne Arrabbiata", "Vollkornnudeln · Tomate · Chili · Knoblauch · Olivenöl · Rucola"], ["Thai-Gemüsecurry", "Jasminreis · Süßkartoffel · Brokkoli · Kokosmilch light · grüne Currypaste · Limette"], ["Enchiladas mit Kidneybohnen", "Vollkorntortilla · Kidneybohnen · Paprika · Tomatensauce · wenig Käse · Koriander"], ["Risotto mit Brokkoli & Zitrone", "Vollkornreis · Brokkoli · Parmesan (wenig) · Zitrone · Olivenöl"], ["Pad Thai (vegetarisch)", "Reisnudeln · Tofu · Ei · Sojasprossen · Frühlingszwiebeln · Erdnüsse · Limette"], ["Kartoffelsuppe mit Brot", "Erdäpfel · Sellerie · Karotte · Majoran · Kümmel · Vollkornweckerl"], ["Veggie-Tacos", "Mais-Tortillas · Rote-Bete · schwarze Bohnen · Koriander · Limette · Joghurt"], ["Kaspressknödel auf Salat", "Bergkäseknödel (gebraten) · Feldsalat · Kürbiskernöl · Essig"]], "abend": [["Vogerlsalat mit Kürbiskernöl", "Feldsalat · Kürbiskerne · Apfel · Vollkornweckerl"], ["Bruschetta mit Rucola & Tomate", "Vollkornbrot · Olivenöl · Basilikum · Knoblauch"], ["Miso-Suppe mit Tofu & Wakame", "Frühlingszwiebeln · Reiswafferl"], ["Gemüse-Quesadilla", "Vollkorntortilla · Paprika · Mais · wenig Käse · Joghurt-Dip"], ["Aloo Gobi (Kartoffel-Karfiol)", "Kartoffel · Karfiol · Kreuzkümmel · Kurkuma · Tomate · Vollkornbrot"], ["Erdäpfelsalat mit Kürbiskernöl", "Kartoffeln · Zwiebel · Essig · Kümmel · Schnittlauch"], ["Joghurt mit Walnüssen & Beeren", "1 EL Leinsamen · wenig Honig"], ["Edamame mit Reiscrackern", "Edamame · wenig Sojasoße · Ingwer"], ["Brettljause vegetarisch", "Vollkornbrot · Radieschen · Aufstrich · Gurke · Schnittlauch"], ["Tomaten-Bohnen-Suppe", "Kidneybohnen · Tomate · Paprika · Kreuzkümmel · Vollkornbrot"], ["Caprese mit Vollkornbrot", "Tomate · wenig Mozzarella · Basilikum · Olivenöl"], ["Vollkornweckerl mit Topfenaufstrich", "Kräutertopfen · Radieschen · Schnittlauch · Gurke"], ["Gemischter Salat mit Walnüssen & Ei", "Rucola · Tomate · Gurke · Vollkornbrot"], ["Joghurt mit Beeren & Leinsamen", "wenig Honig"], ["Dhal-Suppe mit Vollkornbrot", "gelbe Linsen · Karotte · Kurkuma · Koriander"], ["Kürbiscremesuppe", "Ingwer · Kurkuma · Kürbiskerne · Vollkornweckerl"], ["Minestrone mit Vollkornbrot", "Bohnen · Zucchini · Tomate · Karotte · Baslikum · Olivenöl"], ["Frühlingsrollen (gebacken)", "Reispapier · Karotte · Gurke · Rucola · Sesam · Erdnusssauce"], ["Hummus mit Gemüsesticks & Vollkornbrot", "Karotte · Gurke · Paprika · Tomate · Limette"], ["Liptauer auf Vollkornbrot", "Topfen · Paprikapulver · Kümmel · Schnittlauch · Radieschen"], ["Zucchini-Tomate-Suppe", "Basilikum · Knoblauch · Olivenöl · Vollkornbrot"], ["Edamame & Reiscracker", "Sesam · Sojasoße (wenig)"], ["Spinat-Ei-Pfanne", "Vollkorntoast · Knoblauch · Olivenöl · Muskatnuss"], ["Rote-Bete-Suppe mit Vollkornbrot", "Ingwer · Kokos light · Koriander"], ["Hummus-Wrap mit Rohkost", "Vollkorntortilla · Hummus · Rucola · Gurke · Paprika · Radieschen"], ["Joghurt-Raita mit Vollkornbrot", "Joghurt · Gurke · Kreuzkümmel · Minze"]], "seele": [["Topfenpalatschinken", "Vollkornmehl · Topfen · Beeren · wenig Honig"], ["Semmelknödel mit Tomatensauce & Spinat", "Vollkorn-Semmelknödel · braune Linsen · Zwiebel · Essig · Lorbeer · Petersilie"], ["Pizza auf Vollkornteig", "Tomatensauce · wenig Mozzarella · Rucola · Basilikum"], ["Ribollita (toskanische Gemüsesuppe)", "weiße Bohnen · Wirsing · Tomate · Knoblauch · Olivenöl · Vollkornbrot"], ["Vollkorntoast mit Mandelmus & Beeren", "1 EL Chiasamen · Hibiskustee"], ["Veggie-Burger", "Vollkornbun · Kichererbsen-Patty · Salat · Tomate · Rote Bete · Joghurt-Sauce"], ["Hafer-Waffeln mit Beeren", "Vollkornmehl · Haferflocken · Leinsamen · wenig Ahornsirup"], ["Kichererbsen-Curry (Chana Masala)", "Basmati · Kichererbsen · Tomate · Zwiebel · Garam Masala · Ingwer · Koriander"], ["Germknödel (leicht)", "Vollkornmehl · Powidl · wenig Mohnbutter · gedämpft"], ["Grüner Salat mit Ei & Weckerl", "Blattsalat · hart gekochtes Ei · Gurke · Radieschen · Kürbiskernöl · Essig"], ["Hafer-Pancakes mit Beeren", "Haferflocken · Ei · Joghurt · wenig Ahornsirup"], ["Black-Bean-Burger", "Vollkornbun · schwarze Bohnen · Mais · Paprika · Joghurt-Sauce · Coleslaw"], ["Masala-Omelette", "Ei · Zwiebel · Chili · Koriander · Kurkuma · Vollkorntoast"], ["Saag Aloo (Spinat-Erdäpfel)", "Kartoffeln · Spinat · Kurkuma · Kreuzkümmel · Knoblauch · Ingwer · Vollkornbrot"], ["Kaiserschmarrn (leicht)", "Vollkornmehl · Ei · Joghurt · Zwetschgenröster · wenig Staubzucker"], ["Tafelspitz-Suppe (vegetarisch)", "Gemüsebrühe · Karotte · Sellerie · Petersilwurzel · Vollkornbrot · Schnittlauch"]]};
+
+var CHAPTER_INFO = {
+  frueh:  {label:'Frühstücksideen',    singular:'Rezept'},
+  jause:  {label:'Snack-Ideen',        singular:'Rezept'},
+  mittag: {label:'Mittagsgerichte',    singular:'Gericht'},
+  abend:  {label:'Abendideen',         singular:'Gericht'},
+  seele:  {label:'Wohlfühlgerichte',   singular:'Gericht'}
+};
+
+function renderCounts() {
+  Object.keys(DATA).forEach(function(cat) {
+    var el = document.getElementById('cnt-' + cat);
+    if(el) {
+      var n = DATA[cat].length;
+      var info = CHAPTER_INFO[cat];
+      el.textContent = n + ' ' + (n===1 ? info.singular : info.label);
+    }
+  });
+}
+
+function renderChapter(cat) {
+  var container = document.getElementById('recipes-' + cat);
+  if(!container) return;
+  container.innerHTML = '';
+  var isSeele = cat === 'seele';
+  DATA[cat].forEach(function(item) {
+    var card = document.createElement('div');
+    card.className = 'recipe-card' + (isSeele ? ' seele-card' : '');
+    var heart = isSeele ? '<span class="recipe-heart">🫀</span>' : '';
+    var name = document.createElement('div');
+    name.className = 'recipe-name';
+    name.textContent = item[0];
+    card.appendChild(name);
+    if(isSeele) {
+      var h = document.createElement('span');
+      h.className = 'recipe-heart';
+      h.textContent = '🫀';
+      name.insertBefore(h, name.firstChild);
+    }
+    if(item[1]) {
+      var det = document.createElement('div');
+      det.className = 'recipe-detail';
+      det.textContent = item[1];
+      card.appendChild(det);
+    }
+    container.appendChild(card);
+  });
+}
+
+function openChapter(cat) {
+  document.getElementById('tocView').style.display = 'none';
+  document.querySelectorAll('.chapter').forEach(function(c){ c.classList.remove('active'); });
+  var ch = document.getElementById('ch-' + cat);
+  if(ch) { ch.classList.add('active'); ch.scrollTop = 0; }
+  window.scrollTo(0,0);
+}
+
+function goBack() {
+  document.querySelectorAll('.chapter').forEach(function(c){ c.classList.remove('active'); });
+  document.getElementById('tocView').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+// Init
+renderCounts();
+['frueh','jause','mittag','abend','seele'].forEach(renderChapter);
+</script>
+</body>
+</html>

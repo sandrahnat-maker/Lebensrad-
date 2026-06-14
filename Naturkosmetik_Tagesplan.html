@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>Naturkosmetik</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+@keyframes wimpel-swing{0%,100%{transform:rotate(-4deg) skewX(2deg);}50%{transform:rotate(4deg) skewX(-2deg);}}
+@keyframes wimpel-swing2{0%,100%{transform:rotate(3deg) skewX(-1deg);}50%{transform:rotate(-3deg) skewX(1deg);}}
+@keyframes wimpel-swing3{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(5deg);}}
+@keyframes rope-sway{0%,100%{transform:scaleX(1);}50%{transform:scaleX(1.008);}}
+@keyframes tier-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+@keyframes spotlight{0%{left:-100%;}60%,100%{left:220%;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+:root{
+  --bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,0.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,0.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,0.13);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,0.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,0.12);
+  --violet:#6a3f7a;
+  --border:rgba(184,41,74,0.13);--shadow:rgba(30,18,8,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+body{
+  background:var(--bg);font-family:"Raleway",sans-serif;color:var(--text);
+  min-height:100vh;padding-bottom:4rem;
+  background-image:repeating-linear-gradient(-6deg,rgba(184,41,74,0.022) 0px,rgba(184,41,74,0.022) 28px,transparent 28px,transparent 56px,rgba(201,137,58,0.018) 56px,rgba(201,137,58,0.018) 84px,transparent 84px,transparent 112px);
+}
+.wimpelkette{position:relative;width:100%;height:40px;overflow:hidden;display:block;background:var(--bg);}
+.wimpelkette svg{width:100%;height:40px;overflow:visible;animation:rope-sway 5s ease-in-out infinite;}
+.wimpel-1{animation:wimpel-swing 2.8s ease-in-out infinite;}
+.wimpel-2{animation:wimpel-swing2 3.2s ease-in-out infinite 0.3s;}
+.wimpel-3{animation:wimpel-swing3 2.5s ease-in-out infinite 0.6s;}
+.wimpel-4{animation:wimpel-swing 3.0s ease-in-out infinite 0.9s;}
+.wimpel-5{animation:wimpel-swing2 2.7s ease-in-out infinite 1.2s;}
+.wimpel-6{animation:wimpel-swing3 3.4s ease-in-out infinite 1.5s;}
+.wimpel-7{animation:wimpel-swing 2.9s ease-in-out infinite 1.8s;}
+.wimpel-8{animation:wimpel-swing2 2.6s ease-in-out infinite 2.1s;}
+.wimpel-9{animation:wimpel-swing3 3.1s ease-in-out infinite 2.4s;}
+header{padding:1rem 1.2rem .85rem;border-bottom:2px solid var(--border);background:rgba(255,251,245,0.92);backdrop-filter:blur(3px);position:relative;}
+.back-btn{display:inline-flex;align-items:center;gap:.3rem;font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--crimson);text-decoration:none;opacity:.7;margin-bottom:.4rem;background:none;border:none;cursor:pointer;padding:0;}
+.back-btn:active{opacity:1;}
+.header-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;font-weight:500;}
+.header-title{font-family:"Playfair Display",serif;font-size:22px;font-style:italic;color:var(--text);line-height:1.2;}
+.header-sub{font-family:"IM Fell English",serif;font-size:14px;font-style:italic;color:var(--muted);margin-top:.15rem;}
+.rainbow-stripe{height:5px;background:repeating-linear-gradient(90deg,var(--crimson) 0%,var(--crimson) 20%,var(--gold) 20%,var(--gold) 40%,var(--navy) 40%,var(--navy) 60%,var(--violet) 60%,var(--violet) 80%,var(--sage) 80%,var(--sage) 100%);opacity:.6;margin-bottom:.2rem;}
+.z-card{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:0 3px 16px var(--shadow);margin:.5rem 1rem;overflow:hidden;position:relative;}
+.z-card::after{content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.055),transparent);animation:spotlight 10s ease-in-out infinite;pointer-events:none;}
+.z-item{display:flex;align-items:flex-start;gap:.6rem;padding:.55rem .9rem;border-bottom:1px solid rgba(184,41,74,0.07);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .2s;}
+.z-item:last-child{border-bottom:none;}
+.z-item.done{opacity:.28;}
+.z-item.done .z-name{text-decoration:line-through;text-decoration-color:rgba(184,41,74,0.3);}
+.z-check{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(184,41,74,0.3);flex-shrink:0;margin-top:2px;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;}
+.z-item.done .z-check{background:var(--sage-l);border-color:var(--sage);color:var(--sage);}
+.z-item.done .z-check::after{content:"✦";}
+.z-name{font-size:16px;color:var(--text);line-height:1.35;}
+.z-sub{font-size:13px;font-style:italic;color:var(--muted);margin-top:1px;font-family:"IM Fell English",serif;}
+.z-sec{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);padding:.7rem 1rem .2rem;opacity:.8;font-weight:500;}
+.z-info{margin:.3rem 1rem .4rem;padding:.5rem .8rem;background:var(--gold-l);border-left:2px solid var(--gold);font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--muted);line-height:1.6;}
+.section-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:.8rem 1rem .3rem;padding-left:.2rem;font-weight:500;}
+.z-progress{margin:.4rem 1rem .2rem;}
+.z-progress-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:.3rem;}
+.z-progress-bar{height:3px;background:var(--border);border-radius:10px;overflow:hidden;}
+.z-progress-fill{height:100%;background:linear-gradient(90deg,var(--crimson),var(--gold));border-radius:10px;transition:width .4s ease;}
+.z-reset{position:fixed;bottom:1.2rem;right:1.2rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:20px;padding:.4rem 1rem;font-size:13px;font-family:"IM Fell English",serif;font-style:italic;cursor:pointer;}
+.z-reset:active{background:var(--crimson-l);color:var(--crimson);}
+.tier-zeile{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:.3rem 1rem;user-select:none;pointer-events:none;overflow:hidden;}
+.tier-zeile .tier{display:inline-block;animation:tier-float 3s ease-in-out infinite;opacity:.5;font-size:.9rem;}
+.tier-zeile .tier:nth-child(2){animation-delay:.4s;}.tier-zeile .tier:nth-child(3){animation-delay:.8s;}.tier-zeile .tier:nth-child(4){animation-delay:1.2s;}.tier-zeile .tier:nth-child(5){animation-delay:1.6s;}
+.tier-linie{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(184,41,74,0.2),transparent);}
+.manege-line{display:flex;align-items:center;gap:.5rem;padding:.1rem 1rem;color:var(--crimson);opacity:.3;font-size:11px;letter-spacing:.3em;user-select:none;}
+.manege-line::before,.manege-line::after{content:'';flex:1;height:1px;background:currentColor;}
+</style>
+
+<style>
+/* App-spezifisches CSS */
+.hero {
+  background:linear-gradient(135deg,#2e2010,#c8943a);
+  padding: 44px 24px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(ellipse, rgba(212,169,106,0.15) 0%, transparent 70%);
+  animation: shimmer 6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes shimmer {
+  0%,100% { transform: scale(1); opacity:.5; }
+  50% { transform: scale(1.1); opacity:1; }
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2em; color: #fff; font-weight: 400; line-height: 1.3;
+  position: relative; z-index: 1;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero p { color: rgba(255,255,255,0.8); margin-top:8px; font-size:.88em; letter-spacing:.05em; position:relative; z-index:1; }
+
+/* FILTER */
+.filter-bar {
+  display: flex; gap: 8px; justify-content: center;
+  padding: 18px 16px 0; flex-wrap: wrap;
+}
+.filter-btn {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .8em; font-weight: 700;
+  padding: 7px 18px; border-radius: 30px;
+  border: 2px solid transparent; cursor: pointer;
+  transition: all .2s; letter-spacing: .04em;
+}
+.filter-btn.all { background: var(--warm); color: var(--brown); border-color: var(--light); }
+.filter-btn.all.on { background: var(--brown); color: #fff; border-color: var(--brown); }
+.filter-btn.dm  { background: #fff0f0; color: var(--dm-red); border-color: var(--dm-red); }
+.filter-btn.dm.on  { background: var(--dm-red); color: #fff; }
+.filter-btn.bipa { background: #f9f0f7; color: var(--bipa-purple); border-color: var(--bipa-purple); }
+.filter-btn.bipa.on { background: var(--bipa-purple); color: #fff; }
+
+.container { max-width: 720px; margin: 0 auto; padding: 22px 14px 60px; }
+
+.intro-note {
+  background: var(--warm); border-left: 4px solid var(--gold);
+  padding: 14px 18px; border-radius: 0 8px 8px 0;
+  margin-bottom: 24px; font-size: .88em; line-height: 1.7; color: var(--brown);
+}
+.intro-note strong { color: var(--rose-dark); font-weight: 700; }
+
+/* SECTIONS */
+.section {
+  margin-bottom: 18px; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 2px 12px rgba(92,61,46,.08);
+}
+.sec-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 18px; cursor: pointer; user-select: none;
+  transition: filter .2s;
+}
+.sec-header:hover { filter: brightness(.95); }
+.sec-header .ico { font-size:1.4em; flex-shrink:0; }
+.sec-header .tg { flex:1; }
+.sec-header h2 { font-family:'Playfair Display',serif; font-size:1.1em; font-weight:600; color:#fff; }
+.sec-header .sub { font-size:.77em; color:rgba(255,255,255,.75); margin-top:2px; }
+.sec-header .time-badge {
+  display:inline-block; background:rgba(255,255,255,.22); color:#fff;
+  font-size:.72em; padding:2px 9px; border-radius:20px; margin-top:4px; letter-spacing:.04em;
+}
+.chev { color:rgba(255,255,255,.7); font-size:.85em; transition:transform .3s; }
+.section.open .chev { transform:rotate(180deg); }
+
+.sec-body { background:#fff; max-height:0; overflow:hidden; transition:max-height .45s ease; }
+.section.open .sec-body { max-height:4000px; }
+.sec-inner { padding:18px 18px 6px; }
+
+.s-morgen .sec-header { background: linear-gradient(90deg,#c8943a,#c8943a); }
+.s-abend  .sec-header { background: linear-gradient(90deg,#2e2010,#c07060); }
+.s-ernaehrung .sec-header { background: linear-gradient(90deg,#7a9e7e,#a3c4a8); }
+.s-woche .sec-header { background: linear-gradient(90deg,#7a8fa3,#a3b8c4); }
+
+/* STEPS */
+.step { padding: 13px 0; border-bottom: 1px solid var(--light); }
+.step:last-child { border-bottom: none; }
+.step-top { display:flex; gap:12px; align-items:flex-start; }
+.step-num {
+  background:var(--warm); color:var(--rose-dark); font-weight:700;
+  font-size:.76em; width:24px; height:24px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; margin-top:2px;
+}
+.step-content strong { display:block; font-weight:700; font-size:.92em; color:var(--brown); margin-bottom:3px; }
+.step-content p { font-size:.85em; color:#6b5144; line-height:1.6; }
+
+/* PRODUCT CARDS */
+.products { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+
+.prod-card {
+  border-radius: 10px; padding: 11px 14px;
+  display: flex; align-items: flex-start; gap: 12px;
+  border: 1.5px solid transparent;
+  transition: all .2s;
+}
+.prod-card.dm-card   { background:#fff5f5; border-color:#f5c0c0; }
+.prod-card.bipa-card { background:#f9f0f7; border-color:#e0b0d0; }
+.prod-card.both-card { background: linear-gradient(90deg, #fff5f5 50%, #f9f0f7 50%); border-color:#d4b0c8; }
+
+.shop-badge {
+  font-size: .68em; font-weight: 700; padding: 3px 8px;
+  border-radius: 10px; flex-shrink: 0; white-space: nowrap; margin-top: 2px;
+  letter-spacing: .03em;
+}
+.shop-badge.dm   { background: var(--dm-red); color: #fff; }
+.shop-badge.bipa { background: var(--bipa-purple); color: #fff; }
+.shop-badge.both { background: linear-gradient(90deg, var(--dm-red), var(--bipa-purple)); color: #fff; }
+
+.prod-info .prod-name { font-weight:700; font-size:.88em; color:var(--brown); }
+.prod-info .prod-brand { font-size:.78em; color: var(--rose-dark); font-weight:700; margin-bottom:2px; }
+.prod-info .prod-desc { font-size:.8em; color:#7a6458; line-height:1.5; margin-top:2px; }
+.prod-info .prod-price {
+  display:inline-block; margin-top:5px;
+  background:var(--warm); color:var(--brown);
+  font-size:.76em; font-weight:700; padding:2px 9px; border-radius:10px;
+}
+.prod-info .prod-note {
+  display:inline-block; margin-top:5px; margin-left:4px;
+  background:#e8f5e8; color:#3a6b42;
+  font-size:.73em; font-weight:700; padding:2px 8px; border-radius:10px;
+}
+
+/* hidden by filter */
+.prod-card.hidden { display: none; }
+
+/* ERNÄHRUNG */
+.food-list { list-style:none; margin-top:5px; }
+.food-list li {
+  font-size:.87em; color:#6b5144; padding:6px 0;
+  border-bottom:1px solid var(--light);
+  display:flex; align-items:flex-start; gap:8px; line-height:1.5;
+}
+.food-list li:last-child { border-bottom:none; }
+.food-list li::before { content:'✦'; color:var(--gold); font-size:.7em; flex-shrink:0; margin-top:3px; }
+.food-list li strong { color:var(--brown); font-weight:700; }
+
+/* WOCHE */
+.week-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:8px; }
+.week-card { background:var(--warm); border-radius:10px; padding:10px 12px; text-align:center; }
+.week-card .wday { font-weight:700; font-size:.78em; color:var(--rose-dark); text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; }
+.week-card .wact { font-size:.8em; color:#6b5144; line-height:1.4; }
+
+/* MOTIVATION */
+.motivation {
+  text-align:center; padding:28px 20px;
+  background:linear-gradient(135deg,var(--warm),var(--cream));
+  border-radius:14px; margin-top:8px;
+}
+.motivation p { font-family:'Playfair Display',serif; font-style:italic; font-size:1.02em; color:var(--brown); line-height:1.7; }
+.motivation .sig { margin-top:10px; font-size:.78em; color:var(--rose); letter-spacing:.08em; }
+
+/* retinol note */
+.bakuchiol-note {
+  background:#e8f5e8; border-left:3px solid #7a9e7e;
+  padding:10px 14px; border-radius:0 8px 8px 0;
+  font-size:.82em; color:#3a6b42; line-height:1.6; margin-top:10px;
+}
+.bakuchiol-note strong { font-weight:700; }
+</style>
+</head>
+<body>
+<div class="wimpelkette" aria-hidden="true"><svg viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,7 Q50,11 100,9 Q150,7 200,10 Q250,13 300,9 Q350,7 400,9" stroke="#1a2744" stroke-width="1" fill="none" opacity="0.3"/><g class="wimpel-1" transform-origin="30 9"><polygon points="23,9 37,9 30,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-2" transform-origin="67 9"><polygon points="60,9 74,9 67,28" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-3" transform-origin="104 9"><polygon points="97,9 111,9 104,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-4" transform-origin="141 9"><polygon points="134,9 148,9 141,28" fill="#6a3f7a" opacity="0.75"/></g><g class="wimpel-5" transform-origin="178 10"><polygon points="171,10 185,10 178,29" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-6" transform-origin="215 9"><polygon points="208,9 222,9 215,28" fill="#5e8a5a" opacity="0.7"/></g><g class="wimpel-7" transform-origin="252 10"><polygon points="245,10 259,10 252,29" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-8" transform-origin="289 9"><polygon points="282,9 296,9 289,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-9" transform-origin="326 9"><polygon points="319,9 333,9 326,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-1" transform-origin="363 9"><polygon points="356,9 370,9 363,28" fill="#6a3f7a" opacity="0.75"/></g></svg></div>
+<header>
+<div class="rainbow-stripe"></div>
+<div class="header-eyebrow">Pflege</div>
+<div class="header-title">Naturkosmetik</div>
+<div class="header-sub">Lavera & Benecos · cruelty-free</div>
+</header>
+<div class="hero">
+  <p>Mit Produkten aus DM &amp; BIPA Österreich · 100% Natur</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn all on" onclick="setFilter('all',this)">🌿 Alle zeigen</button>
+  <button class="filter-btn dm"   onclick="setFilter('dm',this)">🔴 Nur DM</button>
+  <button class="filter-btn bipa" onclick="setFilter('bipa',this)">🟣 Nur BIPA</button>
+</div>
+
+<div class="container">
+
+  <div class="intro-note">
+    <strong>Dein persönlicher Plan:</strong> Hier findest du alle Schritte deiner täglichen Routine – mit konkreten Naturkosmetik-Produkten, die du bei DM oder BIPA in Österreich kaufen kannst. Filtere oben nach deinem Lieblingsgeschäft. Preise können je nach Filiale leicht abweichen.
+  </div>
+
+  <!-- ===== MORGEN ===== -->
+  <div class="section s-morgen open" id="sec-morgen">
+    <div class="sec-header" onclick="toggle('sec-morgen')">
+      <span class="ico">🌅</span>
+      <div class="tg">
+        <h2>Morgenroutine</h2>
+        <div class="sub">Reinigen · Serum · Feuchtigkeitspflege · Sonnenschutz</div>
+        <span class="time-badge">⏱ ca. 10 Min.</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="sec-inner">
+
+        <div class="step">
+          <div class="step-top">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Sanfte Reinigung</strong>
+              <p>Mit einer cremigen Reinigungsmilch das Gesicht säubern. Kein schäumendes Gel – das trocknet die Haut nach der Menopause zu sehr aus. Mit lauwarmem Wasser abspülen.</p>
+            </div>
+          </div>
+          <div class="products">
+            <div class="prod-card dm-card" data-shop="dm">
+              <span class="shop-badge dm">DM</span>
+              <div class="prod-info">
+                <div class="prod-brand">alverde NATURKOSMETIK</div>
+                <div class="prod-name">Reinigungsmilch Wildrose</div>
+                <div class="prod-desc">Mit Wildrosenöl, Macadamia- und Jojobaöl – reinigt sanft und schützt vor Feuchtigkeitsverlust. Ideal für trockene und sensible Haut.</div>
+                <span class="prod-price">ca. € 3,95 · 200 ml</span>
+              </div>
+            </div>
+            <div class="prod-card bipa-card" data-shop="bipa">
+              <span class="shop-badge bipa">BIPA</span>
+              <div class="prod-info">
+                <div class="prod-brand">lavera</div>
+                <div class="prod-name">Basis Sensitiv Reinigungsmilch</div>
+                <div class="prod-desc">Zertifizierte Naturkosmetik, sanfte Formel ohne synthetische Zusätze. Beruhigt und reinigt empfindliche, reife Haut.</div>
+                <span class="prod-price">ca. € 7,49 · 125 ml</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-top">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Vitamin C Serum – morgens auftragen</strong>
+              <p>3–4 Tropfen auf Wangen, Stirn und Hals. Regt die Kollagenproduktion an, schützt vor freien Radikalen. 1–2 Minuten einziehen lassen.</p>
+            </div>
+          </div>
+          <div class="products">
+            <div class="prod-card dm-card" data-shop="dm">
+              <span class="shop-badge dm">DM</span>
+              <div class="prod-info">
+                <div class="prod-brand">alverde NATURKOSMETIK</div>
+                <div class="prod-name">Serum Vitamin C</div>
+                <div class="prod-desc">Mit 1% Vitamin C, Bio-Aloe Vera, Bitterorangen-Extrakt und Traubenwasser. Schützt vor Umwelteinflüssen, mindert Fältchen, sorgt für natürlichen Glow.</div>
+                <span class="prod-price">ca. € 4,95 · 30 ml</span>
+                <span class="prod-note">✓ Naturkosmetik</span>
+              </div>
+            </div>
+            <div class="prod-card bipa-card" data-shop="bipa">
+              <span class="shop-badge bipa">BIPA</span>
+              <div class="prod-info">
+                <div class="prod-brand">WELEDA</div>
+                <div class="prod-name">Straffendes Serum Granatapfel & Maca-Peptide</div>
+                <div class="prod-desc">100% zertifizierte Naturkosmetik. Granatapfelextrakt mit hohem Vitamin-C-Gehalt und Maca-Peptide straffen und regenerieren reife Haut sichtbar.</div>
+                <span class="prod-price">ca. € 25,99 · 30 ml</span>
+                <span class="prod-note">★ Premium-Tipp</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-top">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Feuchtigkeitspflege Tag</strong>
+              <p>Nach dem Serum eine reichhaltige Tagescreme auftragen. Auch Hals und Dekolleté nicht vergessen!</p>
+            </div>
+          </div>
+          <div class="products">
+            <div class="prod-card dm-card" data-shop="dm">
+              <span class="shop-badge dm">DM</span>
+              <div class="prod-info">
+                <div class="prod-brand">alverde NATURKOSMETIK</div>
+                <div class="prod-name">Anti-Aging Tagespflege (oder lavera My Age Tagescreme)</div>
+                <div class="prod-desc">Lavera My Age Tagescreme bei DM erhältlich – mit Bio-Hibiskus und pflanzlichen Ceramiden. Regenerierend und pflegend für reife Haut.</div>
+                <span class="prod-price">ca. € 10,95 · 50 ml</span>
+              </div>
+            </div>
+            <div class="prod-card bipa-card" data-shop="bipa">
+              <span class="shop-badge bipa">BIPA</span>
+              <div class="prod-info">
+                <div class="prod-brand">WELEDA</div>
+                <div class="prod-name">Straffende Tagespflege Granatapfel & Maca-Peptide</div>
+                <div class="prod-desc">Zertifizierte Naturkosmetik mit wertvollem Granatapfelsamenöl. Strafft, revitalisiert und schützt die Haut den ganzen Tag.</div>
+                <span class="prod-price">ca. € 21,99 · 40 ml</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-top">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>Sonnenschutz LSF 50 – jeden Tag! ☀</strong>
+              <p>Das Wichtigste überhaupt. Auch im Winter, auch drinnen. UV-Strahlung ist der Hauptgrund für Hautalterung. Mineralische Filter (Zinkoxid/Titaniumdioxid) sind für Naturkosmetik typisch und gut verträglich.</p>
+            </div>
+          </div>
+          <div class="products">
+            <div class="prod-card dm-card" data-shop="dm">
+              <span class="shop-badge dm">DM</span>
+              <div class="prod-info">
+                <div class="prod-brand">alverde NATURKOSMETIK</div>
+                <div class="prod-name">Sonnencreme Sensitiv LSF 50</div>
+                <div class="prod-desc">Zertifizierte Naturkosmetik mit mineralischen UV-Filtern. Wasserfest, sofort wirksam, für empfindliche Haut. Ohne synthetische UV-Filter.</div>
+                <span class="prod-price">ca. € 5,75 · 75 ml</span>
+                <span class="prod-note">✓ Mineralisch</span>
+              </div>
+            </div>
+            <div class="prod-card bipa-card" data-shop="bipa">
+              <span class="shop-badge bipa">BIPA</span>
+              <div class="prod-info">
+                <div class="prod-brand">lavera</div>
+                <div class="prod-name">Sonnencreme Anti-Age LSF 30</div>
+                <div class="prod-desc">Mineralischer Sofortschutz mit Bio-Sonnenblume & Bio-Kokosnuss. Speziell für das Gesicht, beugt sonnenbedingter Hautalterung vor. Geeignet für Neurodermitiker.</div>
+                <span class="prod-price">ca. € 14,99 · 30 ml</span>
+                <span class="prod-note">★ Anti-Age</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-top">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <strong>Ein großes Glas Wasser trinken</strong>
+              <p>Nüchtern, vor dem Frühstück. Hydrierung zeigt sich sofort im Hautbild.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ABEND ===== -->
+  <div class="section s-abend" id="sec-abend">
+    <div class="sec-header" onclick="toggle('sec-abend')">
+      <span class="ico">🌙</span>
+      <div class="tg">
+        <h2>Abendroutine</h2>
+        <div class="sub">Reinigen · Bakuchiol-Serum · Nachtpflege</div>
+        <span class="time-badge">⏱ ca. 10–15 Min.</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="sec-inner">
+
+        <div class="bakuchiol-note">
+          <strong>🌿 Bakuchiol statt Retinol:</strong> Da du Naturprodukte möchtest, empfehlen wir <strong>Bakuchiol</strong> – ein pflanzlicher Wirkstoff aus der Babchi-Pflanze. Er wirkt ähnlich wie Retinol (regt Kollagensynthese an, reduziert Falten), ist aber deutlich sanfter, auch bei empfindlicher Haut nach der Menopause gut verträglich und 100% natürlich.
+        </div>
+
+        <div class="step" style="margin-top:12px;">
+          <div class="step-top">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Make-up & Sonnenschutz gründlich entfernen</strong>
+              <p>Doppelreinigung: erst Reinigungsöl oder Mizellarwasser, dann nochmals mit Reinigungsmilch. Übrig gebliebenes Make-up beschleunigt Hautalterung.</p>
+            </div>
+          </div>
+          <div class="products">
+            <div class="prod-card dm-card" data-shop="dm">
+              <span class="shop-badge dm">DM</span>
+              <div class="prod-info">
+                <div class="prod-brand">alverde NATURKOSMETIK</div>
+                <div class="prod-name">Reinigungsmilch Wildrose (gleiche wie morgens)</div>
+                <div class="prod-desc">Abends etwas gründlicher einmassieren, dann mit lauwarmem Wasser abspülen oder mit einem weichen Tuch abwischen.</div>
+                <span class="prod-price">ca. € 3,95 · 200 ml</span>
+              </div>
+            </div>
+            <div class="prod-card bipa-card" data-shop="bipa">
+              <span class="shop-badge bipa">BIPA</span>
+              <div class="prod-info">
+                <div class="prod-brand">bi good (BIPA Eigenmarke)</div>
+                <div class="prod-name">Mizellenwasser Naturkosmetik</div>
+                <div class="prod-desc">BIPAs Naturkosmetik-Eigenmarke bi good – sanfte Reinigung mit Mizellenformel, entfernt Make-up ohne Reiben.</div>
+                <span class="prod-price">ca. € 2,69</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-top">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Bakuchiol-Serum – die natürliche Retinol-Alternative</strong>
+              <p>Täglich abends nach der Reinigung auf Gesicht, Hals und Dekolleté auftragen. Stimuliert nachweislich die Kollagensynthese, mindert Falten – ohne Reizungen.</p>
+            </div>
+          </div>
+          <div class="products">
+            <div class="prod-card dm-card" data-shop="dm">
+              <span class="shop-badge dm">DM</span>
+              <div class="prod-info">
+                <div class="prod-brand">lavera (bei DM erhältlich)</div>
+                <div class="prod-name">Straffendes Serum 3-fach Hyaluron & Bakuchiol</div>
+                <div class="prod-desc">Das Flaggschiff-Serum von lavera: Bakuchiol + 3-fach Hyaluronsäure stimulieren das Kollagensystem, reduzieren Faltentiefe sichtbar. Vegan, zertifiziert, ohne Mikroplastik.</div>
+                <span class="prod-price">ca. € 14,95 · 30 ml</span>
+                <span class="prod-note">★ Bester Tipp</span>
+              </div>
+            </div>
+            <div class="prod-card bipa-card" data-shop="bipa">
+              <span class="shop-badge bipa">BIPA</span>
+              <div class="prod-info">
+                <div class="prod-brand">lavera (auch bei BIPA)</div>
+                <div class="prod-name">My Age Intensiv Öl-Serum</div>
+                <div class="prod-desc">Mit Bio-Hibiskus und pflanzlichen Ceramiden – tief regenerierend für reife Haut. Ausgleichend, pflegend und gegen Pigmentflecken.</div>
+                <span class="prod-price">ca. € 21,49 · 30 ml</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-top">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Reichhaltige Nachtcreme</strong>
+              <p>Abends braucht die Haut mehr Nährstoffe – in der Nacht regeneriert sich das Kollagen. Hals und Dekolleté miteincremen!</p>
+            </div>
+          </div>
+          <div class="products">
+            <div class="prod-card dm-card" data-shop="dm">
+              <span class="shop-badge dm">DM</span>
+              <div class="prod-info">
+                <div class="prod-brand">lavera (bei DM)</div>
+                <div class="prod-name">Straffende Nachtpflege mit Bakuchiol & Hyaluron</div>
+                <div class="prod-desc">Bakuchiol wirkt nachts auf das Kollagensystem ein. Angenehm cremige Konsistenz, recyclierter Glastiegel. Regeneriert die Haut intensiv während des Schlafs.</div>
+                <span class="prod-price">ca. € 14,95 · 50 ml</span>
+                <span class="prod-note">★ Top-Wahl</span>
+              </div>
+            </div>
+            <div class="prod-card bipa-card" data-shop="bipa">
+              <span class="shop-badge bipa">BIPA</span>
+              <div class="prod-info">
+                <div class="prod-brand">WELEDA</div>
+                <div class="prod-name">Straffende Nachtpflege Granatapfel & Maca-Peptide</div>
+                <div class="prod-desc">100% Naturkosmetik, Granatapfelsamenöl mit hohem Antioxidantien-Gehalt. Stimuliert Hauterneuerung und Straffung über Nacht.</div>
+                <span class="prod-price">ca. € 21,99 · 40 ml</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-top">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>Schlafposition & Seidenkissenbezug</strong>
+              <p>Möglichst auf dem Rücken schlafen. Seitenschlafen drückt das Gesicht und verstärkt Falten langfristig. Ein Seidenkissenbezug reduziert den Zug auf die Haut.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ERNÄHRUNG ===== -->
+  <div class="section s-ernaehrung" id="sec-ern">
+    <div class="sec-header" onclick="toggle('sec-ern')">
+      <span class="ico">🥗</span>
+      <div class="tg">
+        <h2>Ernährung & Trinken</h2>
+        <div class="sub">Kollagen von innen unterstützen</div>
+        <span class="time-badge">🔄 täglich im Blick</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="sec-inner">
+        <ul class="food-list">
+          <li><strong>1,5–2 Liter Wasser</strong> täglich – direkt sichtbar im Hautbild</li>
+          <li><strong>Vitamin C täglich:</strong> Paprika (rot = am meisten!), Brokkoli, Petersilie, Zitrusfrüchte – regt Kollagenbildung an</li>
+          <li><strong>Protein bei jeder Mahlzeit:</strong> Hülsenfrüchte, Eier, Fisch, Geflügel – ab 50 braucht der Körper mehr davon für Kollagenaufbau</li>
+          <li><strong>Zucker stark reduzieren</strong> – schädigt Kollagen direkt (Glykation) und beschleunigt Hautalterung</li>
+          <li><strong>Omega-3-reiche Lebensmittel:</strong> Lachs, Walnüsse, Leinsamen – stärken die Hautbarriere</li>
+          <li><strong>Wenig Salz</strong> – reduziert Wassereinlagerungen (Schwellungen im Gesicht)</li>
+          <li><strong>Kollagen-Supplement</strong> erwägen: 10g täglich über mind. 3 Monate – erste Studien positiv für Frauen über 50. Erhältlich bei DM und BIPA.</li>
+          <li><strong>Alkohol einschränken</strong> – entzieht Feuchtigkeit und fördert Erschlaffung</li>
+          <li><strong>Nicht rauchen</strong> – Nikotin zerstört Kollagen massiv</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== WÖCHENTLICH ===== -->
+  <div class="section s-woche" id="sec-woche">
+    <div class="sec-header" onclick="toggle('sec-woche')">
+      <span class="ico">📅</span>
+      <div class="tg">
+        <h2>Wöchentliche Extras</h2>
+        <div class="sub">Maske · Peeling · Heimneedling</div>
+        <span class="time-badge">1–2× pro Woche</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="sec-inner">
+        <div class="week-grid">
+          <div class="week-card">
+            <div class="wday">1–2× / Woche</div>
+            <div class="wact">🪡 Heimneedling<br>(0,3–0,5 mm)<br>danach Serum</div>
+          </div>
+          <div class="week-card">
+            <div class="wday">1× / Woche</div>
+            <div class="wact">🧖‍♀️ Pflegemaske<br>mit Hyaluron<br>oder Ceramiden</div>
+          </div>
+          <div class="week-card">
+            <div class="wday">1× / Woche</div>
+            <div class="wact">✨ Sanftes Peeling<br>(enzymatisch)<br>für bessere Wirkung</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <div class="step">
+            <div class="step-top">
+              <div class="step-num">★</div>
+              <div class="step-content">
+                <strong>Empfohlene Masken & Peeling</strong>
+              </div>
+            </div>
+            <div class="products" style="margin-top:8px;">
+              <div class="prod-card dm-card" data-shop="dm">
+                <span class="shop-badge dm">DM</span>
+                <div class="prod-info">
+                  <div class="prod-brand">alverde NATURKOSMETIK</div>
+                  <div class="prod-name">Hyaluron Tuchmaske oder Feuchtigkeitsmaske</div>
+                  <div class="prod-desc">Intensive Feuchtigkeitspflege für einmal pro Woche. Reife Haut nach der Menopause braucht extra Feuchtigkeitsboosts.</div>
+                  <span class="prod-price">ca. € 1,75–3,95</span>
+                </div>
+              </div>
+              <div class="prod-card bipa-card" data-shop="bipa">
+                <span class="shop-badge bipa">BIPA</span>
+                <div class="prod-info">
+                  <div class="prod-brand">WELEDA</div>
+                  <div class="prod-name">Skin Food Intensivpflege</div>
+                  <div class="prod-desc">Der Klassiker seit 90 Jahren – mit Kamille, Calendula, Rosmarin und Stiefmütterchen. Als wöchentliche intensive Gesichtsmaske auftragen, 10 Min. einwirken lassen.</div>
+                  <span class="prod-price">ca. € 9,99 · 75 ml</span>
+                  <span class="prod-note">★ Kultstatus</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:.8em;color:#7a6a60;margin-top:12px;line-height:1.6;padding-bottom:10px;">
+          ⚠ <strong>Beim Heimneedling:</strong> Gerät vorher desinfizieren, danach kein Make-up. Am nächsten Tag Sonnenschutz besonders wichtig. Roller alle 4–6 Wochen wechseln.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOTIVATION -->
+  <div class="motivation">
+    <p>„Naturkosmetik braucht etwas mehr Geduld – aber sie pflegt deine Haut, ohne sie zu belasten. Täglich 30 Minuten, konsequent über 3 Monate: du wirst den Unterschied spüren."</p>
+    <div class="sig">DEIN NATURKOSMETIK-PLAN · MIT LIEBE ERSTELLT 🌿</div>
+  </div>
+
+</div>
+
+<script>
+function toggle(id) {
+  const sec = document.getElementById(id);
+  sec.classList.toggle('open');
+}
+
+let activeFilter = 'all';
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+
+  document.querySelectorAll('.prod-card').forEach(card => {
+    const shop = card.dataset.shop;
+    if (f === 'all') {
+      card.classList.remove('hidden');
+    } else if (f === 'dm' && shop !== 'dm') {
+      card.classList.add('hidden');
+    } else if (f === 'bipa' && shop !== 'bipa') {
+      card.classList.add('hidden');
+    } else {
+      card.classList.remove('hidden');
+    }
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Bad Früh</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IM+Fell+English:ital@0;1&family=Raleway:wght@400;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,.45);--crimson:#b8294a;--crimson-l:rgba(184,41,74,.10);--gold:#c9893a;--gold-l:rgba(201,137,58,.12);--navy:#1a2744;--navy-l:rgba(26,39,68,.07);--sage:#5e8a5a;--sage-l:rgba(94,138,90,.10);--violet:#6a3f7a;--border-col:rgba(184,41,74,.15);--shadow:rgba(30,18,8,.08);}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);font-family:'Raleway',sans-serif;color:var(--text);min-height:100vh;padding-bottom:5rem;background-image:repeating-linear-gradient(-4deg,rgba(184,41,74,.022) 0px,rgba(184,41,74,.022) 32px,transparent 32px,transparent 64px,rgba(201,137,58,.018) 64px,rgba(201,137,58,.018) 96px,transparent 96px,transparent 128px);}
+body::after{content:'';position:fixed;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,#b8294a 0,#b8294a 20%,#c9893a 20%,#c9893a 40%,#1a2744 40%,#1a2744 60%,#6a3f7a 60%,#6a3f7a 80%,#5e8a5a 80%,#5e8a5a 100%);z-index:100;opacity:.7;}
+.vk-header{background:rgba(255,251,245,.95);border-bottom:1px solid var(--border-col);padding:.9rem 1.2rem .8rem;}
+.vk-header::before{content:'✦  ·  ✦  ·  ✦  ·  ✦  ·  ✦  ·  ✦  ·  ✦  ·  ✦';display:block;font-size:8px;letter-spacing:.3em;color:var(--navy);opacity:.35;text-align:center;margin-bottom:.5rem;}
+.vk-back{display:inline-flex;align-items:center;gap:.3rem;font-family:'Caveat',cursive;font-size:1rem;color:var(--text);text-decoration:none;background:none;border:none;cursor:pointer;opacity:.6;margin-bottom:.3rem;padding:0;}
+.vk-eyebrow{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;opacity:.45;font-weight:500;margin-bottom:.15rem;}
+.vk-title{font-family:'Playfair Display',serif;font-size:1.8rem;line-height:1.1;}
+.vk-sub{font-family:'IM Fell English',serif;font-size:.95rem;opacity:.55;margin-top:.1rem;font-style:italic;}
+.vk-progress{margin:1rem 1rem 0;padding:.8rem 1rem;background:var(--card);border:1px solid var(--border-col);border-radius:14px;box-shadow:0 2px 12px var(--shadow);}
+.vk-prog-row{display:flex;justify-content:space-between;font-family:'Raleway',sans-serif;font-weight:600;font-size:.9rem;margin-bottom:.4rem;}
+.vk-prog-bar{height:6px;background:rgba(30,18,8,.07);border-radius:20px;overflow:hidden;}
+.vk-prog-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--sage));border-radius:20px;transition:width .4s;}
+.vk-fertig{display:none;background:linear-gradient(135deg,var(--sage),var(--navy));border:1px solid var(--border-col);border-radius:14px;margin:1rem 1rem 0;padding:.7rem 1rem;text-align:center;box-shadow:0 3px 16px rgba(26,39,68,.2);}
+.vk-fertig.sichtbar{display:block;}
+.vk-fertig-text{font-family:'Playfair Display',serif;font-size:1.1rem;color:white;}
+.vk-section{font-family:'Raleway',sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);padding:.7rem 1rem .2rem;opacity:.8;}
+.vk-card{background:var(--card);border:1px solid var(--border-col);border-radius:16px;box-shadow:0 2px 12px var(--shadow);margin:.3rem 1rem 0;overflow:hidden;}
+.vk-card::before{content:'';display:block;height:4px;background:repeating-linear-gradient(90deg,var(--crimson) 0,var(--crimson) 20%,var(--gold) 20%,var(--gold) 40%,var(--navy) 40%,var(--navy) 60%,var(--violet) 60%,var(--violet) 80%,var(--sage) 80%,var(--sage) 100%);opacity:.45;}
+.vk-item{display:flex;align-items:flex-start;gap:.65rem;padding:.6rem 1rem;border-bottom:1px dashed rgba(30,18,8,.08);cursor:pointer;transition:background .15s;}
+.vk-item:last-child{border-bottom:none;}
+.vk-item:active{background:var(--navy-l);}
+.vk-item.erledigt{opacity:.3;}
+.vk-item.erledigt .vk-name{text-decoration:line-through;}
+.vk-kreis{width:22px;height:22px;border:1px solid rgba(30,18,8,.2);border-radius:50%;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:.75rem;background:var(--card);transition:all .2s;}
+.vk-item.erledigt .vk-kreis{background:var(--sage);border-color:var(--sage);color:white;}
+.vk-ico{font-size:1.1rem;flex-shrink:0;margin-top:2px;}
+.vk-inhalt{flex:1;}
+.vk-name{font-size:.95rem;font-weight:700;line-height:1.3;}
+.vk-desc{font-family:'IM Fell English',serif;font-size:.9rem;color:var(--muted);margin-top:.05rem;font-style:italic;}
+.vk-tip{font-size:.8rem;background:var(--gold-l);border-left:2px solid var(--gold);padding:.2rem .5rem;margin-top:.3rem;border-radius:0 6px 6px 0;font-style:italic;font-family:'IM Fell English',serif;color:rgba(30,18,8,.65);}
+.vk-reset{position:fixed;bottom:1.2rem;right:1.2rem;background:var(--card);border:1px solid var(--border-col);border-radius:20px;padding:.4rem 1rem;font-family:'Raleway',sans-serif;font-weight:600;font-size:.85rem;cursor:pointer;box-shadow:0 2px 8px var(--shadow);}
+.vk-reset:active{opacity:.7;}
+</style>
+</head>
+<body>
+<div class="vk-header">
+  <button class="vk-back" onclick="history.back()">← zurück</button>
+  <div class="vk-eyebrow">Morgenritual</div>
+  <div class="vk-title">🪥 Bad Früh</div>
+  <div class="vk-sub">Weleda · sanft in den Tag</div>
+</div>
+
+<div class="vk-progress">
+  <div class="vk-prog-row">
+    <span id="plbl">0 von 0</span>
+    <span id="ppct">0%</span>
+  </div>
+  <div class="vk-prog-bar"><div class="vk-prog-fill" id="pb" style="width:0%"></div></div>
+</div>
+
+<div class="vk-fertig" id="doneBanner">
+  <div class="vk-fertig-text">✦ Fertig! Du glänzt! ✦</div>
+</div>
+
+<div id="list"></div>
+<button class="vk-reset" onclick="resetAll()">↺ Neu</button>
+
+<script>
+var SECTIONS=[
+  {label:"🦷 Mundhygiene",items:[
+    {id:'zaehne',ico:'🪥',name:'Zähne putzen',desc:'2 Min · elektrische Bürste · alle Flächen',tip:'Nicht zu fest drücken'},
+    {id:'zahnseide',ico:'🧵',name:'Zahnseide',desc:'Alle Zahnzwischenräume · vor dem Bürsten ist besser'},
+    {id:'mund',ico:'💧',name:'Mundspülung',desc:'30 Sek spülen · nicht nachspülen mit Wasser'},
+  ]},
+  {label:"💅 Nägel & Brauen",items:[
+    {id:'naegel',ico:'💅',name:'Nägel reinigen',desc:'Nagelbürste · besonders nach draußen wichtig'},
+    {id:'brauen',ico:'🦋',name:'Augenbrauen',desc:'Bürstchen · in Wuchsrichtung · formen wenn nötig'},
+  ]},
+  {label:"🌸 Gesicht",items:[
+    {id:'reinigung',ico:'🫧',name:'Reinigungsmilch',desc:'Lavera Basis Sensitiv · kurz einmassieren · abwaschen',tip:'Kein heißes Wasser · lauwarm'},
+    {id:'serum',ico:'✨',name:'Feuchtigkeitsserum',desc:'Lavera 3-fach Hyaluron · 2–3 Tropfen · eintippen',tip:'Nicht einreiben – leicht eintippen'},
+    {id:'creme',ico:'🌿',name:'Leichte Tagescreme',desc:'Lavera My Age · dünn auftragen · vor Sonnencreme'},
+    {id:'sonne',ico:'☀️',name:'Sonnencreme LSF 30',desc:'Lavera Anti-Age · täglich auch im Winter!',tip:'Auch bei Bewölkung – UV-Strahlung ist immer da'},
+  ]},
+  {label:"🦱 Haare",items:[
+    {id:'haare',ico:'🦱',name:'Haare',desc:'Kämmen · stylen · bei Bedarf binden für Sport'},
+    {id:'anziehen',ico:'👗',name:'Anziehen',desc:'Fertig! 🎪'},
+  ]},
+  {label:"💄 Make-up",items:[
+    {id:'bb',ico:'💄',name:'BB Cream / Tinted Moisturizer',desc:'Lavera Tinted Moisturizer · leichte Grundierung'},
+    {id:'concealer',ico:'💄',name:'Concealer',desc:'Lavera Natural Concealer · unter Augen sanft eintippen'},
+    {id:'highlighter',ico:'✨',name:'Highlighter',desc:'Lavera Illuminating Powder · Jochbein & Nasenrücken'},
+    {id:'brauen_mu',ico:'💄',name:'Augenbrauen',desc:'Lavera Brow Styler dunkelbraun · haarfeine Striche'},
+    {id:'lidschatten',ico:'💄',name:'Lidschatten',desc:'Lavera Quattro warm tones · Bronze/Kupfer/Braun'},
+    {id:'eyeliner',ico:'💄',name:'Eyeliner',desc:'Lavera Eyeliner braun · dünn · nur Oberlid'},
+    {id:'mascara',ico:'💄',name:'Mascara',desc:'Lavera Mascara Volume · nur Oberwimpern'},
+    {id:'blush',ico:'🌸',name:'Blush / Rouge',desc:'Lavera Natural Blush rosé · lächeln beim Auftragen'},
+    {id:'lip_liner',ico:'💄',name:'Lip Liner',desc:'Lavera Lip Liner nude rose · Lippenkontur zuerst'},
+    {id:'lipstick',ico:'💄',name:'Lippenstift',desc:'Lavera Natural Lip Colour mauve rose'},
+    {id:'lipgloss',ico:'💄',name:'Lip Gloss',desc:'Lavera Lip Gloss transparent · nur Lippenmitte'},
+  ]},
+];
+
+var KEY='bad_frueh_v1';
+var checked={};
+
+function load(){
+  try{
+    var raw=localStorage.getItem(KEY);
+    if(raw)checked=JSON.parse(raw);
+    var sd=localStorage.getItem(KEY+'_d');
+    var td=new Date().toISOString().slice(0,10);
+    if(sd!==td){checked={};save();localStorage.setItem(KEY+'_d',td);}
+  }catch(e){}
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(checked));}catch(e){}}
+function toggle(id){checked[id]=!checked[id];save();render();}
+function resetAll(){checked={};save();render();}
+function getAllItems(){var all=[];SECTIONS.forEach(function(s){s.items.forEach(function(i){all.push(i);});});return all;}
+
+function render(){
+  var all=getAllItems();
+  var done=all.filter(function(i){return!!checked[i.id];}).length;
+  var total=all.length;
+  var pct=total?Math.round(done/total*100):0;
+  document.getElementById('plbl').textContent=done+' von '+total;
+  document.getElementById('ppct').textContent=pct+'%';
+  document.getElementById('pb').style.width=pct+'%';
+  document.getElementById('doneBanner').className='vk-fertig'+(done===total&&total>0?' sichtbar':'');
+
+  var h='';
+  SECTIONS.forEach(function(sec){
+    h+='<div class="vk-section">'+sec.label+'</div><div class="vk-card">';
+    sec.items.forEach(function(item){
+      var d=!!checked[item.id];
+      h+='<div class="vk-item'+(d?' erledigt':'')+'" onclick="toggle(\''+item.id+'\')">'
+        +'<div class="vk-kreis">'+(d?'✓':'')+'</div>'
+        +'<div class="vk-ico">'+item.ico+'</div>'
+        +'<div class="vk-inhalt"><div class="vk-name">'+item.name+'</div>'
+        +'<div class="vk-desc">'+item.desc+'</div>'
+        +(item.tip?'<div class="vk-tip">💡 '+item.tip+'</div>':'')
+        +'</div></div>';
+    });
+    h+='</div>';
+  });
+  document.getElementById('list').innerHTML=h;
+}
+load();render();
+</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Rudi & Timmy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IM+Fell+English:ital@0;1&family=Raleway:wght@400;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,.12);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,.10);
+  --violet:#6a3f7a;--border-col:rgba(184,41,74,.15);--shadow:rgba(30,18,8,.08);}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);font-family:'Raleway',sans-serif;color:var(--text);background-image:repeating-linear-gradient(-4deg,rgba(184,41,74,.022) 0px,rgba(184,41,74,.022) 32px,transparent 32px,transparent 64px,rgba(201,137,58,.018) 64px,rgba(201,137,58,.018) 96px,transparent 96px,transparent 128px);min-height:100vh;padding-bottom:5rem;
+  background-image:repeating-linear-gradient(-12deg,transparent 0,transparent 60px,rgba(255,217,61,.06) 60px,rgba(255,217,61,.06) 80px,transparent 80px,transparent 140px,rgba(232,72,85,.04) 140px,rgba(232,72,85,.04) 160px);}
+.vk-header{background:var(--gold);border-bottom:1px solid var(--border-col);padding:.8rem 1.1rem .7rem;}
+.vk-header::before{content:'';display:block;height:6px;margin-bottom:.5rem;background:repeating-linear-gradient(90deg,var(--crimson) 0,var(--crimson) 20%,var(--gelb) 20%,var(--gelb) 40%,var(--sage) 40%,var(--sage) 60%,var(--navy) 60%,var(--navy) 80%,var(--violet) 80%,var(--violet) 100%);border-radius:3px;}
+.vk-back{display:inline-flex;align-items:center;gap:.3rem;font-family:'Caveat',cursive;font-size:1rem;color:var(--text);text-decoration:none;background:none;border:none;cursor:pointer;opacity:.7;margin-bottom:.3rem;padding:0;}
+.vk-eyebrow{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;opacity:.6;font-weight:700;margin-bottom:.15rem;}
+.vk-title{font-family:'Playfair Display',serif;font-size:1.8rem;line-height:1.1;}
+.vk-sub{font-family:'Caveat',cursive;font-size:1rem;opacity:.65;margin-top:.1rem;}
+.vk-hinweis{margin:1rem 1rem 0;padding:.7rem .9rem;background:rgba(61,135,203,.12);border:2px solid var(--navy);border-radius:12px;font-family:'Caveat',cursive;font-size:1rem;line-height:1.5;}
+.vk-alert{margin:1rem 1rem 0;padding:.7rem .9rem;background:rgba(232,72,85,.12);border:2px solid var(--crimson);border-radius:12px;font-family:'Playfair Display',serif;font-size:1rem;}
+.session-label{font-family:'Playfair Display',serif;font-size:1.05rem;color:white;padding:.55rem 1rem;display:flex;align-items:center;justify-content:space-between;}
+.session-morgen{background:var(--gelb);color:var(--text);}
+.session-abend{background:var(--violet);}
+.session-time{font-family:'Caveat',cursive;font-size:1rem;opacity:.8;}
+.vk-card{background:var(--card);border:1px solid var(--border-col);border-radius:16px;box-shadow:0 2px 12px var(--shadow);margin:1rem 1rem 0;overflow:hidden;}
+.cats-grid{display:grid;grid-template-columns:1fr 1fr;}
+.cat-col{border-right:2px dashed rgba(30,18,8,.15);}
+.cat-col:last-child{border-right:none;}
+.cat-name{font-family:'Playfair Display',serif;font-size:1rem;padding:.5rem .8rem .3rem;border-bottom:2px solid rgba(30,18,8,.08);}
+.med{display:flex;align-items:center;justify-content:space-between;padding:.45rem .8rem;border-bottom:1px dashed rgba(30,18,8,.08);cursor:pointer;transition:background .15s;-webkit-tap-highlight-color:transparent;gap:.4rem;}
+.med:last-child{border-bottom:none;}
+.med:active{background:rgba(255,217,61,.25);}
+.med.done{opacity:.28;}
+.med.done .med-name{text-decoration:line-through;}
+.med-check{width:20px;height:20px;border:1px solid var(--border-col);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;background:var(--card);transition:all .2s;}
+.med.done .med-check{background:var(--sage);border-color:var(--sage);color:white;}
+.med-name{font-size:.85rem;font-weight:700;flex:1;line-height:1.2;}
+.med-note{font-size:.7rem;font-family:'Caveat',cursive;color:rgba(30,18,8,.45);display:block;}
+.med-dose{font-family:'Playfair Display',serif;font-size:.8rem;color:var(--crimson);flex-shrink:0;}
+.gabapentin-info{margin:1rem 1rem 0;background:var(--gelb);border:1px solid var(--border-col);border-radius:14px;padding:.65rem .9rem;box-shadow:0 2px 8px var(--shadow);}
+.gabapentin-info p{font-family:'Playfair Display',serif;font-size:.95rem;}
+.gabapentin-info small{font-family:'Caveat',cursive;font-size:.9rem;opacity:.7;}
+.vk-reset{position:fixed;bottom:1.2rem;right:1.2rem;background:var(--card);border:1px solid var(--border-col);border-radius:20px;padding:.4rem 1rem;font-family:'Playfair Display',serif;font-size:.9rem;cursor:pointer;box-shadow:0 2px 8px var(--shadow);}
+.vk-reset:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--text);}
+
+body::after{content:'';position:fixed;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,#b8294a 0,#b8294a 20%,#c9893a 20%,#c9893a 40%,#1a2744 40%,#1a2744 60%,#6a3f7a 60%,#6a3f7a 80%,#5e8a5a 80%,#5e8a5a 100%);z-index:100;opacity:.7;}
+</style>
+</head>
+<body>
+<div class="vk-header">
+  <button class="vk-back" onclick="history.back()">← zurück</button>
+  <div class="vk-eyebrow">Tiere</div>
+  <div class="vk-title">🐱 Rudi & Timmy</div>
+  <div class="vk-sub">Medikamente & Pflege</div>
+</div>
+
+<div class="vk-alert">💧 Wasserschüsserl neu füllen!</div>
+<div class="gabapentin-info">
+  <p>📅 Täglich mittags: Gabapentin (Rudi)</p>
+  <small>nach dem Mittagessen — vor dem Rausgehen</small>
+</div>
+
+<div class="session-label session-morgen">🌅 Morgen füttern & Medikamente <span class="session-time">08:30</span></div>
+<div class="vk-card">
+  <div class="cats-grid">
+    <div class="cat-col rudi-col">
+      <div class="cat-name">🟠 Rudi</div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Magenschutz</span><span class="med-dose">½ Pckerl</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Atopica</span><span class="med-dose">0,1 ml</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">B-Decaplex</span><span class="med-dose">½ Tabl.</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Gabapentin</span><span class="med-dose">½ Kaps.</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Tee + Kalium</span><span class="med-dose">1 ml</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Augentropfen</span><span class="med-dose">1 Tr./Auge</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Prednicortone</span><span class="med-dose">¼ Tabl.</span></div>
+    </div>
+    <div class="cat-col timmy-col">
+      <div class="cat-name">🔵 Timmy</div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Felimazole</span><span class="med-dose">1 Tabl.</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Semintra</span><span class="med-dose">0,6 ml</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Amodip</span><span class="med-dose">¼ Tabl.</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Kalium</span><span class="med-dose">1 ml</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="session-label session-abend">🌙 Abend füttern & Medikamente <span class="session-time">22:00</span></div>
+<div class="vk-card">
+  <div class="cats-grid">
+    <div class="cat-col rudi-col">
+      <div class="cat-name">🟠 Rudi</div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Redonyl</span><span class="med-dose">1 Kaps.</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Cosequin</span><span class="med-dose">½ Kaps.</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Malzpaste</span><span class="med-dose"></span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Tee + Kalium</span><span class="med-dose">1 ml</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Augentropfen</span><span class="med-dose">je 1 Tr.</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Atopica<span class="med-note">2–3 Std. nach Futter</span></span><span class="med-dose">0,1 ml</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Gabapentin</span><span class="med-dose">½ Kaps.</span></div>
+    </div>
+    <div class="cat-col timmy-col">
+      <div class="cat-name">🔵 Timmy</div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Cosequin</span><span class="med-dose">½ Kaps.</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Malzpaste</span><span class="med-dose"></span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Felimazole</span><span class="med-dose">1 Tabl.</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Mariendistel</span><span class="med-dose">2 Tropfen</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Amodip</span><span class="med-dose">½ Tabl.</span></div>
+      <div class="med" onclick="tog(this)"><div class="med-check"></div><span class="med-name">Kalium</span><span class="med-dose">1 ml</span></div>
+    </div>
+  </div>
+</div>
+
+<button class="vk-reset" onclick="resetAll()">↺ Neu</button>
+
+<script>
+function tog(el){el.classList.toggle('done');save();}
+function save(){var s=[];document.querySelectorAll('.med').forEach(function(el){s.push(el.classList.contains('done')?'1':'0');});try{localStorage.setItem('katzen_v2',s.join(''));}catch(e){}}
+function load(){var sv;try{sv=localStorage.getItem('katzen_v2');}catch(e){}if(!sv)return;var items=document.querySelectorAll('.med');sv.split('').forEach(function(s,i){if(s==='1'&&items[i])items[i].classList.add('done');});}
+function resetAll(){document.querySelectorAll('.med').forEach(function(el){el.classList.remove('done');});try{localStorage.removeItem('katzen_v2');}catch(e){}}
+load();
+</script>
+</body>
+</html>

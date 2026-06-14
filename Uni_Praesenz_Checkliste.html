@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uni-Präsenz – Mitnehmen</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+@keyframes wimpel-swing{0%,100%{transform:rotate(-5deg);}50%{transform:rotate(5deg);}}
+@keyframes wimpel-swing2{0%,100%{transform:rotate(4deg);}50%{transform:rotate(-6deg);}}
+@keyframes wimpel-swing3{0%,100%{transform:rotate(-3deg);}50%{transform:rotate(7deg);}}
+@keyframes rope-sway{0%,100%{transform:scaleX(1);}50%{transform:scaleX(1.01);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.45;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+@keyframes spotlight{0%{left:-100%;}60%{left:160%;}100%{left:160%;}}
+
+:root{
+  --bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,0.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,0.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,0.13);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,0.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,0.12);
+  --violet:#6a3f7a;
+  --border:rgba(184,41,74,0.13);--shadow:rgba(30,18,8,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+body{
+  background:var(--bg);
+  font-family:"Raleway",sans-serif;
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:2rem;
+}
+
+/* Wimpelkette */
+.wimpelkette{width:100%;overflow:hidden;background:var(--bg);padding:0;line-height:0;}
+.wimpelkette svg{width:100%;height:44px;animation:rope-sway 5s ease-in-out infinite;}
+.wimpel-1{animation:wimpel-swing 2.8s ease-in-out infinite;}
+.wimpel-2{animation:wimpel-swing2 3.2s ease-in-out infinite 0.3s;}
+.wimpel-3{animation:wimpel-swing3 2.5s ease-in-out infinite 0.6s;}
+.wimpel-4{animation:wimpel-swing 3.0s ease-in-out infinite 0.9s;}
+.wimpel-5{animation:wimpel-swing2 2.7s ease-in-out infinite 1.2s;}
+.wimpel-6{animation:wimpel-swing3 3.4s ease-in-out infinite 1.5s;}
+.wimpel-7{animation:wimpel-swing 2.9s ease-in-out infinite 1.8s;}
+
+/* Header */
+.header{padding:1.1rem 1rem .4rem;text-align:center;}
+.header-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;font-weight:500;}
+.header-title{font-family:"Playfair Display",serif;font-size:1.6rem;font-style:italic;color:var(--text);line-height:1.3;}
+.header-sub{font-family:"IM Fell English",serif;font-size:.95rem;color:var(--muted);margin-top:.25rem;font-style:italic;}
+
+/* Hauptkarte */
+.main-wrap{margin:.9rem 1rem 0;animation:fadeIn .4s cubic-bezier(.34,1.2,.64,1);}
+.phase-card{
+  background:var(--card);
+  border-radius:12px;
+  border:1px solid var(--border);
+  box-shadow:0 3px 16px var(--shadow);
+  overflow:hidden;
+  position:relative;
+}
+.phase-card::before{
+  content:'';display:block;height:6px;
+  background:repeating-linear-gradient(
+    90deg,
+    var(--crimson) 0%,var(--crimson) 20%,
+    var(--gold) 20%,var(--gold) 40%,
+    var(--navy) 40%,var(--navy) 60%,
+    var(--violet) 60%,var(--violet) 80%,
+    var(--sage) 80%,var(--sage) 100%
+  );opacity:.65;
+}
+.phase-card::after{
+  content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.055),transparent);
+  animation:spotlight 10s ease-in-out infinite;pointer-events:none;
+}
+
+/* Progress */
+.progress-wrap{padding:.75rem .95rem .5rem;}
+.progress-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;font-weight:500;display:flex;align-items:center;gap:.5rem;}
+.progress-dot{width:6px;height:6px;border-radius:50%;background:var(--crimson);animation:pulse 3s ease-in-out infinite;flex-shrink:0;}
+.progress-bar{height:4px;background:rgba(184,41,74,0.10);border-radius:99px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--crimson),var(--gold));border-radius:99px;transition:width .5s cubic-bezier(.34,1.2,.64,1);}
+.progress-count{font-size:11px;color:var(--muted);font-style:italic;font-family:"IM Fell English",serif;margin-top:.3rem;}
+
+/* Task items */
+.tasks{padding:.2rem .95rem .75rem;}
+.task-item{
+  display:flex;align-items:flex-start;gap:.6rem;
+  padding:.55rem .15rem;
+  border-bottom:1px solid rgba(184,41,74,0.07);
+  cursor:pointer;
+  transition:opacity .2s;
+}
+.task-item:last-child{border-bottom:none;}
+.task-item.done{opacity:.28;}
+.task-item.done .task-name{text-decoration:line-through;text-decoration-color:rgba(184,41,74,0.3);}
+.task-check{
+  width:18px;height:18px;border-radius:50%;
+  border:1px solid rgba(184,41,74,0.3);
+  flex-shrink:0;margin-top:2px;
+  transition:all .25s;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:transparent;
+}
+.task-item.done .task-check{background:var(--sage-l);border-color:var(--sage);color:var(--sage);}
+.task-item.done .task-check::after{content:'✦';}
+.task-name{font-size:1.05rem;color:var(--text);line-height:1.35;font-weight:400;}
+.task-note{font-size:.8rem;font-style:italic;color:var(--muted);margin-top:1px;font-family:"IM Fell English",serif;}
+
+/* Fertig-Meldung */
+.all-done{
+  text-align:center;
+  padding:.8rem 1rem .5rem;
+  font-family:"Playfair Display",serif;
+  font-size:1.1rem;
+  font-style:italic;
+  color:var(--sage);
+  display:none;
+  border-top:1px dashed rgba(94,138,90,0.3);
+  margin:0 .95rem;
+}
+
+/* Reset */
+.reset-wrap{text-align:center;margin-top:1.2rem;}
+.reset-btn{
+  font-size:.8rem;font-style:italic;
+  color:var(--muted);background:none;border:none;
+  cursor:pointer;font-family:"IM Fell English",serif;opacity:.6;
+}
+.reset-btn:hover{opacity:1;color:var(--crimson);}
+</style>
+</head>
+<body>
+
+<div class="wimpelkette">
+<svg viewBox="0 0 400 44" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,8 Q50,4 100,8 Q150,12 200,8 Q250,4 300,8 Q350,12 400,8" stroke="rgba(184,41,74,0.35)" stroke-width="1.2" fill="none"/>
+  <polygon class="wimpel-1" points="28,9 38,9 33,26" fill="#b8294a" opacity=".75" transform-origin="33 9"/>
+  <polygon class="wimpel-2" points="68,7 78,7 73,24" fill="#c9893a" opacity=".75" transform-origin="73 7"/>
+  <polygon class="wimpel-3" points="108,9 118,9 113,26" fill="#1a2744" opacity=".7" transform-origin="113 9"/>
+  <polygon class="wimpel-4" points="148,7 158,7 153,24" fill="#6a3f7a" opacity=".75" transform-origin="153 7"/>
+  <polygon class="wimpel-5" points="188,9 198,9 193,26" fill="#5e8a5a" opacity=".7" transform-origin="193 9"/>
+  <polygon class="wimpel-6" points="228,7 238,7 233,24" fill="#b8294a" opacity=".75" transform-origin="233 7"/>
+  <polygon class="wimpel-7" points="268,9 278,9 273,26" fill="#c9893a" opacity=".7" transform-origin="273 9"/>
+</svg>
+</div>
+
+<div class="header">
+  <div class="header-label">Checkliste</div>
+  <div class="header-title">Uni-Präsenz</div>
+  <div class="header-sub">für den Kurs mitnehmen</div>
+</div>
+
+<div class="main-wrap">
+  <div class="phase-card">
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span class="progress-dot"></span>
+        <span id="prog-label">Was einpacken?</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
+      <div class="progress-count" id="ptxt"></div>
+    </div>
+    <div class="tasks" id="list"></div>
+    <div class="all-done" id="alldone">✦ Alles eingepackt — viel Freude im Kurs!</div>
+  </div>
+</div>
+
+<div class="reset-wrap">
+  <button class="reset-btn" onclick="reset()">↺ Zurücksetzen</button>
+</div>
+
+<script>
+const items = [
+  { name: "Mappe" },
+  { name: "Notizblätter" },
+  { name: "Ev. Vorbereitung für WS" },
+  { name: "Wasserflasche" },
+  { name: "Jause" },
+  { name: "Stifte" },
+  { name: "Kalender" },
+];
+
+const KEY = "uni_praesenz_check_v2";
+let state = JSON.parse(localStorage.getItem(KEY) || "[]");
+if (state.length !== items.length) state = items.map(() => false);
+
+function render() {
+  const ul = document.getElementById("list");
+  ul.innerHTML = "";
+  const done = state.filter(Boolean).length;
+  items.forEach((item, i) => {
+    const el = document.createElement("div");
+    el.className = "task-item" + (state[i] ? " done" : "");
+    el.onclick = () => { state[i] = !state[i]; save(); render(); };
+    el.innerHTML = `<div class="task-check"></div>
+      <div>
+        <div class="task-name">${item.name}</div>
+        ${item.note ? `<div class="task-note">${item.note}</div>` : ""}
+      </div>`;
+    ul.appendChild(el);
+  });
+  const pct = Math.round(done / items.length * 100);
+  document.getElementById("fill").style.width = pct + "%";
+  document.getElementById("ptxt").textContent = `${done} von ${items.length} erledigt`;
+  document.getElementById("prog-label").textContent = done === items.length ? "Alles dabei ✦" : "Was einpacken?";
+  document.getElementById("alldone").style.display = done === items.length ? "block" : "none";
+}
+function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
+function reset() { state = items.map(() => false); save(); render(); }
+render();
+</script>
+</body>
+</html>

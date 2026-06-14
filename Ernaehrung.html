@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#fdf6ee">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intuitiv & Gesund Essen</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,.45);
+    --crimson:#b8294a;--crimson-l:rgba(184,41,74,.10);
+    --gold:#c9893a;--gold-l:rgba(201,137,58,.12);
+    --navy:#1a2744;--navy-l:rgba(26,39,68,.07);
+    --sage:#5e8a5a;--sage-l:rgba(94,138,90,.10);
+    --violet:#6a3f7a;--border-col:rgba(184,41,74,.15);--shadow:rgba(30,18,8,.08);
+    --cream:var(--bg);--warm-white:var(--card);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--bg);
+    font-family: 'Raleway', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 3rem 0;
+  }
+
+  /* Wimpelkette */
+  .wimpelkette {
+    width: 100%;
+    overflow: hidden;
+    background: rgba(26,39,68,.06);
+    padding: 0.4rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .wimpel {
+    width: 0;
+    height: 0;
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-top: 28px solid var(--crimson);
+    margin: 0 3px;
+    animation: sway 3s ease-in-out infinite;
+  }
+  .wimpel:nth-child(2n) { border-top-color: var(--gold); animation-delay: 0.3s; }
+  .wimpel:nth-child(3n) { border-top-color: var(--violet); animation-delay: 0.6s; }
+  .wimpel:nth-child(4n) { border-top-color: var(--sage); animation-delay: 0.9s; }
+  .wimpel:nth-child(5n) { border-top-color: var(--cream); animation-delay: 1.2s; }
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(-4deg); }
+    50% { transform: rotate(4deg); }
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--crimson);
+    text-align: center;
+    margin-bottom: 0.3rem;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--gold);
+    text-align: center;
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Hunger-Skala */
+  .card {
+    background: var(--card);
+    border: 1.5px solid var(--gold);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 3px 3px 0 var(--gold);
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--crimson);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hunger-scale {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.8rem;
+  }
+
+  .hunger-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: 2px solid transparent;
+    transition: transform 0.2s;
+    cursor: default;
+  }
+  .hunger-dot:hover { transform: scale(1.15); }
+  .hunger-dot.low { background: #f0e8e8; color: var(--crimson); border-color: var(--crimson); }
+  .hunger-dot.mid { background: #f5f0e0; color: #8B7000; border-color: var(--gold); }
+  .hunger-dot.high { background: #e8f0e8; color: #2D6B3A; border-color: var(--sage); }
+
+  .hunger-legend {
+    font-size: 0.82rem;
+    color: #666;
+    font-style: italic;
+  }
+
+  /* Mahlzeiten */
+  .mahlzeiten-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 560px) {
+    .mahlzeiten-grid { grid-template-columns: 1fr; }
+  }
+
+  .mahlzeit-card {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 1.1rem;
+    border-top: 4px solid var(--crimson);
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.06);
+    transition: transform 0.2s;
+  }
+  .mahlzeit-card:hover { transform: translateY(-2px); }
+  .mahlzeit-card:nth-child(2) { border-top-color: var(--gold); }
+  .mahlzeit-card:nth-child(3) { border-top-color: var(--violet); }
+
+  .mahlzeit-emoji { font-size: 1.6rem; margin-bottom: 0.4rem; }
+  .mahlzeit-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+  .mahlzeit-desc {
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.5;
+  }
+  .mahlzeit-beispiel {
+    font-size: 0.78rem;
+    color: var(--sage);
+    font-style: italic;
+    margin-top: 0.4rem;
+  }
+
+  /* Anker-Punkte */
+  .anker-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    .anker-grid { grid-template-columns: 1fr; }
+  }
+
+  .anker-item {
+    background: var(--card);
+    border-left: 4px solid var(--sage);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8rem 1rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+  .anker-item:nth-child(2) { border-left-color: var(--violet); }
+  .anker-item:nth-child(3) { border-left-color: var(--gold); }
+  .anker-item:nth-child(4) { border-left-color: var(--crimson); }
+  .anker-label {
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+
+  /* Lebensmittel-Listen */
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .tab-btn {
+    background: none;
+    border: 2px solid var(--gold);
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: var(--gold);
+    color: white;
+    font-weight: 600;
+  }
+  .tab-btn:hover:not(.active) {
+    background: #f5f0e0;
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .food-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .food-item {
+    background: var(--card);
+    border: 1px solid #e8e0d0;
+    border-radius: 8px;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: background 0.15s;
+  }
+  .food-item:hover { background: #f0ebe0; }
+  .food-emoji { font-size: 1rem; }
+
+  /* Regel */
+  .regel-box {
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  .regel-text {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--gold);
+  }
+
+  /* Section headers */
+  .section-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  hr.divider {
+    border: none;
+    border-top: 1px dashed var(--gold);
+    margin: 1.5rem 0;
+    opacity: 0.5;
+  }
+
+body::after{content:'';position:fixed;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,#b8294a 0,#b8294a 20%,#c9893a 20%,#c9893a 40%,#1a2744 40%,#1a2744 60%,#6a3f7a 60%,#6a3f7a 80%,#5e8a5a 80%,#5e8a5a 100%);z-index:100;opacity:.7;}
+</style>
+</head>
+<body>
+
+<!-- Wimpelkette -->
+<div class="wimpelkette">
+  <div class="wimpel"></div><div class="wimpel"></div><div class="wimpel"></div>
+  <div class="wimpel"></div><div class="wimpel"></div><div class="wimpel"></div>
+  <div class="wimpel"></div><div class="wimpel"></div><div class="wimpel"></div>
+  <div class="wimpel"></div><div class="wimpel"></div><div class="wimpel"></div>
+  <div class="wimpel"></div><div class="wimpel"></div><div class="wimpel"></div>
+  <div class="wimpel"></div><div class="wimpel"></div><div class="wimpel"></div>
+  <div class="wimpel"></div><div class="wimpel"></div><div class="wimpel"></div>
+</div>
+
+<div class="container">
+
+  <h1>Intuitiv & Gesund Essen</h1>
+  <p class="subtitle">Kein Zwang. Nur Bewusstsein. 🌿</p>
+
+  <!-- Hunger-Skala -->
+  <div class="card">
+    <div class="card-title">🌡️ Vor dem Essen — kurz innehalten</div>
+    <div class="hunger-scale">
+      <div class="hunger-dot low">1</div>
+      <div class="hunger-dot low">2</div>
+      <div class="hunger-dot low">3</div>
+      <div class="hunger-dot low">4</div>
+      <div class="hunger-dot mid">5</div>
+      <div class="hunger-dot mid">6</div>
+      <div class="hunger-dot high">7</div>
+      <div class="hunger-dot high">8</div>
+      <div class="hunger-dot high">9</div>
+      <div class="hunger-dot high">10</div>
+    </div>
+    <p class="hunger-legend">
+      🔴 1–4: Kein echter Hunger — warten oder fragen: <em>Was brauche ich wirklich?</em><br>
+      🟡 5–6: Leichter Hunger — kleiner Snack oder Tee reicht<br>
+      🟢 7–10: Echter Hunger — jetzt essen, bewusst & genussvoll
+    </p>
+  </div>
+
+  <!-- Mahlzeiten -->
+  <div class="section-label">Tagesstruktur — locker & ohne Zwang</div>
+  <div class="mahlzeiten-grid">
+    <div class="mahlzeit-card">
+      <div class="mahlzeit-emoji">🌅</div>
+      <div class="mahlzeit-title">Frühstück</div>
+      <div class="mahlzeit-desc">Klein & nährstoffreich. Nicht zwingen — aber etwas Echtes.</div>
+      <div class="mahlzeit-beispiel">Brot + Mandelmus + Marmelade ✓<br>Joghurt + Nüsse + Beeren<br>Overnight Oats<br>Weiches Ei + Vollkornbrot</div>
+    </div>
+    <div class="mahlzeit-card">
+      <div class="mahlzeit-emoji">☀️</div>
+      <div class="mahlzeit-title">Mittagessen</div>
+      <div class="mahlzeit-desc">Die Hauptmahlzeit — wenn der Hunger am stärksten ist.</div>
+      <div class="mahlzeit-beispiel">Gemüse + Protein + Vollkorn<br>Hülsenfrüchte + Reis<br>Suppe + Brot<br>Tofu + Gemüse</div>
+    </div>
+    <div class="mahlzeit-card">
+      <div class="mahlzeit-emoji">🌙</div>
+      <div class="mahlzeit-title">Abendessen</div>
+      <div class="mahlzeit-desc">Leicht & genussvoll. Genuss, nicht Kalorien.</div>
+      <div class="mahlzeit-beispiel">Suppe · Salat · Brot<br>Gemüse + Ei<br>Linsen · Hummus<br>Kleines, Warmes</div>
+    </div>
+  </div>
+
+  <!-- Qualitäts-Anker -->
+  <div class="card">
+    <div class="card-title">🌱 Qualitäts-Ankerpunkte</div>
+    <div class="anker-grid">
+      <div class="anker-item">
+        <div class="anker-label">🥦 Täglich Grünes</div>
+        Gemüse in irgendeiner Form — roh, gedünstet, in der Suppe
+      </div>
+      <div class="anker-item">
+        <div class="anker-label">💪 Täglich Protein</div>
+        Hülsenfrüchte, Ei, Nüsse, Samen, Tofu, Tempeh
+      </div>
+      <div class="anker-item">
+        <div class="anker-label">🫒 Täglich Gutes Fett</div>
+        Olivenöl, Nüsse, Mandelmus, Samen, Ei
+      </div>
+      <div class="anker-item">
+        <div class="anker-label">💧 Täglich Wasser</div>
+        Wasser, Tee — vor dem Essen trinken, nicht danach
+      </div>
+    </div>
+  </div>
+
+  <!-- Lebensmittel-Listen -->
+  <div class="card">
+    <div class="card-title">🛒 Pflanzliche Lebensmittel — vollständige Liste</div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('eiweiss')">💪 Eiweiß</button>
+      <button class="tab-btn" onclick="showTab('gemuese')">🥦 Gemüse</button>
+      <button class="tab-btn" onclick="showTab('obst')">🍓 Obst</button>
+      <button class="tab-btn" onclick="showTab('kohlenhydrate')">🌾 Kohlenhydrate</button>
+      <button class="tab-btn" onclick="showTab('extras')">✨ Extras & Eier</button>
+    </div>
+
+    <div id="eiweiss" class="tab-content active">
+      <div class="food-grid">
+        <div class="food-item"><span class="food-emoji">🫘</span> Linsen</div>
+        <div class="food-item"><span class="food-emoji">🫘</span> Kichererbsen</div>
+        <div class="food-item"><span class="food-emoji">🫘</span> Schwarze Bohnen</div>
+        <div class="food-item"><span class="food-emoji">🫘</span> Weiße Bohnen</div>
+        <div class="food-item"><span class="food-emoji">🫘</span> Kidneybohnen</div>
+        <div class="food-item"><span class="food-emoji">🫘</span> Erbsen</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Tofu</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Tempeh</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Edamame</div>
+        <div class="food-item"><span class="food-emoji">🥜</span> Mandelmus</div>
+        <div class="food-item"><span class="food-emoji">🥜</span> Erdnussmus</div>
+        <div class="food-item"><span class="food-emoji">🥜</span> Mandeln</div>
+        <div class="food-item"><span class="food-emoji">🥜</span> Walnüsse</div>
+        <div class="food-item"><span class="food-emoji">🥜</span> Cashews</div>
+        <div class="food-item"><span class="food-emoji">🥜</span> Haselnüsse</div>
+        <div class="food-item"><span class="food-emoji">🌱</span> Hanfsamen</div>
+        <div class="food-item"><span class="food-emoji">🌱</span> Kürbiskerne</div>
+        <div class="food-item"><span class="food-emoji">🌱</span> Sonnenblumenkerne</div>
+        <div class="food-item"><span class="food-emoji">🌱</span> Chiasamen</div>
+        <div class="food-item"><span class="food-emoji">🌱</span> Leinsamen</div>
+        <div class="food-item"><span class="food-emoji">🌱</span> Sesam / Tahini</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Quinoa</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Buchweizen</div>
+      </div>
+    </div>
+
+    <div id="gemuese" class="tab-content">
+      <div class="food-grid">
+        <div class="food-item"><span class="food-emoji">🥦</span> Brokkoli</div>
+        <div class="food-item"><span class="food-emoji">🥬</span> Spinat</div>
+        <div class="food-item"><span class="food-emoji">🥬</span> Grünkohl</div>
+        <div class="food-item"><span class="food-emoji">🥬</span> Mangold</div>
+        <div class="food-item"><span class="food-emoji">🥬</span> Feldsalat</div>
+        <div class="food-item"><span class="food-emoji">🥬</span> Rucola</div>
+        <div class="food-item"><span class="food-emoji">🥬</span> Kopfsalat</div>
+        <div class="food-item"><span class="food-emoji">🫑</span> Paprika</div>
+        <div class="food-item"><span class="food-emoji">🥕</span> Karotten</div>
+        <div class="food-item"><span class="food-emoji">🍅</span> Tomaten</div>
+        <div class="food-item"><span class="food-emoji">🥒</span> Gurke</div>
+        <div class="food-item"><span class="food-emoji">🧅</span> Zwiebel</div>
+        <div class="food-item"><span class="food-emoji">🧄</span> Knoblauch</div>
+        <div class="food-item"><span class="food-emoji">🥑</span> Zucchini</div>
+        <div class="food-item"><span class="food-emoji">🍆</span> Aubergine</div>
+        <div class="food-item"><span class="food-emoji">🌽</span> Mais</div>
+        <div class="food-item"><span class="food-emoji">🥔</span> Süßkartoffel</div>
+        <div class="food-item"><span class="food-emoji">🥔</span> Kartoffel</div>
+        <div class="food-item"><span class="food-emoji">🫚</span> Rote Rübe</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Fenchel</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Sellerie</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Lauch / Porree</div>
+        <div class="food-item"><span class="food-emoji">🍄</span> Champignons</div>
+        <div class="food-item"><span class="food-emoji">🍄</span> Shiitake</div>
+        <div class="food-item"><span class="food-emoji">🥦</span> Blumenkohl</div>
+        <div class="food-item"><span class="food-emoji">🥦</span> Rosenkohl</div>
+        <div class="food-item"><span class="food-emoji">🥦</span> Kohlrabi</div>
+        <div class="food-item"><span class="food-emoji">🥬</span> Pak Choi</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Spargel</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Artischocke</div>
+      </div>
+    </div>
+
+    <div id="obst" class="tab-content">
+      <div class="food-grid">
+        <div class="food-item"><span class="food-emoji">🍓</span> Erdbeeren</div>
+        <div class="food-item"><span class="food-emoji">🫐</span> Blaubeeren</div>
+        <div class="food-item"><span class="food-emoji">🍇</span> Himbeeren</div>
+        <div class="food-item"><span class="food-emoji">🍒</span> Kirschen</div>
+        <div class="food-item"><span class="food-emoji">🍎</span> Äpfel</div>
+        <div class="food-item"><span class="food-emoji">🍐</span> Birnen</div>
+        <div class="food-item"><span class="food-emoji">🍊</span> Orangen</div>
+        <div class="food-item"><span class="food-emoji">🍋</span> Zitronen</div>
+        <div class="food-item"><span class="food-emoji">🍇</span> Weintrauben</div>
+        <div class="food-item"><span class="food-emoji">🍌</span> Bananen</div>
+        <div class="food-item"><span class="food-emoji">🥭</span> Mango</div>
+        <div class="food-item"><span class="food-emoji">🍍</span> Ananas</div>
+        <div class="food-item"><span class="food-emoji">🍑</span> Pfirsich</div>
+        <div class="food-item"><span class="food-emoji">🍑</span> Nektarine</div>
+        <div class="food-item"><span class="food-emoji">🍑</span> Marillen</div>
+        <div class="food-item"><span class="food-emoji">🍈</span> Melone</div>
+        <div class="food-item"><span class="food-emoji">🥝</span> Kiwi</div>
+        <div class="food-item"><span class="food-emoji">🍅</span> Feigen</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Stachelbeeren</div>
+        <div class="food-item"><span class="food-emoji">🍇</span> Schwarze Johannisbeeren</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Granatapfel</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Datteln</div>
+      </div>
+    </div>
+
+    <div id="kohlenhydrate" class="tab-content">
+      <div class="food-grid">
+        <div class="food-item"><span class="food-emoji">🌾</span> Haferflocken</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Vollkornbrot</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Roggenbrot</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Vollkornnudeln</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Brauner Reis</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Vollkornreis</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Quinoa</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Buchweizen</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Hirse</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Dinkel</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Gerste</div>
+        <div class="food-item"><span class="food-emoji">🌾</span> Amaranth</div>
+        <div class="food-item"><span class="food-emoji">🥔</span> Kartoffeln</div>
+        <div class="food-item"><span class="food-emoji">🥔</span> Süßkartoffeln</div>
+        <div class="food-item"><span class="food-emoji">🌽</span> Polenta / Mais</div>
+        <div class="food-item"><span class="food-emoji">🫘</span> Linsen (auch KH)</div>
+        <div class="food-item"><span class="food-emoji">🫘</span> Kichererbsen (auch KH)</div>
+      </div>
+    </div>
+
+    <div id="extras" class="tab-content">
+      <div class="food-grid">
+        <div class="food-item"><span class="food-emoji">🥚</span> Eier (gekocht)</div>
+        <div class="food-item"><span class="food-emoji">🥚</span> Rührei</div>
+        <div class="food-item"><span class="food-emoji">🥚</span> Omelett</div>
+        <div class="food-item"><span class="food-emoji">🫒</span> Olivenöl</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Leinöl</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Kürbiskernöl</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Kokosöl</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Hummus</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Guacamole</div>
+        <div class="food-item"><span class="food-emoji">🧂</span> Hefeflocken</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Miso</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Tamari / Sojasauce</div>
+        <div class="food-item"><span class="food-emoji">🫙</span> Kokosjoghurt</div>
+        <div class="food-item"><span class="food-emoji">🫙</span> Sojajoghurt</div>
+        <div class="food-item"><span class="food-emoji">🥛</span> Hafermilch</div>
+        <div class="food-item"><span class="food-emoji">🥛</span> Mandelmilch</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Spirulina</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Kurkuma</div>
+        <div class="food-item"><span class="food-emoji">🌿</span> Ingwer</div>
+        <div class="food-item"><span class="food-emoji">🍵</span> Kräutertee</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Die eine Regel -->
+  <div class="regel-box">
+    <div class="regel-text">
+      Iss nur, wenn du hungrig bist.<br>
+      Hör auf, wenn du satt bist.<br>
+      Genieße, was du isst. 🌿
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>

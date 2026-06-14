@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>Kalkschulter</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+@keyframes wimpel-swing{0%,100%{transform:rotate(-4deg) skewX(2deg);}50%{transform:rotate(4deg) skewX(-2deg);}}
+@keyframes wimpel-swing2{0%,100%{transform:rotate(3deg) skewX(-1deg);}50%{transform:rotate(-3deg) skewX(1deg);}}
+@keyframes wimpel-swing3{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(5deg);}}
+@keyframes rope-sway{0%,100%{transform:scaleX(1);}50%{transform:scaleX(1.008);}}
+@keyframes tier-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+@keyframes spotlight{0%{left:-100%;}60%,100%{left:220%;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+:root{
+  --bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,0.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,0.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,0.13);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,0.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,0.12);
+  --violet:#6a3f7a;
+  --border:rgba(184,41,74,0.13);--shadow:rgba(30,18,8,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+body{
+  background:var(--bg);font-family:"Raleway",sans-serif;color:var(--text);
+  min-height:100vh;padding-bottom:4rem;
+  background-image:repeating-linear-gradient(-6deg,rgba(184,41,74,0.022) 0px,rgba(184,41,74,0.022) 28px,transparent 28px,transparent 56px,rgba(201,137,58,0.018) 56px,rgba(201,137,58,0.018) 84px,transparent 84px,transparent 112px);
+}
+.wimpelkette{position:relative;width:100%;height:40px;overflow:hidden;display:block;background:var(--bg);}
+.wimpelkette svg{width:100%;height:40px;overflow:visible;animation:rope-sway 5s ease-in-out infinite;}
+.wimpel-1{animation:wimpel-swing 2.8s ease-in-out infinite;}
+.wimpel-2{animation:wimpel-swing2 3.2s ease-in-out infinite 0.3s;}
+.wimpel-3{animation:wimpel-swing3 2.5s ease-in-out infinite 0.6s;}
+.wimpel-4{animation:wimpel-swing 3.0s ease-in-out infinite 0.9s;}
+.wimpel-5{animation:wimpel-swing2 2.7s ease-in-out infinite 1.2s;}
+.wimpel-6{animation:wimpel-swing3 3.4s ease-in-out infinite 1.5s;}
+.wimpel-7{animation:wimpel-swing 2.9s ease-in-out infinite 1.8s;}
+.wimpel-8{animation:wimpel-swing2 2.6s ease-in-out infinite 2.1s;}
+.wimpel-9{animation:wimpel-swing3 3.1s ease-in-out infinite 2.4s;}
+header{padding:1rem 1.2rem .85rem;border-bottom:2px solid var(--border);background:rgba(255,251,245,0.92);backdrop-filter:blur(3px);position:relative;}
+.back-btn{display:inline-flex;align-items:center;gap:.3rem;font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--crimson);text-decoration:none;opacity:.7;margin-bottom:.4rem;background:none;border:none;cursor:pointer;padding:0;}
+.back-btn:active{opacity:1;}
+.header-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;font-weight:500;}
+.header-title{font-family:"Playfair Display",serif;font-size:22px;font-style:italic;color:var(--text);line-height:1.2;}
+.header-sub{font-family:"IM Fell English",serif;font-size:14px;font-style:italic;color:var(--muted);margin-top:.15rem;}
+.rainbow-stripe{height:5px;background:repeating-linear-gradient(90deg,var(--crimson) 0%,var(--crimson) 20%,var(--gold) 20%,var(--gold) 40%,var(--navy) 40%,var(--navy) 60%,var(--violet) 60%,var(--violet) 80%,var(--sage) 80%,var(--sage) 100%);opacity:.6;margin-bottom:.2rem;}
+.z-card{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:0 3px 16px var(--shadow);margin:.5rem 1rem;overflow:hidden;position:relative;}
+.z-card::after{content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.055),transparent);animation:spotlight 10s ease-in-out infinite;pointer-events:none;}
+.z-item{display:flex;align-items:flex-start;gap:.6rem;padding:.55rem .9rem;border-bottom:1px solid rgba(184,41,74,0.07);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .2s;}
+.z-item:last-child{border-bottom:none;}
+.z-item.done{opacity:.28;}
+.z-item.done .z-name{text-decoration:line-through;text-decoration-color:rgba(184,41,74,0.3);}
+.z-check{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(184,41,74,0.3);flex-shrink:0;margin-top:2px;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;}
+.z-item.done .z-check{background:var(--sage-l);border-color:var(--sage);color:var(--sage);}
+.z-item.done .z-check::after{content:"✦";}
+.z-name{font-size:16px;color:var(--text);line-height:1.35;}
+.z-sub{font-size:13px;font-style:italic;color:var(--muted);margin-top:1px;font-family:"IM Fell English",serif;}
+.z-sec{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);padding:.7rem 1rem .2rem;opacity:.8;font-weight:500;}
+.z-info{margin:.3rem 1rem .4rem;padding:.5rem .8rem;background:var(--gold-l);border-left:2px solid var(--gold);font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--muted);line-height:1.6;}
+.section-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:.8rem 1rem .3rem;padding-left:.2rem;font-weight:500;}
+.z-progress{margin:.4rem 1rem .2rem;}
+.z-progress-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:.3rem;}
+.z-progress-bar{height:3px;background:var(--border);border-radius:10px;overflow:hidden;}
+.z-progress-fill{height:100%;background:linear-gradient(90deg,var(--crimson),var(--gold));border-radius:10px;transition:width .4s ease;}
+.z-reset{position:fixed;bottom:1.2rem;right:1.2rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:20px;padding:.4rem 1rem;font-size:13px;font-family:"IM Fell English",serif;font-style:italic;cursor:pointer;}
+.z-reset:active{background:var(--crimson-l);color:var(--crimson);}
+.tier-zeile{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:.3rem 1rem;user-select:none;pointer-events:none;overflow:hidden;}
+.tier-zeile .tier{display:inline-block;animation:tier-float 3s ease-in-out infinite;opacity:.5;font-size:.9rem;}
+.tier-zeile .tier:nth-child(2){animation-delay:.4s;}.tier-zeile .tier:nth-child(3){animation-delay:.8s;}.tier-zeile .tier:nth-child(4){animation-delay:1.2s;}.tier-zeile .tier:nth-child(5){animation-delay:1.6s;}
+.tier-linie{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(184,41,74,0.2),transparent);}
+.manege-line{display:flex;align-items:center;gap:.5rem;padding:.1rem 1rem;color:var(--crimson);opacity:.3;font-size:11px;letter-spacing:.3em;user-select:none;}
+.manege-line::before,.manege-line::after{content:'';flex:1;height:1px;background:currentColor;}
+</style>
+
+<style>
+/* App-spezifisches CSS */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap');
+  .container{max-width:420px;width:100%}
+  .header{text-align:center;margin-bottom:1.2rem}
+  .header-label{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rose);margin-bottom:.3rem}
+  .header-title{font-family:'Playfair Display',serif;font-size:1.8rem;line-height:1.1}
+  .header-title em{font-style:italic;color:var(--rose-bright)}
+  .header-sub{margin-top:.3rem;font-size:.65rem;color:var(--text2);letter-spacing:.04em;line-height:1.5}
+  .warn{background:#2a1818;border:1px solid #8b3030;border-radius:10px;padding:.5rem .8rem;
+    font-size:.65rem;color:#e09090;margin-bottom:1rem;line-height:1.5}
+  .timer-card{background:var(--surface);border:1px solid #2a2020;border-radius:20px;
+    padding:1.4rem 1.2rem;margin-bottom:1rem;text-align:center;position:relative;overflow:hidden}
+  .timer-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+    background:radial-gradient(ellipse at 50% 0%,rgba(212,132,122,.05) 0%,transparent 60%);pointer-events:none}
+  .phase-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.35rem;transition:color .3s}
+  .phase-label.work{color:var(--rose)} .phase-label.rest{color:var(--amber)}
+  .phase-label.prep{color:var(--text2)} .phase-label.done{color:var(--rose-bright)}
+  .exercise-name{font-family:'Playfair Display',serif;font-size:1.4rem;line-height:1.2;
+    margin-bottom:.2rem;min-height:1.8em;display:flex;align-items:center;justify-content:center;text-align:center}
+  .exercise-note{font-size:.65rem;color:var(--text2);margin-bottom:1rem;min-height:1.1em;line-height:1.4}
+  .big-timer{font-size:4.2rem;font-weight:500;line-height:1;letter-spacing:-.02em;
+    margin-bottom:.4rem;transition:color .3s;font-variant-numeric:tabular-nums}
+  .big-timer.work{color:var(--rose-bright)} .big-timer.rest{color:var(--amber)}
+  .big-timer.prep{color:var(--text2)}
+  .big-timer.danger{color:var(--red);animation:pulse .5s ease-in-out infinite alternate}
+  @keyframes pulse{from{opacity:1}to{opacity:.4}}
+  .progress-wrap{height:3px;background:#2a2020;border-radius:2px;margin-bottom:.8rem;overflow:hidden}
+  .progress-bar{height:100%;border-radius:2px;transition:width 1s linear,background .3s}
+  .counters{display:flex;justify-content:center;gap:1.2rem;font-size:.65rem;color:var(--text2);letter-spacing:.04em}
+  .counters span{color:#2e2010;font-weight:500}
+  .btn-row{display:flex;gap:.6rem;margin-bottom:1rem}
+  .btn{flex:1;padding:.8rem;border:none;border-radius:12px;font-family:'Cormorant Garamond',serif;
+    font-size:.75rem;font-weight:500;letter-spacing:.05em;cursor:pointer;transition:all .15s}
+  .btn-primary{background:var(--rose);color:#faf3e8}
+  .btn-primary:hover{background:var(--rose-bright)}
+  .btn-secondary{background:var(--surface2);color:var(--text2);border:1px solid #2a2020}
+  .btn-secondary:hover{color:#2e2010}
+  .btn:disabled{opacity:.3;cursor:not-allowed}
+  .exercises-card{background:var(--surface);border:1px solid #2a2020;border-radius:16px;margin-bottom:1rem;overflow:hidden}
+  .exercises-title{padding:.6rem 1rem;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--text2);border-bottom:1px solid #2a2020}
+  .exercise-row{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;
+    border-bottom:1px solid #1e1a1b;font-size:.72rem;transition:background .2s}
+  .exercise-row:last-child{border-bottom:none}
+  .exercise-row.active{background:rgba(212,132,122,.08)}
+  .exercise-row.done{opacity:.3}
+  .ex-num{width:1.3rem;height:1.3rem;border-radius:50%;background:#2a2020;display:flex;
+    align-items:center;justify-content:center;font-size:.58rem;flex-shrink:0;color:var(--text2);transition:all .3s}
+  .exercise-row.active .ex-num{background:var(--rose);color:#faf3e8}
+  .ex-info{flex:1}
+  .ex-name{color:#2e2010;margin-bottom:.08rem}
+  .ex-detail{font-size:.6rem;color:var(--text2)}
+  .ex-time{font-size:.6rem;color:var(--text2);white-space:nowrap}
+  .settings-card{background:var(--surface);border:1px solid #2a2020;border-radius:16px;
+    padding:.9rem 1rem;margin-bottom:1rem}
+  .settings-title{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text2);margin-bottom:.7rem}
+  .setting-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;font-size:.7rem}
+  .setting-row:last-child{margin-bottom:0}
+  .setting-label{color:var(--text2)} .setting-val{color:#2e2010;font-weight:500;min-width:3rem;text-align:right}
+  input[type=range]{width:100px;accent-color:var(--rose)}
+  .voice-status{font-size:.6rem;color:var(--text2);text-align:center;margin-top:.3rem;min-height:1em}
+
+.side-select{display:flex;gap:.5rem;justify-content:center;padding:.5rem 1rem;}
+.side-btn{flex:1;padding:.4rem .3rem;border:2px solid #7B5EA7;background:transparent;color:#7B5EA7;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;}
+.side-btn.active{background:#7B5EA7;color:#fff;}
+</style>
+</head>
+<body>
+<div class="wimpelkette" aria-hidden="true"><svg viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,7 Q50,11 100,9 Q150,7 200,10 Q250,13 300,9 Q350,7 400,9" stroke="#1a2744" stroke-width="1" fill="none" opacity="0.3"/><g class="wimpel-1" transform-origin="30 9"><polygon points="23,9 37,9 30,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-2" transform-origin="67 9"><polygon points="60,9 74,9 67,28" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-3" transform-origin="104 9"><polygon points="97,9 111,9 104,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-4" transform-origin="141 9"><polygon points="134,9 148,9 141,28" fill="#6a3f7a" opacity="0.75"/></g><g class="wimpel-5" transform-origin="178 10"><polygon points="171,10 185,10 178,29" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-6" transform-origin="215 9"><polygon points="208,9 222,9 215,28" fill="#5e8a5a" opacity="0.7"/></g><g class="wimpel-7" transform-origin="252 10"><polygon points="245,10 259,10 252,29" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-8" transform-origin="289 9"><polygon points="282,9 296,9 289,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-9" transform-origin="326 9"><polygon points="319,9 333,9 326,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-1" transform-origin="363 9"><polygon points="356,9 370,9 363,28" fill="#6a3f7a" opacity="0.75"/></g></svg></div>
+<header>
+<div class="rainbow-stripe"></div>
+<div class="header-eyebrow">Körper & Heilung</div>
+<div class="header-title">Kalkschulter</div>
+<div class="header-sub">Sanfte Schulterübungen</div>
+</header>
+<div class="container">
+  <div class="header">
+    <div class="header-label">Schulter &#183; Physiotherapie</div>
+    <div class="header-title">&#x1F9B4; Kalk<em>schulter</em></div>
+    <div class="header-sub">6 Uebungen &middot; ca. 8 Minuten &middot; mit Ansage</div>
+  </div>
+  <div class="side-select">
+    <button class="side-btn active" id="btn-links" onclick="setSide('links')">&#x1F4AA; Links</button>
+    <button class="side-btn" id="btn-rechts" onclick="setSide('rechts')">&#x1F4AA; Rechts</button>
+    <button class="side-btn" id="btn-beide" onclick="setSide('beide')">&#x1F4AA; Beide</button>
+  </div>
+  <div class="warn">&#x26A0;&#xFE0F; Nur im schmerzfreien Bereich &middot; Bei Schmerz &gt; 4/10 sofort stoppen &middot; kein Ersatz fuer aerztliche Behandlung</div>
+  <div class="timer-card">
+    <div class="phase-label prep" id="phaseLabel">BEREIT</div>
+    <div class="exercise-name" id="exerciseName">Kalkschulter-Training</div>
+    <div class="exercise-note" id="exerciseNote">Starte das Training mit dem Button unten</div>
+    <div class="big-timer prep" id="bigTimer">&#x2014;</div>
+    <div class="z-progress"><div class="z-progress-bar" id="progressBar" style="width:0%;background:var(--rose)"></div></div>
+    <div class="counters">Uebung&nbsp;<span id="exCounter">&#x2014;</span>&nbsp;/&nbsp;<span id="exTotal">6</span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;Zeit&nbsp;<span id="totalTime">&#x2014;</span></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" id="btnStart" onclick="startTraining()">&#x25B6; START</button>
+    <button class="btn btn-secondary" id="btnPause" onclick="togglePause()" disabled>&#x23F8; PAUSE</button>
+    <button class="btn btn-secondary" id="btnStop" onclick="stopTraining()" disabled>&#x23F9; STOP</button>
+  </div>
+  <div class="voice-status" id="voiceStatus"></div>
+  <div class="exercises-card">
+    <div class="exercises-title">Uebungsplan</div>
+    <div id="exerciseList"></div>
+  </div>
+  <div class="settings-card">
+    <div class="settings-title">Einstellungen</div>
+    <div class="setting-row">
+      <span class="setting-label">Uebungszeit</span>
+      <span class="setting-val" id="workLabel">60s</span>
+      <input type="range" min="30" max="90" step="10" value="60" id="workSlider" oninput="updateSettings()">
+    </div>
+    <div class="setting-row">
+      <span class="setting-label">Pause</span>
+      <span class="setting-val" id="restLabel">15s</span>
+      <input type="range" min="10" max="30" step="5" value="15" id="restSlider" oninput="updateSettings()">
+    </div>
+    <div class="setting-row">
+      <span class="setting-label">Ansage</span>
+      <span class="setting-val" id="voiceLabel">An</span>
+      <input type="range" min="0" max="1" step="1" value="1" id="voiceSlider" oninput="updateSettings()">
+    </div>
+  </div>
+</div>
+<script>
+var currentSide = 'links';
+var sideRound = 1;
+
+function setSide(side) {
+  if (phase !== 'idle' && phase !== 'done') return;
+  currentSide = side;
+  ['links','rechts','beide'].forEach(function(s){
+    var el = document.getElementById('btn-'+s);
+    if (el) el.className = 'side-btn' + (s===side?' active':'');
+  });
+}
+
+function getSideLabel() {
+  if (currentSide === 'beide') return sideRound === 1 ? 'linke' : 'rechte';
+  return currentSide + 'e';
+}
+
+var EXERCISES = [
+  { name:"Pendeluebung (Codman)", note:"Gesunde Hand abstuetzen - Arm locker kreisen",
+    voice:"Pendeluebung! Gesunde Hand an den Tisch, leicht vorbeugen, Arm locker haengen lassen und sanft in kleinen Kreisen schwingen." },
+  { name:"Schulterbl\u00E4tter zusammenziehen", note:"Aufrecht stehen - kurz halten - loesen",
+    voice:"Schulterbl\u00E4tter zusammenziehen! Aufrecht stehen, Schulterbl\u00E4tter langsam zur Wirbels\u00E4ule ziehen, kurz halten, dann loesen." },
+  { name:"Nackenentlastung seitlich", note:"Ohr Richtung Schulter - 10 Sek halten",
+    voice:"Nackenentlastung! Kopf langsam zur Seite neigen, Ohr Richtung Schulter, zehn Sekunden halten, dann Seite wechseln." },
+  { name:"Aussenrotation mit Tuch", note:"Nur bis zur Schmerzgrenze - langsam zurueck",
+    voice:"Aussenrotation! Handtuch waagerecht halten. Schulter sanft in Aussenrotation fuehren, nur bis zur Schmerzgrenze, langsam zurueck." },
+  { name:"Schulter vorwaerts kreisen", note:"Grosse, weiche Kreise - beide Schultern",
+    voice:"Schulter kreisen! Beide Schultern langsam vorwaerts kreisen, grosse weiche Kreisbewegungen." },
+  { name:"Brustkorb-Dehnung an der Wand", note:"Unterarm an Wand - Koerper wegdrehen",
+    voice:"Brustkorb-Dehnung! Seitlich an die Wand, Unterarm abstuetzen, Koerper langsam wegdrehen. Dehnt die Schulterkapsel von vorne." }
+];
+
+var PREP_TIME = 5;
+var WORK_TIME = 60;
+var REST_TIME = 15;
+var voiceOn = true;
+
+var phase = 'idle';
+var isPaused = false;
+var currentEx = 0;
+var timerInterval = null;
+var elapsed = 0;
+var phaseDuration = 0;
+
+// Speech - try multiple sources (iframe may have restricted access)
+var synthObj = null;
+function getSynth() {
+  if (synthObj) return synthObj;
+  try { if (window.window.speechSynthesis) { synthObj = window.window.speechSynthesis; return synthObj; } } catch(e){}
+  try { if (window.top && window.top.window.speechSynthesis) { synthObj = window.top.window.speechSynthesis; return synthObj; } } catch(e){}
+  try { if (window.parent && window.parent.window.speechSynthesis) { synthObj = window.parent.window.speechSynthesis; return synthObj; } } catch(e){}
+  return null;
+}
+
+var voicesLoaded = false;
+var germanVoice = null;
+
+function loadVoices() {
+  var s = getSynth();
+  if (!s) return;
+  var voices = s.getVoices();
+  if (voices.length > 0) {
+    voicesLoaded = true;
+    germanVoice = null;
+    for (var i = 0; i < voices.length; i++) {
+      if (voices[i].lang && voices[i].lang.indexOf('de') === 0) {
+        germanVoice = voices[i];
+        break;
+      }
+    }
+    updateVoiceStatus();
+  }
+}
+
+function updateVoiceStatus() {
+  var s = getSynth();
+  var el = document.getElementById('voiceStatus');
+  if (!s) {
+    el.textContent = '&#x1F507; Ansage nicht verfuegbar in diesem Browser';
+    el.style.color = '#e07070';
+  } else if (germanVoice) {
+    el.textContent = '&#x1F50A; Deutsche Stimme: ' + germanVoice.name.substring(0,30);
+    el.style.color = 'var(--text2)';
+  } else if (voicesLoaded) {
+    el.textContent = '&#x1F508; Keine deutsche Stimme - Standardstimme wird verwendet';
+    el.style.color = 'var(--amber)';
+  }
+}
+
+function speak(text) {
+  if (!voiceOn) return;
+  var s = getSynth();
+  if (!s) return;
+  try {
+    s.cancel();
+    var utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'de-DE';
+    utt.rate = 0.9;
+    utt.pitch = 1.0;
+    utt.volume = 1.0;
+    if (germanVoice) utt.voice = germanVoice;
+    s.speak(utt);
+  } catch(e) {
+    console.log('speak error:', e);
+  }
+}
+
+function initVoice() {
+  var s = getSynth();
+  if (!s) { updateVoiceStatus(); return; }
+  if (s.onvoiceschanged !== undefined) s.onvoiceschanged = loadVoices;
+  loadVoices();
+  // Retry after short delay (Chrome needs this)
+  setTimeout(loadVoices, 500);
+  setTimeout(loadVoices, 1500);
+}
+
+function updateSettings() {
+  WORK_TIME = parseInt(document.getElementById('workSlider').value);
+  REST_TIME = parseInt(document.getElementById('restSlider').value);
+  voiceOn = parseInt(document.getElementById('voiceSlider').value) === 1;
+  document.getElementById('workLabel').textContent = WORK_TIME + 's';
+  document.getElementById('restLabel').textContent = REST_TIME + 's';
+  document.getElementById('voiceLabel').textContent = voiceOn ? 'An' : 'Aus';
+  renderList();
+}
+
+function renderList() {
+  var html = '';
+  for (var i = 0; i < EXERCISES.length; i++) {
+    var ex = EXERCISES[i];
+    var cls = '';
+    if (phase !== 'idle' && phase !== 'done') {
+      if (i === currentEx) cls = 'active';
+      else if (i < currentEx) cls = 'done';
+    }
+    var num = cls === 'done' ? '&#x2713;' : (i+1);
+    html += '<div class="exercise-row ' + cls + '">' +
+      '<div class="ex-num">' + num + '</div>' +
+      '<div class="ex-info"><div class="ex-name">' + ex.name + '</div>' +
+      '<div class="ex-detail">' + ex.note + '</div></div>' +
+      '<div class="ex-time">' + WORK_TIME + 's</div></div>';
+  }
+  document.getElementById('exerciseList').innerHTML = html;
+}
+
+function setUI(exIdx, ph, timeLeft, phaseDur) {
+  var ex = EXERCISES[exIdx] || null;
+  var phaseEl = document.getElementById('phaseLabel');
+  var labels = {prep:'VORBEREITUNG', work:'UEBUNG', rest:'PAUSE', done:'FERTIG'};
+  phaseEl.textContent = labels[ph] || '';
+  phaseEl.className = 'phase-label ' + ph;
+
+  if (ph === 'done') {
+    document.getElementById('exerciseName').textContent = '&#x1F389; Training abgeschlossen!';
+    document.getElementById('exerciseNote').textContent = 'Gut gemacht - Schulter gepflegt!';
+  } else if (ph === 'rest') {
+    var nextEx = EXERCISES[exIdx + 1];
+    document.getElementById('exerciseName').textContent = '&#x1F4A4; Pause';
+    document.getElementById('exerciseNote').textContent = nextEx ? 'Naechste: ' + nextEx.name : 'Letzte Pause';
+  } else if (ex) {
+    document.getElementById('exerciseName').textContent = ex.name;
+    document.getElementById('exerciseNote').textContent = ex.note;
+  }
+
+  var timerEl = document.getElementById('bigTimer');
+  if (ph === 'done') {
+    timerEl.textContent = '&#x2713;';
+    timerEl.className = 'big-timer work';
+  } else {
+    timerEl.textContent = timeLeft;
+    var cls = ph;
+    if ((ph === 'work' || ph === 'prep') && timeLeft <= 3) cls = 'danger';
+    timerEl.className = 'big-timer ' + cls;
+  }
+
+  var pct = phaseDur > 0 ? Math.min(100, ((phaseDur - timeLeft) / phaseDur) * 100) : 100;
+  var bar = document.getElementById('progressBar');
+  bar.style.width = pct + '%';
+  bar.style.background = ph === 'rest' ? 'var(--amber)' : 'var(--rose)';
+
+  document.getElementById('exCounter').textContent = ph === 'done' ? EXERCISES.length : (exIdx + 1);
+
+  var totalSec = EXERCISES.length * WORK_TIME + (EXERCISES.length - 1) * REST_TIME;
+  var mm = Math.floor(totalSec / 60);
+  var ss = totalSec % 60;
+  document.getElementById('totalTime').textContent = mm + ':' + (ss < 10 ? '0' : '') + ss;
+  renderList();
+}
+
+function startTraining() {
+  if (phase !== 'idle') return;
+  // Trigger voice init on user gesture (required by browsers)
+  initVoice();
+  currentEx = 0;
+  elapsed = 0;
+  isPaused = false;
+  sideRound = 1;
+  document.getElementById('btnStart').disabled = true;
+  document.getElementById('btnPause').disabled = false;
+  document.getElementById('btnStop').disabled = false;
+  startPhase('prep');
+}
+
+function startPhase(ph) {
+  phase = ph;
+  elapsed = 0;
+
+  if (ph === 'prep') {
+    phaseDuration = PREP_TIME;
+    speak('Bereit machen fuer die ' + getSideLabel() + ' Schulter! In ' + PREP_TIME + ' Sekunden geht es los.');
+    setUI(currentEx, 'prep', PREP_TIME, PREP_TIME);
+  } else if (ph === 'work') {
+    phaseDuration = WORK_TIME;
+    speak(EXERCISES[currentEx].voice);
+    setUI(currentEx, 'work', WORK_TIME, WORK_TIME);
+  } else if (ph === 'rest') {
+    phaseDuration = REST_TIME;
+    var next = EXERCISES[currentEx + 1];
+    speak('Pause! Erholen. Als naechstes: ' + (next ? next.name : 'letzte Uebung'));
+    setUI(currentEx, 'rest', REST_TIME, REST_TIME);
+  } else if (ph === 'done') {
+    if (currentSide === 'beide' && sideRound === 1) {
+      // Erste Seite fertig → automatisch rechte Schulter starten
+      sideRound = 2;
+      speak('Linke Schulter fertig! Kurze Pause, dann die rechte Schulter.');
+      setTimeout(function() {
+        currentEx = 0; elapsed = 0;
+        startPhase('prep');
+      }, 4000);
+      return;
+    }
+    var msg = currentSide === 'beide'
+      ? 'Training abgeschlossen! Beide Schultern gut gepflegt. Ausgezeichnet.'
+      : 'Training abgeschlossen! ' + getSideLabel().charAt(0).toUpperCase() + getSideLabel().slice(1) + ' Schulter gut gepflegt.';
+    speak(msg);
+    setUI(EXERCISES.length - 1, 'done', 0, 1);
+    document.getElementById('btnPause').disabled = true;
+    document.getElementById('btnStop').disabled = true;
+    document.getElementById('btnStart').disabled = false;
+    document.getElementById('btnStart').textContent = '&#x25B6; NOCHMAL';
+    phase = 'done';
+    return;
+  }
+
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(tick, 1000);
+}
+
+function tick() {
+  if (isPaused) return;
+  elapsed++;
+  var remaining = phaseDuration - elapsed;
+  setUI(currentEx, phase, remaining, phaseDuration);
+  if (remaining === 3) speak('Drei');
+  else if (remaining === 2) speak('Zwei');
+  else if (remaining === 1) speak('Eins');
+
+  if (remaining <= 0) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    if (phase === 'prep') {
+      startPhase('work');
+    } else if (phase === 'work') {
+      if (currentEx < EXERCISES.length - 1) { startPhase('rest'); }
+      else { startPhase('done'); }
+    } else if (phase === 'rest') {
+      currentEx++;
+      startPhase('work');
+    }
+  }
+}
+
+function togglePause() {
+  if (phase === 'idle' || phase === 'done') return;
+  isPaused = !isPaused;
+  document.getElementById('btnPause').textContent = isPaused ? '&#x25B6; WEITER' : '&#x23F8; PAUSE';
+  speak(isPaused ? 'Pause' : 'Weiter!');
+}
+
+function stopTraining() {
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = null;
+  var s = getSynth(); if (s) { try { s.cancel(); } catch(e){} }
+  phase = 'idle'; isPaused = false; currentEx = 0; elapsed = 0;
+  document.getElementById('btnStart').disabled = false;
+  document.getElementById('btnStart').textContent = '&#x25B6; START';
+  document.getElementById('btnPause').disabled = true;
+  document.getElementById('btnPause').textContent = '&#x23F8; PAUSE';
+  document.getElementById('btnStop').disabled = true;
+  document.getElementById('phaseLabel').textContent = 'BEREIT';
+  document.getElementById('phaseLabel').className = 'phase-label prep';
+  document.getElementById('exerciseName').textContent = 'Kalkschulter-Training';
+  document.getElementById('exerciseNote').textContent = 'Starte das Training mit dem Button unten';
+  document.getElementById('bigTimer').textContent = '&#x2014;';
+  document.getElementById('bigTimer').className = 'big-timer prep';
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('exCounter').textContent = '&#x2014;';
+  renderList();
+}
+
+// Init
+updateSettings();
+renderList();
+initVoice();
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>Aufwärmen</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+@keyframes wimpel-swing{0%,100%{transform:rotate(-4deg) skewX(2deg);}50%{transform:rotate(4deg) skewX(-2deg);}}
+@keyframes wimpel-swing2{0%,100%{transform:rotate(3deg) skewX(-1deg);}50%{transform:rotate(-3deg) skewX(1deg);}}
+@keyframes wimpel-swing3{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(5deg);}}
+@keyframes rope-sway{0%,100%{transform:scaleX(1);}50%{transform:scaleX(1.008);}}
+@keyframes tier-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+@keyframes spotlight{0%{left:-100%;}60%,100%{left:220%;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+:root{
+  --bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,0.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,0.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,0.13);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,0.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,0.12);
+  --violet:#6a3f7a;
+  --border:rgba(184,41,74,0.13);--shadow:rgba(30,18,8,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+body{
+  background:var(--bg);font-family:"Raleway",sans-serif;color:var(--text);
+  min-height:100vh;padding-bottom:4rem;
+  background-image:repeating-linear-gradient(-6deg,rgba(184,41,74,0.022) 0px,rgba(184,41,74,0.022) 28px,transparent 28px,transparent 56px,rgba(201,137,58,0.018) 56px,rgba(201,137,58,0.018) 84px,transparent 84px,transparent 112px);
+}
+.wimpelkette{position:relative;width:100%;height:40px;overflow:hidden;display:block;background:var(--bg);}
+.wimpelkette svg{width:100%;height:40px;overflow:visible;animation:rope-sway 5s ease-in-out infinite;}
+.wimpel-1{animation:wimpel-swing 2.8s ease-in-out infinite;}
+.wimpel-2{animation:wimpel-swing2 3.2s ease-in-out infinite 0.3s;}
+.wimpel-3{animation:wimpel-swing3 2.5s ease-in-out infinite 0.6s;}
+.wimpel-4{animation:wimpel-swing 3.0s ease-in-out infinite 0.9s;}
+.wimpel-5{animation:wimpel-swing2 2.7s ease-in-out infinite 1.2s;}
+.wimpel-6{animation:wimpel-swing3 3.4s ease-in-out infinite 1.5s;}
+.wimpel-7{animation:wimpel-swing 2.9s ease-in-out infinite 1.8s;}
+.wimpel-8{animation:wimpel-swing2 2.6s ease-in-out infinite 2.1s;}
+.wimpel-9{animation:wimpel-swing3 3.1s ease-in-out infinite 2.4s;}
+header{padding:1rem 1.2rem .85rem;border-bottom:2px solid var(--border);background:rgba(255,251,245,0.92);backdrop-filter:blur(3px);position:relative;}
+.back-btn{display:inline-flex;align-items:center;gap:.3rem;font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--crimson);text-decoration:none;opacity:.7;margin-bottom:.4rem;background:none;border:none;cursor:pointer;padding:0;}
+.back-btn:active{opacity:1;}
+.header-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;font-weight:500;}
+.header-title{font-family:"Playfair Display",serif;font-size:22px;font-style:italic;color:var(--text);line-height:1.2;}
+.header-sub{font-family:"IM Fell English",serif;font-size:14px;font-style:italic;color:var(--muted);margin-top:.15rem;}
+.rainbow-stripe{height:5px;background:repeating-linear-gradient(90deg,var(--crimson) 0%,var(--crimson) 20%,var(--gold) 20%,var(--gold) 40%,var(--navy) 40%,var(--navy) 60%,var(--violet) 60%,var(--violet) 80%,var(--sage) 80%,var(--sage) 100%);opacity:.6;margin-bottom:.2rem;}
+.z-card{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:0 3px 16px var(--shadow);margin:.5rem 1rem;overflow:hidden;position:relative;}
+.z-card::after{content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.055),transparent);animation:spotlight 10s ease-in-out infinite;pointer-events:none;}
+.z-item{display:flex;align-items:flex-start;gap:.6rem;padding:.55rem .9rem;border-bottom:1px solid rgba(184,41,74,0.07);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .2s;}
+.z-item:last-child{border-bottom:none;}
+.z-item.done{opacity:.28;}
+.z-item.done .z-name{text-decoration:line-through;text-decoration-color:rgba(184,41,74,0.3);}
+.z-check{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(184,41,74,0.3);flex-shrink:0;margin-top:2px;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;}
+.z-item.done .z-check{background:var(--sage-l);border-color:var(--sage);color:var(--sage);}
+.z-item.done .z-check::after{content:"✦";}
+.z-name{font-size:16px;color:var(--text);line-height:1.35;}
+.z-sub{font-size:13px;font-style:italic;color:var(--muted);margin-top:1px;font-family:"IM Fell English",serif;}
+.z-sec{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);padding:.7rem 1rem .2rem;opacity:.8;font-weight:500;}
+.z-info{margin:.3rem 1rem .4rem;padding:.5rem .8rem;background:var(--gold-l);border-left:2px solid var(--gold);font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--muted);line-height:1.6;}
+.section-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:.8rem 1rem .3rem;padding-left:.2rem;font-weight:500;}
+.z-progress{margin:.4rem 1rem .2rem;}
+.z-progress-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:.3rem;}
+.z-progress-bar{height:3px;background:var(--border);border-radius:10px;overflow:hidden;}
+.z-progress-fill{height:100%;background:linear-gradient(90deg,var(--crimson),var(--gold));border-radius:10px;transition:width .4s ease;}
+.z-reset{position:fixed;bottom:1.2rem;right:1.2rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:20px;padding:.4rem 1rem;font-size:13px;font-family:"IM Fell English",serif;font-style:italic;cursor:pointer;}
+.z-reset:active{background:var(--crimson-l);color:var(--crimson);}
+.tier-zeile{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:.3rem 1rem;user-select:none;pointer-events:none;overflow:hidden;}
+.tier-zeile .tier{display:inline-block;animation:tier-float 3s ease-in-out infinite;opacity:.5;font-size:.9rem;}
+.tier-zeile .tier:nth-child(2){animation-delay:.4s;}.tier-zeile .tier:nth-child(3){animation-delay:.8s;}.tier-zeile .tier:nth-child(4){animation-delay:1.2s;}.tier-zeile .tier:nth-child(5){animation-delay:1.6s;}
+.tier-linie{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(184,41,74,0.2),transparent);}
+.manege-line{display:flex;align-items:center;gap:.5rem;padding:.1rem 1rem;color:var(--crimson);opacity:.3;font-size:11px;letter-spacing:.3em;user-select:none;}
+.manege-line::before,.manege-line::after{content:'';flex:1;height:1px;background:currentColor;}
+</style>
+
+<style>
+/* App-spezifisches CSS */
+header{padding:1.4rem 1.2rem 1rem;border-bottom:1px solid var(--border);}
+.back{font-size:14px;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;margin-bottom:.6rem;}
+h1{font-family:"Playfair Display",serif;font-size:26px;font-style:italic;font-weight:600;color:var(--terra);line-height:1.3;}
+.subtitle{font-size:14px;font-style:italic;color:var(--muted);margin-top:.3rem;}
+.section-wrap{margin:1.3rem 1.2rem 0;}
+.section-label{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem;padding-left:.2rem;}
+.video-card{background:var(--card);border-radius:18px;border:1.5px solid var(--border);box-shadow:0 4px 16px var(--shadow);margin-bottom:1rem;overflow:hidden;text-decoration:none;color:var(--text);display:block;}
+.video-card:active{opacity:.9;}
+.thumb{width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;background:linear-gradient(135deg,rgba(200,148,58,0.10),rgba(122,154,90,0.10));}
+.thumb-duration{position:absolute;bottom:.5rem;right:.7rem;background:rgba(46,32,16,0.7);color:#fff;font-size:13px;border-radius:6px;padding:.15rem .45rem;font-family:"Cormorant Garamond",serif;}
+.video-body{padding:.9rem 1.1rem 1.1rem;}
+.video-tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.25rem;}
+.video-title{font-family:"Playfair Display",serif;font-size:18px;font-style:italic;color:var(--text);line-height:1.4;margin-bottom:.5rem;}
+.video-desc{font-size:14px;color:var(--muted);font-style:italic;line-height:1.5;margin-bottom:.7rem;}
+.play-btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--gold);color:#fff;border-radius:20px;padding:.35rem 1rem;font-size:15px;font-family:"Cormorant Garamond",serif;font-style:italic;}
+</style>
+</head>
+<body>
+<div class="wimpelkette" aria-hidden="true"><svg viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,7 Q50,11 100,9 Q150,7 200,10 Q250,13 300,9 Q350,7 400,9" stroke="#1a2744" stroke-width="1" fill="none" opacity="0.3"/><g class="wimpel-1" transform-origin="30 9"><polygon points="23,9 37,9 30,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-2" transform-origin="67 9"><polygon points="60,9 74,9 67,28" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-3" transform-origin="104 9"><polygon points="97,9 111,9 104,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-4" transform-origin="141 9"><polygon points="134,9 148,9 141,28" fill="#6a3f7a" opacity="0.75"/></g><g class="wimpel-5" transform-origin="178 10"><polygon points="171,10 185,10 178,29" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-6" transform-origin="215 9"><polygon points="208,9 222,9 215,28" fill="#5e8a5a" opacity="0.7"/></g><g class="wimpel-7" transform-origin="252 10"><polygon points="245,10 259,10 252,29" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-8" transform-origin="289 9"><polygon points="282,9 296,9 289,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-9" transform-origin="326 9"><polygon points="319,9 333,9 326,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-1" transform-origin="363 9"><polygon points="356,9 370,9 363,28" fill="#6a3f7a" opacity="0.75"/></g></svg></div>
+<header>
+<div class="rainbow-stripe"></div>
+<div class="header-eyebrow">Sport & Bewegung</div>
+<div class="header-title">Aufwärmen</div>
+<div class="header-sub">Sonnengruß · mit Mady Morrison</div>
+</header>
+
+
+
+<div class="section-wrap">
+  <div class="section-label">Schnell · 10 Minuten</div>
+
+  <a class="video-card" href="https://www.youtube.com/watch?v=ajPbiwOjrss" target="_blank">
+    <div class="thumb">☀️<span class="thumb-duration">10 Min</span></div>
+    <div class="video-body">
+      <div class="video-tag">Sonnengruß A · 6 Runden</div>
+      <div class="video-title">Morgenroutine — 6× Surya Namaskar A</div>
+      <div class="video-desc">Einfach mitmachen, auch im Schlafanzug. Perfekt für einen schnellen Start in den Tag.</div>
+      <div class="play-btn">▶ Jetzt starten</div>
+    </div>
+  </a>
+
+  <a class="video-card" href="https://www.youtube.com/watch?v=d_Ibq08-ucg" target="_blank">
+    <div class="thumb">🌤️<span class="thumb-duration">10 Min</span></div>
+    <div class="video-body">
+      <div class="video-tag">Sonnengruß A & B</div>
+      <div class="video-title">Wach & energiegeladen — A und B kombiniert</div>
+      <div class="video-desc">Kreislauf in Schwung bringen, Energie für den Tag tanken, Körper und Geist beleben.</div>
+      <div class="play-btn">▶ Jetzt starten</div>
+    </div>
+  </a>
+</div>
+
+<div class="section-wrap">
+  <div class="section-label">Fließend · 10–15 Minuten</div>
+
+  <a class="video-card" href="https://www.youtube.com/watch?v=tV3tCLZtNeg" target="_blank">
+    <div class="thumb">🌿<span class="thumb-duration">10 Min</span></div>
+    <div class="video-body">
+      <div class="video-tag">Sonnengruß B · 4 Runden</div>
+      <div class="video-title">Der Sonnengruß B — perfekter Tagesstart</div>
+      <div class="video-desc">Mit Stuhl und Krieger I. Mit jeder Runde etwas anspruchsvoller — alles optional.</div>
+      <div class="play-btn">▶ Jetzt starten</div>
+    </div>
+  </a>
+</div>
+
+<div class="section-wrap">
+  <div class="section-label">Ausführlich · 20+ Minuten</div>
+
+  <a class="video-card" href="https://www.youtube.com/watch?v=8jzBjFd-8YE" target="_blank">
+    <div class="thumb">🧘<span class="thumb-duration">~20 Min</span></div>
+    <div class="video-body">
+      <div class="video-tag">Klassischer Sonnengruß · Sivananda</div>
+      <div class="video-title">Klassischer Sonnengruß — 6 Runden</div>
+      <div class="video-desc">Tiefergehend, mit Atempause. Wunderbar als Morgenroutine oder Warm-Up für den Tag.</div>
+      <div class="play-btn">▶ Jetzt starten</div>
+    </div>
+  </a>
+
+  <a class="video-card" href="https://www.youtube.com/watch?v=Nm6RlQiwvgc" target="_blank">
+    <div class="thumb">🌸<span class="thumb-duration">~20 Min</span></div>
+    <div class="video-body">
+      <div class="video-tag">Morgenroutine · Vollständig</div>
+      <div class="video-title">Madys persönliche Yoga Morgenroutine</div>
+      <div class="video-desc">Fließend und vollständig — für alle, die etwas mehr Zeit haben und den Tag wirklich beginnen wollen.</div>
+      <div class="play-btn">▶ Jetzt starten</div>
+    </div>
+  </a>
+</div>
+
+</body>
+</html>

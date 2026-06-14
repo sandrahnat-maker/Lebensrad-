@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#b8294a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Sandra läuft 🎪</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IM+Fell+English:ital@0;1&family=Raleway:wght@400;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,.12);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,.10);
+  --violet:#6a3f7a;--border-col:rgba(184,41,74,.15);--shadow:rgba(30,18,8,.08);}
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {background:var(--bg);background-image:repeating-linear-gradient(-4deg,rgba(184,41,74,.022) 0px,rgba(184,41,74,.022) 32px,transparent 32px,transparent 64px,rgba(201,137,58,.018) 64px,rgba(201,137,58,.018) 96px,transparent 96px,transparent 128px);
+    font-family: 'Raleway', sans-serif;
+    background: var(--dark);
+    color: var(--cream);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Wimpelkette Banner */
+  .wimpel-banner {
+    width: 100%;
+    height: 36px;
+    background: var(--navy);
+    overflow: hidden;
+    position: relative;
+    border-bottom: 2px solid var(--gold);
+  }
+  .wimpel-track {
+    display: flex;
+    animation: wimpel-scroll 18s linear infinite;
+    height: 100%;
+    align-items: flex-end;
+    white-space: nowrap;
+  }
+  .wimpel {
+    width: 0; height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 28px solid var(--crimson);
+    margin: 0 2px;
+    flex-shrink: 0;
+  }
+  .wimpel:nth-child(2n) { border-top-color: var(--gold); }
+  .wimpel:nth-child(3n) { border-top-color: var(--violet); }
+  .wimpel:nth-child(4n) { border-top-color: var(--navy); border-top: 28px solid #2a3060; }
+  @keyframes wimpel-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--crimson) 0%, #5a0000 60%, var(--navy) 100%);
+    padding: 20px 20px 16px;
+    text-align: center;
+    position: relative;
+    border-bottom: 3px solid var(--gold);
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(201,168,76,0.04) 10px, rgba(201,168,76,0.04) 11px);
+    pointer-events: none;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  }
+  header .subtitle {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--cream);
+    opacity: 0.8;
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
+
+  /* Nav Tabs */
+  .nav-tabs {
+    display: flex;
+    background: var(--navy);
+    border-bottom: 2px solid var(--gold);
+  }
+  .nav-tab {
+    flex: 1;
+    padding: 12px 4px;
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--cream);
+    opacity: 0.5;
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+  }
+  .nav-tab.active {
+    opacity: 1;
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+    background: rgba(201,168,76,0.08);
+  }
+  .nav-tab .tab-icon { display: block; font-size: 1.2rem; margin-bottom: 2px; }
+
+  /* Screens */
+  .screen { display: none; padding: 16px; }
+  .screen.active { display: block; }
+
+  /* ===== TIMER SCREEN ===== */
+  .week-badge {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .week-badge span {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--crimson), var(--violet));
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    padding: 6px 20px;
+    border-radius: 20px;
+    border: 1px solid var(--gold);
+    letter-spacing: 2px;
+  }
+
+  .timer-ring-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px 0;
+    position: relative;
+  }
+  .timer-svg { transform: rotate(-90deg); }
+  .timer-track { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 12; }
+  .timer-progress {
+    fill: none;
+    stroke-width: 12;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear, stroke 0.5s;
+  }
+  .timer-center {
+    position: absolute;
+    text-align: center;
+  }
+  .timer-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .timer-phase {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1rem;
+    margin-top: 4px;
+    letter-spacing: 1px;
+    transition: color 0.5s;
+  }
+  .timer-phase.laufen { color: var(--run-color); }
+  .timer-phase.gehen { color: var(--walk-color); }
+  .timer-phase.pause { color: var(--cream); opacity: 0.5; }
+
+  .interval-info {
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: 0.82rem;
+    color: var(--cream);
+    opacity: 0.6;
+    font-family: 'Raleway', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .interval-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    padding: 0 8px;
+  }
+  .interval-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s;
+  }
+  .interval-dot.run { background: var(--run-color); border-color: var(--run-color); }
+  .interval-dot.walk { background: var(--walk-color); border-color: var(--violet); }
+  .interval-dot.done { opacity: 0.3; }
+  .interval-dot.current { transform: scale(1.4); box-shadow: 0 0 8px currentColor; }
+
+  .timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .btn-main {
+    background: linear-gradient(135deg, var(--crimson), #a00000);
+    color: var(--gold);
+    border: 2px solid var(--gold);
+    border-radius: 50px;
+    padding: 14px 36px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(184,41,74,0.5);
+  }
+  .btn-main:active { transform: scale(0.97); }
+  .btn-main.running {
+    background: linear-gradient(135deg, #4a0000, var(--crimson));
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.05);
+    color: var(--cream);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 14px 20px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tts-toggle {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .tts-btn {
+    background: none;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--cream);
+    opacity: 0.6;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+    transition: all 0.2s;
+  }
+  .tts-btn.on { opacity: 1; color: var(--gold); border-color: var(--gold); }
+
+  /* Workout selector */
+  .workout-selector {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+  .workout-selector h3 {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .workout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .workout-btn {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--cream);
+    padding: 8px 6px;
+    border-radius: 8px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.72rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+  }
+  .workout-btn.selected {
+    background: rgba(184,41,74,0.3);
+    border-color: var(--crimson);
+    color: var(--gold);
+  }
+  .workout-btn .wk-label { font-weight: 700; display: block; margin-bottom: 2px; }
+  .workout-btn .wk-desc { opacity: 0.7; font-size: 0.65rem; }
+
+  /* ===== PLAN SCREEN ===== */
+  .plan-header {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .plan-header h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.4rem;
+  }
+  .plan-header p {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--cream);
+    opacity: 0.7;
+    font-size: 0.85rem;
+    margin-top: 4px;
+  }
+
+  .week-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .week-card.current-week { border-color: var(--gold); }
+  .week-card.completed { border-color: rgba(74,124,89,0.4); }
+
+  .week-card-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    cursor: pointer;
+    gap: 10px;
+  }
+  .week-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    opacity: 0.4;
+    min-width: 32px;
+  }
+  .week-card.current-week .week-number { opacity: 1; }
+  .week-card.completed .week-number { color: var(--success); opacity: 0.8; }
+
+  .week-info { flex: 1; }
+  .week-info .week-title {
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+  .week-info .week-desc {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--cream);
+    opacity: 0.6;
+    margin-top: 2px;
+  }
+
+  .week-progress-mini {
+    display: flex;
+    gap: 4px;
+  }
+  .session-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .session-dot.done { background: var(--success); border-color: var(--success); }
+  .session-dot.today { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 6px var(--gold); }
+
+  .week-card-body {
+    padding: 0 14px 12px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .session-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .session-row:last-child { border-bottom: none; }
+  .session-check {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.2);
+    background: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .session-check.done { background: var(--success); border-color: var(--success); }
+  .session-text { flex: 1; font-size: 0.8rem; }
+  .session-date { font-size: 0.7rem; opacity: 0.4; }
+
+  /* ===== GPS SCREEN ===== */
+  .map-container {
+    background: var(--navy);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  #map {
+    width: 100%;
+    height: 240px;
+  }
+  .map-placeholder {
+    width: 100%; height: 240px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px;
+    color: var(--cream); opacity: 0.4;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+  }
+  .map-placeholder .map-icon { font-size: 2.5rem; }
+
+  .gps-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+  }
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-top: 2px;
+  }
+
+  .gps-controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .btn-gps {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-gps.start { background: var(--crimson); color: var(--gold); border: 1px solid var(--gold); }
+  .btn-gps.stop { background: rgba(255,255,255,0.1); color: var(--cream); border: 1px solid rgba(255,255,255,0.2); }
+  .btn-gps:disabled { opacity: 0.3; pointer-events: none; }
+
+  .route-history h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  .route-item {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .route-icon { font-size: 1.2rem; }
+  .route-info { flex: 1; }
+  .route-info .route-date { font-size: 0.72rem; opacity: 0.5; }
+  .route-info .route-stats { font-size: 0.82rem; color: var(--gold); font-weight: 600; }
+
+  /* ===== MUSIK SCREEN ===== */
+  .musik-note {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .musik-note .musik-icon { font-size: 2.5rem; margin-bottom: 8px; }
+  .musik-note p {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--cream);
+    opacity: 0.7;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .playlist-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .playlist-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 14px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: block;
+  }
+  .playlist-card:active { transform: scale(0.97); background: rgba(184,41,74,0.2); }
+  .playlist-card .pl-icon { font-size: 1.8rem; margin-bottom: 6px; }
+  .playlist-card .pl-name {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-bottom: 2px;
+  }
+  .playlist-card .pl-desc {
+    font-size: 0.7rem;
+    color: var(--cream);
+    opacity: 0.5;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+  }
+
+  /* Completion animation */
+  .done-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 32px;
+  }
+  .done-overlay.show { display: flex; animation: fadeIn 0.5s; }
+  @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+  .done-overlay h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .done-overlay p {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--cream);
+    opacity: 0.8;
+    margin-bottom: 24px;
+  }
+  .done-confetti { font-size: 3rem; margin-bottom: 16px; animation: bounce 0.6s infinite alternate; }
+  @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
+
+  /* Scrollable content */
+  .screen-content { max-height: calc(100vh - 180px); overflow-y: auto; }
+
+  /* Pulse animation for running state */
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(184,41,74,0.4); }
+    70% { box-shadow: 0 0 0 16px rgba(184,41,74,0); }
+    100% { box-shadow: 0 0 0 0 rgba(184,41,74,0); }
+  }
+  .btn-main.running { animation: pulse-ring 2s infinite; }
+
+  .empty-state {
+    text-align: center;
+    padding: 20px;
+    opacity: 0.5;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+  }
+
+  /* Ornament divider */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    opacity: 0.3;
+    font-size: 1rem;
+    letter-spacing: 8px;
+    margin: 8px 0;
+  }
+
+body::after{content:'';position:fixed;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,#b8294a 0,#b8294a 20%,#c9893a 20%,#c9893a 40%,#1a2744 40%,#1a2744 60%,#6a3f7a 60%,#6a3f7a 80%,#5e8a5a 80%,#5e8a5a 100%);z-index:100;opacity:.7;}
+</style>
+</head>
+<body>
+
+<!-- Wimpelkette -->
+<div class="wimpel-banner">
+  <div class="wimpel-track" id="wimpelTrack"></div>
+</div>
+
+<!-- Header -->
+<header>
+  <h1>🏃‍♀️ Sandra läuft</h1>
+  <div class="subtitle">8 Wochen zurück ins Laufen — sanft & sicher</div>
+</header>
+
+<!-- Nav -->
+<nav class="nav-tabs">
+  <button class="nav-tab active" onclick="showScreen('timer')" id="tab-timer">
+    <span class="tab-icon">⏱</span>Timer
+  </button>
+  <button class="nav-tab" onclick="showScreen('plan')" id="tab-plan">
+    <span class="tab-icon">📋</span>Plan
+  </button>
+  <button class="nav-tab" onclick="showScreen('gps')" id="tab-gps">
+    <span class="tab-icon">🗺</span>Route
+  </button>
+  <button class="nav-tab" onclick="showScreen('musik')" id="tab-musik">
+    <span class="tab-icon">🎵</span>Musik
+  </button>
+</nav>
+
+<!-- ===== TIMER SCREEN ===== -->
+<div class="screen active" id="screen-timer">
+  <div class="screen-content">
+    <div class="week-badge">
+      <span id="currentWeekBadge">Woche 1 · Tag 1</span>
+    </div>
+
+    <!-- Workout selector -->
+    <div class="workout-selector">
+      <h3>Trainingseinheit wählen</h3>
+      <div class="workout-grid" id="workoutGrid"></div>
+    </div>
+
+    <!-- Timer Ring -->
+    <div class="timer-ring-container">
+      <svg class="timer-svg" width="200" height="200" viewBox="0 0 200 200">
+        <circle class="timer-track" cx="100" cy="100" r="88"/>
+        <circle class="timer-progress" id="timerProgress" cx="100" cy="100" r="88"
+          stroke-dasharray="553" stroke-dashoffset="0" stroke="var(--gold)"/>
+      </svg>
+      <div class="timer-center">
+        <div class="timer-display" id="timerDisplay">00:00</div>
+        <div class="timer-phase pause" id="timerPhase">Bereit</div>
+      </div>
+    </div>
+
+    <div class="interval-info" id="intervalInfo">Wähle eine Einheit oben</div>
+
+    <!-- Interval dots -->
+    <div class="interval-dots" id="intervalDots"></div>
+
+    <!-- Controls -->
+    <div class="timer-controls">
+      <button class="btn-secondary" onclick="resetTimer()">↺ Reset</button>
+      <button class="btn-main" id="startBtn" onclick="toggleTimer()">START</button>
+      <button class="btn-secondary" onclick="skipInterval()">⏭ Skip</button>
+    </div>
+
+    <div class="tts-toggle">
+      <button class="tts-btn on" id="ttsBtn" onclick="toggleTTS()">🔊 Ansage AN</button>
+    </div>
+
+    <div class="ornament">✦ ✦ ✦</div>
+  </div>
+</div>
+
+<!-- ===== PLAN SCREEN ===== -->
+<div class="screen" id="screen-plan">
+  <div class="screen-content">
+    <div class="plan-header">
+      <h2>8-Wochen-Plan</h2>
+      <p>Rückenfreundlicher Wiedereinstieg</p>
+    </div>
+    <div id="planContainer"></div>
+  </div>
+</div>
+
+<!-- ===== GPS SCREEN ===== -->
+<div class="screen" id="screen-gps">
+  <div class="screen-content">
+    <!-- Map -->
+    <div class="map-container">
+      <div class="map-placeholder" id="mapPlaceholder">
+        <div class="map-icon">🗺</div>
+        <div>GPS-Tracking starten</div>
+        <div style="font-size:0.7rem">Prater · Augarten · Türkenschanzpark</div>
+      </div>
+      <div id="map" style="display:none"></div>
+    </div>
+
+    <!-- Stats -->
+    <div class="gps-stats">
+      <div class="stat-card">
+        <span class="stat-value" id="statDist">0.0</span>
+        <span class="stat-label">km</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="statTime">0:00</span>
+        <span class="stat-label">Zeit</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="statPace">—</span>
+        <span class="stat-label">min/km</span>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="gps-controls">
+      <button class="btn-gps start" id="btnGpsStart" onclick="startGPS()">📍 Aufzeichnen</button>
+      <button class="btn-gps stop" id="btnGpsStop" onclick="stopGPS()" disabled>⏹ Stopp & Speichern</button>
+    </div>
+
+    <!-- Route History -->
+    <div class="route-history">
+      <h3>Letzte Runden</h3>
+      <div id="routeHistory"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MUSIK SCREEN ===== -->
+<div class="screen" id="screen-musik">
+  <div class="screen-content">
+    <div class="musik-note">
+      <div class="musik-icon">🎪</div>
+      <p>Öffne deine Lieblingsmusik-App und starte eine Playlist — dann komm zurück und starte den Intervall-Timer.</p>
+    </div>
+
+    <div style="margin-bottom: 12px;">
+      <div style="font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1rem; margin-bottom: 8px;">
+        Lauf-Stimmungen
+      </div>
+      <div class="playlist-grid" id="playlistGrid"></div>
+    </div>
+
+    <div class="ornament">✦ ✦ ✦</div>
+
+    <div style="background: rgba(255,255,255,0.03); border-radius: 10px; padding: 14px; border: 1px solid rgba(255,255,255,0.06);">
+      <div style="font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; color: var(--gold); margin-bottom: 8px; text-transform: uppercase;">Schnellstart</div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <a href="spotify:" style="background: #1db954; color: #000; padding: 8px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-decoration: none;">Spotify öffnen</a>
+        <a href="https://music.youtube.com" style="background: #ff0000; color: #fff; padding: 8px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-decoration: none;">YouTube Music</a>
+        <a href="https://fm4.orf.at" style="background: var(--crimson); color: var(--gold); padding: 8px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-decoration: none; border: 1px solid var(--gold);">FM4 Live</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Done overlay -->
+<div class="done-overlay" id="doneOverlay">
+  <div class="done-confetti">🎪</div>
+  <h2>Geschafft! 🥇</h2>
+  <p id="doneMessage">Einheit abgeschlossen.<br>Dein Rücken dankt dir!</p>
+  <button class="btn-main" onclick="closeDone()" style="margin-top: 8px;">Weiter so!</button>
+</div>
+
+<script>
+// ===== DATA =====
+const WORKOUTS = [
+  { id: 'w1', week: '1–2', label: 'Woche 1–2', desc: '1min laufen / 2min gehen × 8', run: 60, walk: 120, reps: 8 },
+  { id: 'w2', week: '3–4', label: 'Woche 3–4', desc: '2min laufen / 1min gehen × 8', run: 120, walk: 60, reps: 8 },
+  { id: 'w3', week: '5–6', label: 'Woche 5–6', desc: '5min laufen / 1min gehen × 4', run: 300, walk: 60, reps: 4 },
+  { id: 'w4', week: '7', label: 'Woche 7', desc: '8min laufen / 1min gehen × 3', run: 480, walk: 60, reps: 3 },
+  { id: 'w5', week: '8', label: 'Woche 8', desc: '15min durchlaufen', run: 900, walk: 0, reps: 1 },
+  { id: 'free', week: '—', label: 'Frei', desc: 'Eigenes Intervall', run: 60, walk: 60, reps: 5 },
+];
+
+const PLAN_WEEKS = [
+  { num: 1, title: 'Woche 1', desc: '1min laufen · 2min gehen · 8×', workout: 'w1', sessions: 3 },
+  { num: 2, title: 'Woche 2', desc: '1min laufen · 2min gehen · 8×', workout: 'w1', sessions: 3 },
+  { num: 3, title: 'Woche 3', desc: '2min laufen · 1min gehen · 8×', workout: 'w2', sessions: 3 },
+  { num: 4, title: 'Woche 4', desc: '2min laufen · 1min gehen · 8×', workout: 'w2', sessions: 3 },
+  { num: 5, title: 'Woche 5', desc: '5min laufen · 1min gehen · 4×', workout: 'w3', sessions: 3 },
+  { num: 6, title: 'Woche 6', desc: '5min laufen · 1min gehen · 4×', workout: 'w3', sessions: 3 },
+  { num: 7, title: 'Woche 7', desc: '8min laufen · 1min gehen · 3×', workout: 'w4', sessions: 3 },
+  { num: 8, title: 'Woche 8', desc: '15min durchlaufen', workout: 'w5', sessions: 3 },
+];
+
+const PLAYLISTS = [
+  { icon: '⚡', name: 'Power-Start', desc: 'Energiegeladen für Intervalle', query: 'running power playlist' },
+  { icon: '🌿', name: 'Waldstimmung', desc: 'Ruhig, fließend, natürlich', query: 'nature running music' },
+  { icon: '🎸', name: 'Indie-Kick', desc: 'Pillow Queens, Inhaler, Bilderbuch', query: 'indie running playlist' },
+  { icon: '🌙', name: 'Früh & Leise', desc: 'Sanfter Start in den Tag', query: 'morning run calm' },
+];
+
+// ===== STATE =====
+let state = JSON.parse(localStorage.getItem('lauf_state') || 'null') || {
+  selectedWorkout: 'w1',
+  sessions: {},   // key: "week-session" -> date string
+  routes: [],
+  currentWeek: 1,
+};
+
+function saveState() {
+  localStorage.setItem('lauf_state', JSON.stringify(state));
+}
+
+// ===== WIMPEL =====
+(function() {
+  const track = document.getElementById('wimpelTrack');
+  const colors = ['#b8294a','#C9A84C','#6B4C8A','#1a1f3a'];
+  let html = '';
+  for (let i = 0; i < 60; i++) {
+    html += '<div class="wimpel" style="border-top-color:' + colors[i%4] + '"></div>';
+  }
+  track.innerHTML = html + html; // double for seamless loop
+})();
+
+// ===== SCREENS =====
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+  if (id === 'plan') renderPlan();
+  if (id === 'gps') renderRouteHistory();
+}
+
+// ===== TIMER =====
+let timerInterval = null;
+let currentPhase = null; // 'run' or 'walk'
+let phaseTime = 0;
+let phaseTotal = 0;
+let currentRep = 0;
+let totalReps = 0;
+let isRunning = false;
+let workout = null;
+let ttsEnabled = true;
+
+function getWorkout(id) { return WORKOUTS.find(w => w.id === id); }
+
+function initWorkout(id) {
+  state.selectedWorkout = id;
+  saveState();
+  workout = getWorkout(id);
+  renderWorkoutGrid();
+  resetTimer();
+  const el = document.getElementById('intervalInfo');
+  el.textContent = workout.desc;
+  totalReps = workout.reps * (workout.walk > 0 ? 2 : 1);
+  renderDots();
+  updateWeekBadge();
+}
+
+function renderWorkoutGrid() {
+  const grid = document.getElementById('workoutGrid');
+  grid.innerHTML = WORKOUTS.map(w => `
+    <button class="workout-btn ${w.id === state.selectedWorkout ? 'selected' : ''}" onclick="initWorkout('${w.id}')">
+      <span class="wk-label">${w.label}</span>
+      <span class="wk-desc">${w.desc}</span>
+    </button>
+  `).join('');
+}
+
+function renderDots() {
+  const container = document.getElementById('intervalDots');
+  if (!workout) { container.innerHTML = ''; return; }
+  let dots = '';
+  for (let i = 0; i < workout.reps; i++) {
+    dots += `<div class="interval-dot run" id="dot-run-${i}"></div>`;
+    if (workout.walk > 0) dots += `<div class="interval-dot walk" id="dot-walk-${i}"></div>`;
+  }
+  container.innerHTML = dots;
+}
+
+function updateDots() {
+  if (!workout) return;
+  for (let i = 0; i < workout.reps; i++) {
+    const runDot = document.getElementById('dot-run-' + i);
+    const walkDot = document.getElementById('dot-walk-' + i);
+    const runDone = currentRep > i || (currentRep === i && currentPhase === 'walk');
+    const walkDone = currentRep > i;
+    const runCurrent = currentRep === i && currentPhase === 'run';
+    const walkCurrent = currentRep === i && currentPhase === 'walk';
+    if (runDot) { runDot.className = 'interval-dot run' + (runDone?' done':'') + (runCurrent?' current':''); }
+    if (walkDot) { walkDot.className = 'interval-dot walk' + (walkDone?' done':'') + (walkCurrent?' current':''); }
+  }
+}
+
+function startPhase(phase) {
+  currentPhase = phase;
+  phaseTotal = phase === 'run' ? workout.run : workout.walk;
+  phaseTime = phaseTotal;
+  updateTimerDisplay();
+  updateDots();
+  const phaseEl = document.getElementById('timerPhase');
+  if (phase === 'run') {
+    phaseEl.textContent = '🏃‍♀️ LAUFEN';
+    phaseEl.className = 'timer-phase laufen';
+    document.getElementById('timerProgress').style.stroke = 'var(--run-color)';
+    if (ttsEnabled) speak('Laufen!');
+  } else {
+    phaseEl.textContent = '🚶‍♀️ Gehen';
+    phaseEl.className = 'timer-phase gehen';
+    document.getElementById('timerProgress').style.stroke = 'var(--walk-color)';
+    if (ttsEnabled) speak('Gehen. Erholen.');
+  }
+}
+
+function toggleTimer() {
+  if (!workout) { initWorkout(state.selectedWorkout); }
+  if (isRunning) {
+    pauseTimer();
+  } else {
+    startTimer();
+  }
+}
+
+function startTimer() {
+  isRunning = true;
+  document.getElementById('startBtn').textContent = 'PAUSE';
+  document.getElementById('startBtn').classList.add('running');
+  if (currentPhase === null) {
+    currentRep = 0;
+    startPhase('run');
+  }
+  timerInterval = setInterval(tick, 1000);
+}
+
+function pauseTimer() {
+  isRunning = false;
+  clearInterval(timerInterval);
+  document.getElementById('startBtn').textContent = 'WEITER';
+  document.getElementById('startBtn').classList.remove('running');
+}
+
+function tick() {
+  phaseTime--;
+  updateTimerDisplay();
+  if (phaseTime <= 3 && phaseTime > 0 && ttsEnabled) {
+    speak(phaseTime.toString());
+  }
+  if (phaseTime <= 0) {
+    nextPhase();
+  }
+}
+
+function nextPhase() {
+  if (currentPhase === 'run') {
+    if (workout.walk > 0) {
+      startPhase('walk');
+    } else {
+      currentRep++;
+      if (currentRep >= workout.reps) {
+        finishWorkout();
+      } else {
+        startPhase('run');
+      }
+    }
+  } else {
+    currentRep++;
+    if (currentRep >= workout.reps) {
+      finishWorkout();
+    } else {
+      startPhase('run');
+    }
+  }
+}
+
+function skipInterval() {
+  if (!isRunning) return;
+  nextPhase();
+}
+
+function finishWorkout() {
+  clearInterval(timerInterval);
+  isRunning = false;
+  document.getElementById('startBtn').textContent = 'START';
+  document.getElementById('startBtn').classList.remove('running');
+  document.getElementById('timerPhase').textContent = '✅ Fertig!';
+  document.getElementById('timerPhase').className = 'timer-phase';
+  if (ttsEnabled) speak('Einheit abgeschlossen! Bravo!');
+  // Mark session
+  markSessionDone();
+  // Show overlay after short delay
+  setTimeout(() => {
+    document.getElementById('doneMessage').innerHTML = 'Einheit abgeschlossen! 🎉<br>Dein Rücken dankt dir.';
+    document.getElementById('doneOverlay').classList.add('show');
+  }, 1200);
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  isRunning = false;
+  currentPhase = null;
+  currentRep = 0;
+  phaseTime = 0;
+  phaseTotal = 0;
+  document.getElementById('startBtn').textContent = 'START';
+  document.getElementById('startBtn').classList.remove('running');
+  document.getElementById('timerDisplay').textContent = workout ? formatTime(workout.run) : '00:00';
+  document.getElementById('timerPhase').textContent = 'Bereit';
+  document.getElementById('timerPhase').className = 'timer-phase pause';
+  document.getElementById('timerProgress').style.strokeDashoffset = '0';
+  renderDots();
+}
+
+function updateTimerDisplay() {
+  document.getElementById('timerDisplay').textContent = formatTime(phaseTime);
+  const circumference = 553;
+  const offset = circumference * (1 - phaseTime / phaseTotal);
+  document.getElementById('timerProgress').style.strokeDashoffset = offset;
+}
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+}
+
+function toggleTTS() {
+  ttsEnabled = !ttsEnabled;
+  const btn = document.getElementById('ttsBtn');
+  btn.textContent = ttsEnabled ? '🔊 Ansage AN' : '🔇 Ansage AUS';
+  btn.className = 'tts-btn' + (ttsEnabled ? ' on' : '');
+}
+
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-AT';
+  u.rate = 0.95;
+  window.speechSynthesis.speak(u);
+}
+
+function updateWeekBadge() {
+  const w = getWorkout(state.selectedWorkout);
+  document.getElementById('currentWeekBadge').textContent = 'Woche ' + (w ? w.week : '—') + ' · Einheit gewählt';
+}
+
+// ===== PLAN =====
+function markSessionDone() {
+  // Find next undone session in current week
+  const weekIdx = Math.min(state.currentWeek - 1, 7);
+  const week = PLAN_WEEKS[weekIdx];
+  for (let s = 1; s <= week.sessions; s++) {
+    const key = week.num + '-' + s;
+    if (!state.sessions[key]) {
+      state.sessions[key] = new Date().toLocaleDateString('de-AT');
+      saveState();
+      break;
+    }
+  }
+  // Auto-advance week if all done
+  let allDone = true;
+  for (let s = 1; s <= week.sessions; s++) {
+    if (!state.sessions[week.num + '-' + s]) { allDone = false; break; }
+  }
+  if (allDone && state.currentWeek < 8) state.currentWeek++;
+  saveState();
+}
+
+function toggleSession(weekNum, sessionNum) {
+  const key = weekNum + '-' + sessionNum;
+  if (state.sessions[key]) {
+    delete state.sessions[key];
+  } else {
+    state.sessions[key] = new Date().toLocaleDateString('de-AT');
+  }
+  saveState();
+  renderPlan();
+}
+
+function renderPlan() {
+  const container = document.getElementById('planContainer');
+  container.innerHTML = PLAN_WEEKS.map((week, i) => {
+    const sessionsDone = Array.from({length: week.sessions}, (_,si) => state.sessions[week.num + '-' + (si+1)]).filter(Boolean).length;
+    const allDone = sessionsDone === week.sessions;
+    const isCurrent = week.num === state.currentWeek;
+
+    const dotsHTML = Array.from({length: week.sessions}, (_,si) => {
+      const done = !!state.sessions[week.num + '-' + (si+1)];
+      return `<div class="session-dot${done?' done':''}" onclick="toggleSession(${week.num},${si+1})" title="Einheit ${si+1}"></div>`;
+    }).join('');
+
+    const sessionRows = Array.from({length: week.sessions}, (_,si) => {
+      const key = week.num + '-' + (si+1);
+      const done = !!state.sessions[key];
+      const date = state.sessions[key] || '';
+      return `<div class="session-row">
+        <div class="session-check${done?' done':''}" onclick="toggleSession(${week.num},${si+1})">${done ? '✓' : ''}</div>
+        <div class="session-text">
+          <div>Einheit ${si+1}</div>
+          ${date ? `<div class="session-date">${date}</div>` : ''}
+        </div>
+        ${isCurrent && !done ? `<button onclick="initWorkout('${week.workout}'); showScreen('timer');" style="background: var(--crimson); color: var(--gold); border: none; border-radius: 8px; padding: 4px 10px; font-size: 0.7rem; cursor: pointer;">▶ Starten</button>` : ''}
+      </div>`;
+    }).join('');
+
+    return `<div class="week-card${isCurrent?' current-week':''}${allDone?' completed':''}">
+      <div class="week-card-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display==='none'?'block':'none'">
+        <div class="week-number">${week.num}</div>
+        <div class="week-info">
+          <div class="week-title">${week.title}${allDone ? ' ✓' : isCurrent ? ' ← Aktuell' : ''}</div>
+          <div class="week-desc">${week.desc}</div>
+        </div>
+        <div class="week-progress-mini">${dotsHTML}</div>
+      </div>
+      <div class="week-card-body" style="display:${isCurrent?'block':'none'}">
+        ${sessionRows}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===== GPS =====
+let gpsWatcher = null;
+let gpsCoords = [];
+let gpsStartTime = null;
+let gpsTimer = null;
+let mapCtx = null;
+
+function startGPS() {
+  if (!navigator.geolocation) {
+    alert('GPS nicht verfügbar auf diesem Gerät.');
+    return;
+  }
+  gpsCoords = [];
+  gpsStartTime = Date.now();
+  document.getElementById('mapPlaceholder').style.display = 'none';
+  document.getElementById('map').style.display = 'block';
+  document.getElementById('btnGpsStart').disabled = true;
+  document.getElementById('btnGpsStop').disabled = false;
+
+  gpsWatcher = navigator.geolocation.watchPosition(pos => {
+    gpsCoords.push({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+    updateGPSStats();
+    drawMap();
+  }, err => {}, { enableHighAccuracy: true, maximumAge: 2000 });
+
+  gpsTimer = setInterval(updateGPSStats, 1000);
+}
+
+function stopGPS() {
+  if (gpsWatcher) navigator.geolocation.clearWatch(gpsWatcher);
+  clearInterval(gpsTimer);
+  document.getElementById('btnGpsStart').disabled = false;
+  document.getElementById('btnGpsStop').disabled = true;
+
+  if (gpsCoords.length > 1) {
+    const dist = calcDistance();
+    const elapsed = Math.round((Date.now() - gpsStartTime) / 1000);
+    const route = {
+      date: new Date().toLocaleDateString('de-AT'),
+      dist: dist.toFixed(2),
+      time: elapsed,
+      coords: gpsCoords
+    };
+    state.routes.unshift(route);
+    if (state.routes.length > 20) state.routes.pop();
+    saveState();
+    renderRouteHistory();
+  }
+}
+
+function calcDistance() {
+  let d = 0;
+  for (let i = 1; i < gpsCoords.length; i++) {
+    d += haversine(gpsCoords[i-1], gpsCoords[i]);
+  }
+  return d;
+}
+
+function haversine(a, b) {
+  const R = 6371;
+  const dLat = (b.lat - a.lat) * Math.PI/180;
+  const dLng = (b.lng - a.lng) * Math.PI/180;
+  const x = Math.sin(dLat/2)**2 + Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1-x));
+}
+
+function updateGPSStats() {
+  const dist = calcDistance();
+  const elapsed = Math.round((Date.now() - gpsStartTime) / 1000);
+  document.getElementById('statDist').textContent = dist.toFixed(2);
+  const m = Math.floor(elapsed/60), s = elapsed%60;
+  document.getElementById('statTime').textContent = m + ':' + String(s).padStart(2,'0');
+  if (dist > 0.05) {
+    const paceMin = (elapsed/60) / dist;
+    const pm = Math.floor(paceMin), ps = Math.round((paceMin - pm)*60);
+    document.getElementById('statPace').textContent = pm + ':' + String(ps).padStart(2,'0');
+  }
+}
+
+function drawMap() {
+  const canvas = document.getElementById('map');
+  if (!canvas.getContext) return;
+  if (!mapCtx) { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; mapCtx = canvas.getContext('2d'); }
+  if (gpsCoords.length < 2) return;
+  const lats = gpsCoords.map(c => c.lat), lngs = gpsCoords.map(c => c.lng);
+  const minLat = Math.min(...lats), maxLat = Math.max(...lats);
+  const minLng = Math.min(...lngs), maxLng = Math.max(...lngs);
+  const pad = 20;
+  const scaleX = (canvas.width - pad*2) / (maxLng - minLng || 0.001);
+  const scaleY = (canvas.height - pad*2) / (maxLat - minLat || 0.001);
+  const scale = Math.min(scaleX, scaleY);
+  mapCtx.clearRect(0, 0, canvas.width, canvas.height);
+  mapCtx.fillStyle = '#0d1020';
+  mapCtx.fillRect(0, 0, canvas.width, canvas.height);
+  // Grid
+  mapCtx.strokeStyle = 'rgba(201,168,76,0.08)';
+  mapCtx.lineWidth = 1;
+  for (let i = 0; i < 5; i++) {
+    const y = pad + (canvas.height - pad*2) * i/4;
+    mapCtx.beginPath(); mapCtx.moveTo(0, y); mapCtx.lineTo(canvas.width, y); mapCtx.stroke();
+  }
+  // Route
+  mapCtx.beginPath();
+  mapCtx.strokeStyle = 'var(--gold)';
+  mapCtx.lineWidth = 3;
+  mapCtx.lineJoin = 'round';
+  mapCtx.lineCap = 'round';
+  const toX = lng => pad + (lng - minLng) * scale + (canvas.width - pad*2 - (maxLng-minLng)*scale)/2;
+  const toY = lat => canvas.height - pad - (lat - minLat) * scale - (canvas.height - pad*2 - (maxLat-minLat)*scale)/2;
+  gpsCoords.forEach((c, i) => {
+    if (i === 0) mapCtx.moveTo(toX(c.lng), toY(c.lat));
+    else mapCtx.lineTo(toX(c.lng), toY(c.lat));
+  });
+  mapCtx.stroke();
+  // Start dot
+  const s = gpsCoords[0], e = gpsCoords[gpsCoords.length-1];
+  mapCtx.fillStyle = '#4a7c59';
+  mapCtx.beginPath(); mapCtx.arc(toX(s.lng), toY(s.lat), 6, 0, Math.PI*2); mapCtx.fill();
+  mapCtx.fillStyle = '#C9A84C';
+  mapCtx.beginPath(); mapCtx.arc(toX(e.lng), toY(e.lat), 6, 0, Math.PI*2); mapCtx.fill();
+}
+
+function renderRouteHistory() {
+  const container = document.getElementById('routeHistory');
+  if (!state.routes.length) {
+    container.innerHTML = '<div class="empty-state">Noch keine Runden aufgezeichnet.</div>';
+    return;
+  }
+  container.innerHTML = state.routes.map((r, i) => {
+    const m = Math.floor(r.time/60), s = r.time%60;
+    return `<div class="route-item">
+      <div class="route-icon">🏃‍♀️</div>
+      <div class="route-info">
+        <div class="route-date">${r.date}</div>
+        <div class="route-stats">${r.dist} km · ${m}:${String(s).padStart(2,'0')} min</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===== MUSIK =====
+function renderPlaylists() {
+  const grid = document.getElementById('playlistGrid');
+  grid.innerHTML = PLAYLISTS.map(pl => `
+    <a href="https://open.spotify.com/search/${encodeURIComponent(pl.query)}" target="_blank" class="playlist-card">
+      <div class="pl-icon">${pl.icon}</div>
+      <div class="pl-name">${pl.name}</div>
+      <div class="pl-desc">${pl.desc}</div>
+    </a>
+  `).join('');
+}
+
+function closeDone() {
+  document.getElementById('doneOverlay').classList.remove('show');
+  resetTimer();
+  showScreen('plan');
+}
+
+// ===== INIT =====
+initWorkout(state.selectedWorkout);
+renderPlaylists();
+renderRouteHistory();
+</script>
+</body>
+</html>

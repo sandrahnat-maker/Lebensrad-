@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#fdf6ee">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Weidlingbach</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IM+Fell+English:ital@0;1&family=Raleway:wght@400;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,.12);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,.10);
+  --violet:#6a3f7a;--border-col:rgba(184,41,74,.15);--shadow:rgba(30,18,8,.08);}
+html{font-size:18px;}*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background-image:repeating-linear-gradient(-4deg,rgba(184,41,74,.022) 0px,rgba(184,41,74,.022) 32px,transparent 32px,transparent 64px,rgba(201,137,58,.018) 64px,rgba(201,137,58,.018) 96px,transparent 96px,transparent 128px);background:var(--bg);font-family:"Cormorant Garamond",Georgia,serif;color:var(--text);padding-bottom:5rem;}
+header{background:linear-gradient(135deg,#f5ede0,#fdf6ee);border-bottom:1px solid var(--border);padding:1rem 1.1rem .8rem;text-align:center;box-shadow:0 1px 8px rgba(30,18,8,.08);}
+.ht{font-family:"Playfair Display",serif;font-size:22px;font-style:italic;color:var(--text);}
+.hs{font-size:13px;color:var(--muted);font-style:italic;margin-top:.2rem;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;padding:.9rem .9rem .5rem;}
+.stat{background:var(--white);border-radius:11px;padding:.5rem .3rem;text-align:center;border:1px solid var(--border);}
+.sn{font-family:"Playfair Display",serif;font-size:19px;}.sl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+.sb .sn{color:var(--sage);}.sv .sn{color:var(--gold);}.ss .sn{color:var(--lav);}.sw .sn{color:var(--terra);}
+.cat-block{margin:0 .9rem .9rem;}
+.cat-hdr{background:var(--white);border-radius:14px 14px 0 0;padding:.75rem 1rem;border:1px solid var(--border);border-bottom:none;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.cat-hdr.closed{border-radius:14px;border-bottom:1px solid var(--border);}
+.ct{font-family:"Playfair Display",serif;font-size:17px;font-style:italic;color:var(--text);}
+.ci{font-size:12px;color:var(--gold);}
+.cat-body{background:var(--white);border-radius:0 0 14px 14px;border:1px solid var(--border);border-top:none;overflow:hidden;}
+.cpb{height:3px;background:var(--border);}.cpf{height:100%;background:linear-gradient(90deg,var(--sage),var(--gold));transition:width .3s;}
+.shdr{padding:.5rem 1rem;background:rgba(200,148,58,0.06);border-bottom:1px solid var(--border);font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--gold);}
+.irow{display:flex;align-items:center;padding:.5rem .8rem;border-bottom:1px solid var(--border);gap:.5rem;}
+.irow:last-child{border-bottom:none;}
+.iname{flex:1;font-size:15px;color:var(--text);}
+.iname.done{color:var(--muted);text-decoration:line-through;}
+.dbtns{display:grid;grid-template-columns:1fr 1fr;gap:.25rem;flex-shrink:0;width:128px;}
+.db{padding:.3rem .2rem;border-radius:6px;border:1.5px solid var(--border);background:var(--bg);font-size:12px;cursor:pointer;font-family:"Cormorant Garamond",serif;color:var(--muted);text-align:center;transition:all .15s;}
+.db.on{color:#fff;}.db.b.on{background:var(--sage);border-color:var(--sage);}.db.v.on{background:var(--gold);border-color:var(--gold);}.db.s.on{background:var(--lav);border-color:var(--lav);}.db.w.on{background:var(--terra);border-color:var(--terra);}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);padding:.5rem 0;box-shadow:0 -2px 12px rgba(30,18,8,.08);}
+.nb{display:flex;flex-direction:column;align-items:center;gap:.2rem;background:none;border:none;cursor:pointer;padding:.35rem 0;font-family:"Cormorant Garamond",serif;}
+.ni{font-size:1.2rem;}.nl{font-size:11px;color:var(--muted);}.nb.on .nl{color:var(--gold);}
+
+body::after{content:'';position:fixed;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,#b8294a 0,#b8294a 20%,#c9893a 20%,#c9893a 40%,#1a2744 40%,#1a2744 60%,#6a3f7a 60%,#6a3f7a 80%,#5e8a5a 80%,#5e8a5a 100%);z-index:100;opacity:.7;}
+</style>
+</head>
+<body>
+<header>
+  <div class="ht">&#127807; Weidlingbach &#8212; Ausr&#228;umen</div>
+  <div class="hs">KonMari &#183; Kategorie f&#252;r Kategorie</div>
+</header>
+<div class="stats">
+  <div class="stat sb"><div class="sn" id="nb">0</div><div class="sl">Behalten</div></div>
+  <div class="stat sv"><div class="sn" id="nv">0</div><div class="sl">Verkaufen</div></div>
+  <div class="stat ss"><div class="sn" id="ns">0</div><div class="sl">Schenken</div></div>
+  <div class="stat sw"><div class="sn" id="nw">0</div><div class="sl">Weg</div></div>
+</div>
+<div id="catList"></div>
+<div class="bnav">
+  <button class="nb on" id="fa" onclick="filt('all')"><div class="ni">&#128203;</div><div class="nl">Alle</div></button>
+  <button class="nb" id="fo" onclick="filt('offen')"><div class="ni">&#9711;</div><div class="nl">Offen</div></button>
+  <button class="nb" id="fb" onclick="filt('b')"><div class="ni">&#127807;</div><div class="nl">Behalten</div></button>
+  <button class="nb" id="fv" onclick="filt('v')"><div class="ni">&#128176;</div><div class="nl">Verkaufen</div></button>
+</div>
+<script>
+var DATA = [
+  {cat:"1 Buecher", subs:[
+    {sub:"Romane und Belletristik", items:["Romane (Hardcover)","Romane (Taschenbuch)","Kurzgeschichten und Lyrik","Klassiker"]},
+    {sub:"Sachbuecher und Ratgeber", items:["Sachbuecher allgemein","Ratgeber und Selbsthilfe","Reisefuehrer","Nachschlagewerke und Lexika"]},
+    {sub:"Fachbuecher", items:["Berufsbezogene Fachbuecher","Handwerk und Heimwerken","Kunstbuecher und Bildbaende"]},
+    {sub:"Kochbuecher", items:["Kochbuecher","Backbuecher","Diaet und Ernaehrung"]},
+    {sub:"Sonstiges Druckwerk", items:["Kinderbuecher","Zeitschriften und Magazine","Kataloge und Prospekte","Kalender"]}
+  ]},
+  {cat:"2 Kleidung und Textilien", subs:[
+    {sub:"Oberbekleidung", items:["Jacken und Maentel","Pullover und Strickjacken","Hemden und Blusen","T-Shirts und Tops","Hosen","Roecke und Kleider"]},
+    {sub:"Unterkleidung und Nachtwaesche", items:["Unterwasche","Socken und Strumpfe","Schlafanzug und Nachthemden","Bademantel"]},
+    {sub:"Schuhe und Taschen", items:["Alltagsschuhe","Stiefel","Sportschuhe","Sandalen","Handtaschen","Rucksaecke und Koffer"]},
+    {sub:"Bettwaesche und Polster", items:["Bettbezuege und Laken","Kissen und Polster","Decken und Quilts","Matratzenauflagen"]},
+    {sub:"Haus- und Tischtextilien", items:["Vorhaenge und Gardinen","Tischdecken und Laeufer","Servietten","Schuerzen"]},
+    {sub:"Handtuecher und Bad", items:["Badetuecher","Handtuecher","Waschlappen","Badematte"]}
+  ]},
+  {cat:"3 Kueche und Esszimmer", subs:[
+    {sub:"Geschirr und Servierware", items:["Teller gross","Teller klein und Dessert","Schuesseln","Servierplatten","Spezielles Geschirr"]},
+    {sub:"Toepfe und Pfannen", items:["Kochtopfe (Satz)","Brattopfe und Schmorpfannen","Kasserollen","Wok","Backformen und Auflaufformen"]},
+    {sub:"Tassen und Glaeser", items:["Kaffeetassen und -becher","Teetassen","Wasserglaeser","Weinglaese","Sektglaeser","Schnapsglaese","Bierkruege"]},
+    {sub:"Besteck und Kuechenhelfer", items:["Besteck (Satz)","Messer und Schneidbretter","Kuechenhelfer (Wender, Kellen)","Siebe und Schuehler","Dosenoffner und Korkenzieher","Reiben und Hobel"]},
+    {sub:"Elektrische Geraete", items:["Kaffeemaschine","Wasserkocher","Toaster","Mixer und Stabmixer","Kuechenmaschine","Mikrowelle","Entsafter","Brotbackautomat","Raclette und Fondue"]},
+    {sub:"Vorrat und Aufbewahrung", items:["Vorratsdosen und Glaeser","Einmachglaeser","Frischhalteboxen","Alufolie und Frischhaltefolie"]},
+    {sub:"Sonstiges Kueche", items:["Tabletts","Untersetzer","Platzsets","Gewuerzregale","Geschirrtucher"]}
+  ]},
+  {cat:"4 Papiere und Dokumente", subs:[
+    {sub:"Wichtige Dokumente", items:["Vertrage (Versicherung, Miete)","Urkunden und Zeugnisse","Grundbuch und Eigentumsunterlagen","Steuerunterlagen","Bankdokumente","Gesundheitsunterlagen"]},
+    {sub:"Haushalt und Technik", items:["Betriebsanleitungen und Garantiescheine","Rechnungen und Kassenbons","Lieferscheine","Bauplane und Grundrisse"]},
+    {sub:"Persoenliches", items:["Briefe und Postkarten","Fotos (lose)","Fotoalben","Notizbucher und Tagebucher"]},
+    {sub:"Sonstiges Papier", items:["Zeitungen und Zeitschriften (alt)","Bueropapier und Schreibwaren","Umschlaege und Briefpapier","alte Kalender"]}
+  ]},
+  {cat:"5a Komono: Bad und Gesundheit", subs:[
+    {sub:"Koerperpflege und Kosmetik", items:["Parfum und Deos","Hautpflege und Cremes","Haarpflegeprodukte","Schminke und Make-up","Nagelzubehoer","Rasur"]},
+    {sub:"Medizin und Erste Hilfe", items:["Medikamente (auf Ablaufdatum pruefen)","Verbandskasten und Pflaster","Thermometer und Messgeraete","Brillen und Kontaktlinsen"]},
+    {sub:"Reinigung und Putzmittel", items:["Putzmittel und Reiniger","Schwamme und Buersten","Mopps und Wischtuecher","Muellsaecke"]}
+  ]},
+  {cat:"5b Komono: Werkzeug und Technik", subs:[
+    {sub:"Werkzeug", items:["Hammer, Saegen, Beile","Schraubenzieher und Schrauben","Bohrmaschine und Zubehoer","Leitern und Tritte","Meterstaebe und Wasserwaagen","Klebe- und Dichtmittel"]},
+    {sub:"Elektro und Kabel", items:["Kabel und Adapter (aussortieren)","Ladekabel und USB","Steckerleisten und Verlaengerungen","Batterien und Akkus","Gluehbirnen und Leuchtmittel","Sicherungen"]},
+    {sub:"Buerobedarf", items:["Stifte und Schreibwaren","Klebeband und Scheren","Ordner und Mappen","Drucker und Zubehoer"]}
+  ]},
+  {cat:"5c Komono: Hobby und Freizeit", subs:[
+    {sub:"Sport und Bewegung", items:["Sportkleidung und -schuhe","Sportgeraete (Hanteln, Matten)","Fahrrad und Zubehoer","Wanderausruestung"]},
+    {sub:"Spiele und Unterhaltung", items:["Gesellschaftsspiele","Puzzles","Karten- und Wuerfelspiele","DVDs und CDs"]},
+    {sub:"Kreativ und Basteln", items:["Naehzeug und Stoffe","Strick- und Hakelgarn","Mal- und Zeichenbedarf","Bastelzubehoer"]},
+    {sub:"Garten", items:["Gartengeraete (Spaten, Harke)","Giesskannen und Schlaeuche","Blumentoepfe und Kaesten","Gartenmoebel","Pflanzerde und Duenger","Gartenbeleuchtung"]}
+  ]},
+  {cat:"5d Komono: Deko und Einrichtung", subs:[
+    {sub:"Deko und Ziergegenstande", items:["Vasen und Schalen","Kerzen und Kerzenhalter","Figuren und Skulpturen","Kunstobjekte und Souvenirs","Uhren (Deko)","Kleine Spiegel"]},
+    {sub:"Wand und Licht", items:["Bilder und Kunstdrucke","Wanddeko und Schilder","Stehlampen und Tischlampen","Deckenlampen und Leuchten","Lichterketten"]},
+    {sub:"Saisondeko", items:["Weihnachtsdeko","Weihnachtsbaum und Schmuck","Osterdeko","Sonstige Saisondeko"]},
+    {sub:"Sonstiger Hausrat", items:["Aschenbecher","Kerzenstaender","Dekorative Kissen und Decken"]}
+  ]},
+  {cat:"6 Moebel und Grosses", subs:[
+    {sub:"Sitzmoebel", items:["Sofa und Couch","Sessel","Esszimmerstuehle","Gartenmoebel (Sitzgruppe)","Hocker und Poufs"]},
+    {sub:"Tische", items:["Esstisch","Couchtisch","Beistelltische","Schreibtisch","Gartentisch"]},
+    {sub:"Schraenke und Aufbewahrung", items:["Kleiderschrank","Buecherschrank und Regale","Sideboard und Kommoden","Vitrinenschraenke","Aktenschraenke","Garderobenschraenke"]},
+    {sub:"Schlafzimmer", items:["Bett und Bettrahmen","Kopfteil","Nachtkastchen","Matratzen","Lattenrost"]},
+    {sub:"Sonstiges Grossmobiliar", items:["Teppiche und Laeufer","Raumteiler und Paravents","Grosse Spiegel","Grosse Gemalde und Bilder"]}
+  ]},
+  {cat:"7 Sonstiges", subs:[
+    {sub:"Keller und Lager", items:["Eingemachtes und Konserven","doppelt vorhandenes Werkzeug","Alte Farben und Lacke","Sperrmull"]},
+    {sub:"Ubrig gebliebenes", items:["Diverses ohne Kategorie","Geschenkpapier und Schleifen","Einkaufstaschen","Sonstiges"]}
+  ]}
+];
+
+var CF = "all";
+var CL = {};
+function ld(){var d;try{d=JSON.parse(localStorage.getItem("wbk2")||"{}");}catch(e){d={};}return d;}
+function sv(d){try{localStorage.setItem("wbk2",JSON.stringify(d));}catch(e){}}
+function ik(c,s,i){return c.replace(/\W/g,"_")+"__"+s.replace(/\W/g,"_")+"__"+i.replace(/\W/g,"_");}
+function dec(key,val){var d=ld();d[key]=(d[key]===val)?null:val;sv(d);render();}
+function filt(f){
+  CF=f;
+  ["fa","fo","fb","fv"].forEach(function(id){document.getElementById(id).classList.remove("on");});
+  var map={"all":"fa","offen":"fo","b":"fb","v":"fv"};
+  if(map[f])document.getElementById(map[f]).classList.add("on");
+  render();
+}
+function render(){
+  var d=ld();
+  var cnt={b:0,v:0,s:0,w:0};
+  Object.keys(d).forEach(function(k){if(d[k])cnt[d[k]]++;});
+  document.getElementById("nb").textContent=cnt.b;
+  document.getElementById("nv").textContent=cnt.v;
+  document.getElementById("ns").textContent=cnt.s;
+  document.getElementById("nw").textContent=cnt.w;
+  var list=document.getElementById("catList");
+  list.innerHTML="";
+  DATA.forEach(function(catObj){
+    var total=0,done=0;
+    catObj.subs.forEach(function(sub){sub.items.forEach(function(item){var k=ik(catObj.cat,sub.sub,item);total++;if(d[k])done++;});});
+    var hasMatch=false;
+    catObj.subs.forEach(function(sub){sub.items.forEach(function(item){
+      var k=ik(catObj.cat,sub.sub,item);
+      if(CF==="all")hasMatch=true;
+      else if(CF==="offen"?!d[k]:false)hasMatch=true;
+      else if(d[k]===CF)hasMatch=true;
+    });});
+    if(!hasMatch)return;
+    var pct=total?Math.round(done/total*100):0;
+    var closed=(CL[catObj.cat]===true);
+    var block=document.createElement("div");block.className="cat-block";
+    var hdr=document.createElement("div");hdr.className="cat-hdr"+(closed?" closed":"");
+    var t=document.createElement("div");t.className="ct";t.textContent=catObj.cat;
+    var i=document.createElement("div");i.className="ci";i.textContent=done+"/"+total;
+    hdr.appendChild(t);hdr.appendChild(i);
+    (function(c){hdr.addEventListener("click",function(){CL[c]=!CL[c];render();});})(catObj.cat);
+    block.appendChild(hdr);
+    if(!closed){
+      var body=document.createElement("div");body.className="cat-body";
+      var pb=document.createElement("div");pb.className="cpb";
+      var pf=document.createElement("div");pf.className="cpf";pf.style.width=pct+"%";
+      pb.appendChild(pf);body.appendChild(pb);
+      catObj.subs.forEach(function(sub){
+        var subMatch=sub.items.some(function(item){
+          var k=ik(catObj.cat,sub.sub,item);
+          if(CF==="all")return true;
+          if(CF==="offen")return !d[k];
+          return d[k]===CF;
+        });
+        if(!subMatch)return;
+        var sh=document.createElement("div");sh.className="shdr";sh.textContent=sub.sub;body.appendChild(sh);
+        sub.items.forEach(function(item){
+          var k=ik(catObj.cat,sub.sub,item);
+          var dec_val=d[k]||null;
+          if(CF!=="all"){if(CF==="offen"?dec_val:false)return;else if(CF!=="offen"?dec_val!==CF:false)return;}
+          var row=document.createElement("div");row.className="irow";
+          var nm=document.createElement("div");nm.className="iname"+(dec_val?" done":"");nm.textContent=item;
+          var btns=document.createElement("div");btns.className="dbtns";
+          [{k:"b",l:"behalten"},{k:"v",l:"verkaufen"},{k:"s",l:"schenken"},{k:"w",l:"weg"}].forEach(function(db){
+            var btn=document.createElement("button");
+            btn.className="db "+db.k+(dec_val===db.k?" on":"");
+            btn.textContent=db.l;
+            (function(key,dk){btn.addEventListener("click",function(e){e.stopPropagation();dec(key,dk);});})(k,db.k);
+            btns.appendChild(btn);
+          });
+          row.appendChild(nm);row.appendChild(btns);body.appendChild(row);
+        });
+      });
+      block.appendChild(body);
+    }
+    list.appendChild(block);
+  });
+}
+render();
+</script>
+</body>
+</html>

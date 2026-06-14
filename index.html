@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sandras Lebensrad</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Raleway:wght@400;600;700&family=IM+Fell+English:ital@1&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:#f7f3ee;font-family:'Raleway',sans-serif;color:#1e1005;min-height:100vh;padding-bottom:3rem;}
+
+/* HEADER */
+.header{background:#f7f3ee;border-bottom:1px solid rgba(139,26,26,.10);padding:.9rem 1.2rem .8rem;text-align:center;}
+.wimpel{margin:0 -1.2rem .7rem;overflow:hidden;}
+.wimpel svg{display:block;width:100%;height:24px;}
+.titel{font-family:'Playfair Display',serif;font-size:1.25rem;color:#8b1a1a;}
+.motto{font-family:'IM Fell English',serif;font-style:italic;font-size:.88rem;color:rgba(30,16,5,.5);margin-top:.15rem;}
+
+/* GRID */
+.grid-wrap{padding:.9rem .9rem 0;}
+.grid-label{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:#b8882a;font-weight:700;margin-bottom:.6rem;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;}
+
+/* KACHEL */
+.kachel{background:#fdfaf4;border:1px solid rgba(139,26,26,.10);border-radius:7px;padding:.65rem .7rem .55rem;cursor:pointer;transition:transform .1s;}
+.kachel:active{transform:scale(.97);}
+.kachel-top{display:flex;align-items:center;gap:.45rem;margin-bottom:.35rem;}
+.kachel-icon{font-size:1.25rem;flex-shrink:0;}
+.kachel-label{font-family:'Raleway',sans-serif;font-size:.78rem;font-weight:700;color:#1e1005;line-height:1.2;}
+.kachel-bar-bg{background:rgba(42,26,10,.08);border-radius:2px;height:3px;margin-bottom:.2rem;}
+.kachel-bar{height:3px;border-radius:2px;transition:width .4s;}
+.kachel-info{font-family:'IM Fell English',serif;font-style:italic;font-size:.68rem;color:rgba(30,16,5,.4);}
+.kachel.aktiv .kachel-info{color:#4a6741;}
+
+/* OVERLAY */
+.overlay{display:none;position:fixed;inset:0;z-index:999;background:#f7f3ee;flex-direction:column;animation:reinkommen .25s ease;}
+.overlay.offen{display:flex;}
+@keyframes reinkommen{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+.ov-head{padding:1rem 1.2rem .7rem;border-bottom:1px solid rgba(139,26,26,.10);display:flex;align-items:center;gap:.7rem;flex-shrink:0;}
+.ov-head-icon{font-size:1.7rem;}
+.ov-head-titel{font-family:'Playfair Display',serif;font-size:1.15rem;color:#8b1a1a;}
+.ov-close{margin-left:auto;background:none;border:none;font-size:1.3rem;color:rgba(30,16,5,.3);cursor:pointer;padding:.2rem .4rem;}
+
+.ov-body{flex:1;overflow-y:auto;padding:.6rem 1.2rem 1rem;}
+
+/* TÄTIGKEITEN */
+.ov-section-label{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:rgba(30,16,5,.35);margin:.7rem 0 .35rem;}
+.ov-section-label:first-child{margin-top:.1rem;}
+
+.tätigkeit{display:flex;align-items:center;gap:.65rem;padding:.55rem .3rem;border-bottom:1px solid rgba(42,26,10,.06);cursor:pointer;}
+.tätigkeit:last-child{border-bottom:none;}
+.tätigkeit.done{opacity:.32;}
+.tätigkeit.done .tät-name{text-decoration:line-through;}
+.tät-check{width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(139,26,26,.22);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.68rem;background:#fdfaf4;transition:all .2s;}
+.tätigkeit.done .tät-check{background:#4a6741;border-color:#4a6741;color:white;}
+.tät-name{font-family:'Raleway',sans-serif;font-size:.88rem;font-weight:500;color:#1e1005;flex:1;}
+
+/* APP-LINKS */
+.app-link{display:flex;align-items:center;gap:.65rem;padding:.6rem .3rem;border-bottom:1px solid rgba(42,26,10,.06);text-decoration:none;color:#1e1005;}
+.app-link:last-child{border-bottom:none;}
+.app-link-icon{font-size:1.05rem;width:24px;text-align:center;flex-shrink:0;}
+.app-link-name{font-family:'Raleway',sans-serif;font-size:.88rem;font-weight:500;flex:1;}
+.app-link-arr{color:#b8882a;font-size:.85rem;opacity:.6;}
+
+/* FOOTER */
+.ov-footer{padding:.7rem 1.2rem;border-top:1px solid rgba(42,26,10,.07);flex-shrink:0;text-align:center;}
+.ov-footer-txt{font-family:'IM Fell English',serif;font-style:italic;font-size:.82rem;color:rgba(30,16,5,.4);}
+
+/* BODENSTREIFEN */
+body::after{content:'';position:fixed;bottom:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,#8b1a1a 0,#8b1a1a 33.3%,#f7f3ee 33.3%,#f7f3ee 66.6%,#b8882a 66.6%,#b8882a 100%);z-index:100;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="wimpel">
+    <svg viewBox="0 0 400 24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,4 Q28,9 56,4 Q84,1 112,5 Q140,9 168,4 Q196,1 224,5 Q252,9 280,4 Q308,1 336,5 Q364,9 392,4" fill="none" stroke="#b8882a" stroke-width="1.2" opacity=".6"/>
+      <polygon points="4,4 18,4 11,22" fill="#8b1a1a" opacity=".85"/>
+      <polygon points="32,3 46,3 39,22" fill="#b8882a" opacity=".8"/>
+      <polygon points="60,5 74,5 67,22" fill="#f7f3ee" stroke="#b8882a" stroke-width=".7"/>
+      <polygon points="88,4 102,4 95,22" fill="#5c3060" opacity=".75"/>
+      <polygon points="116,3 130,3 123,22" fill="#4a6741" opacity=".75"/>
+      <polygon points="144,5 158,5 151,22" fill="#8b1a1a" opacity=".85"/>
+      <polygon points="172,4 186,4 179,22" fill="#b8882a" opacity=".8"/>
+      <polygon points="200,3 214,3 207,22" fill="#f7f3ee" stroke="#b8882a" stroke-width=".7"/>
+      <polygon points="228,5 242,5 235,22" fill="#5c3060" opacity=".75"/>
+      <polygon points="256,4 270,4 263,22" fill="#4a6741" opacity=".75"/>
+      <polygon points="284,3 298,3 291,22" fill="#8b1a1a" opacity=".85"/>
+      <polygon points="312,5 326,5 319,22" fill="#b8882a" opacity=".8"/>
+      <polygon points="340,4 354,4 347,22" fill="#f7f3ee" stroke="#b8882a" stroke-width=".7"/>
+      <polygon points="368,3 382,3 375,22" fill="#5c3060" opacity=".75"/>
+      <circle cx="11" cy="4" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="39" cy="3" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="67" cy="5" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="95" cy="4" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="123" cy="3" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="151" cy="5" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="179" cy="4" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="207" cy="3" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="235" cy="5" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="263" cy="4" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="291" cy="3" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="319" cy="5" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="347" cy="4" r="1.6" fill="#b8882a" opacity=".8"/>
+      <circle cx="375" cy="3" r="1.6" fill="#b8882a" opacity=".8"/>
+    </svg>
+  </div>
+  <div class="titel">🎪 Sandras Lebensrad</div>
+  <div class="motto">Ich gestalte meinen Tag wie mein Leben.</div>
+</div>
+
+<div class="grid-wrap">
+  <div class="grid-label">✦ Meine Lebensbereiche</div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="ov-head">
+    <span class="ov-head-icon" id="ovIcon">🌿</span>
+    <span class="ov-head-titel" id="ovTitel">Bereich</span>
+    <button class="ov-close" onclick="schliesseOverlay()">✕</button>
+  </div>
+  <div class="ov-body" id="ovBody"></div>
+  <div class="ov-footer">
+    <div class="ov-footer-txt" id="ovFooter">Tippe an, was du heute getan hast.</div>
+  </div>
+</div>
+
+<script>
+// ── DATEN ──
+var BEREICHE = [
+  {
+    id:'koerper', icon:'🌿', label:'Gesundheit\n& Körper', farbe:'#4a6741',
+    tätigkeiten:[
+      'Euthyrox (noch im Bett)','Rosenwurz (zum Frühstück)','Atorvastatin (abends)','Melatonin (abends)','Magnesium (abends)','Spaziergang mit Lotte','Yoga','Muskeltraining',
+      'Balanceboard','Waldspaziergang','Körperöl','Sitzbad',
+      'Kalkschulter-Übung','Beckenboden','Gesichtsyoga',
+      'Haarpflege','Fußpflege','Gesichtspflege','Meditation'
+    ],
+    apps:[
+      {name:'Morgenroutine', icon:'🌅', href:'morgenroutine.html'},
+      {name:'Kalkschulter', icon:'💪', href:'Kalkschulter.html'},
+      {name:'Beckenboden', icon:'🧘', href:'Beckenboden.html'},
+      {name:'Gesichtsyoga', icon:'✨', href:'Gesichtsyoga.html'},
+      {name:'Lotte Runden', icon:'🐕', href:'Lotte_Runden.html'}
+    ]
+  },
+  {
+    id:'seele', icon:'🎭', label:'Seele &\nKreativität', farbe:'#5c3060',
+    tätigkeiten:[
+      'Tagebuch schreiben','Zeichnen oder malen','Musik hören',
+      'Lesen','Spazieren ohne Ziel','Stille genießen',
+      'Etwas Schönes gestalten','Kunstzeit','Atemübung','Meditation'
+    ],
+    apps:[
+      {name:'Mein Atelier', icon:'🎨', href:'Atelier.html'},
+      {name:'Morgenroutine', icon:'🌅', href:'morgenroutine.html'}
+    ]
+  },
+  {
+    id:'familie', icon:'🐾', label:'Familie\n& Tiere', farbe:'#8b4513',
+    tätigkeiten:[
+      'Rudi & Timmy morgens füttern','Rudi & Timmy abends füttern','Medikamente Katzen','Lotte füttern','Tierärztin',
+      'Lotte raus','Lotte langer Spaziergang','Lotte spielen',
+      'Katzen spielen','Thomas — Abendessen',
+      'Thomas — gemeinsame Zeit','Freundinnen kontaktieren'
+    ],
+    apps:[
+      {name:'Lotte Runden', icon:'🐕', href:'Lotte_Runden.html'},
+      {name:'Ernährungsplan Tiere', icon:'🐱', href:'Ernaehrungsplan.html'},
+      {name:'Medikamente Katzen', icon:'💊', href:'Medikamente.html'}
+    ]
+  },
+  {
+    id:'beruf', icon:'💼', label:'Beruf', farbe:'#8b1a1a',
+    tätigkeiten:[
+      'Kursvorbereitung VHS','Unterlagen & Kopieren',
+      'Materialien einsortieren','Stunden planen',
+      'Verwaltung','Neues Material erstellen','Lernhilfe vorbereiten','Zukunft gestalten'
+    ],
+    apps:[
+      {name:'Wochenplan', icon:'📅', href:'Wochenplan.html'},
+      {name:'Lernmaterial', icon:'📋', href:'Lernmaterial.html'}
+    ]
+  },
+  {
+    id:'finanzen', icon:'💰', label:'Finanzen', farbe:'#b8882a',
+    tätigkeiten:[
+      'Überblick Ausgaben','Rechnung bezahlen',
+      'Kontostand prüfen','Budget planen',
+      'Belege ordnen','Futter & Medis bestellen'
+    ],
+    apps:[
+      {name:'Finanzen', icon:'💰', href:'Finanzen.html'}
+    ]
+  },
+  {
+    id:'freizeit', icon:'🎨', label:'Freizeit', farbe:'#2c6e8a',
+    tätigkeiten:[
+      'Musik hören','Serie schauen','Lesen',
+      'Freundinnen treffen','Kreativ sein',
+      'Nichts tun — bewusst','Ausflug machen','Bad genießen'
+    ],
+    apps:[
+      {name:'Mein Atelier', icon:'🎨', href:'Atelier.html'}
+    ]
+  },
+  {
+    id:'weiterbildung', icon:'📚', label:'Weiterbildung\n& Entwicklung', farbe:'#4a5a8a',
+    tätigkeiten:[
+      'Uni-Aufgabe erledigen','Lernplan durchsehen',
+      'Artikel lesen','Podcast hören',
+      'Reflexion schreiben','Wochenrückblick','Neues ausprobieren'
+    ],
+    apps:[
+      {name:'Wochenplan', icon:'📅', href:'Wochenplan.html'},
+      {name:'Kalender', icon:'🗓', href:'Kalender.html'}
+    ]
+  },
+  {
+    id:'wohnung', icon:'🏠', label:'Wohnung', farbe:'#6b4a2a',
+    tätigkeiten:[
+      '10 Min aufräumen','Küche putzen','Bad putzen',
+      'Staubsaugen','Boden wischen','Bügeln',
+      'Pflanzen gießen','Lüften','Wäsche waschen',
+      'Einkaufsliste schreiben','Wohnung gestalten'
+    ],
+    apps:[
+      {name:'Einkaufsliste', icon:'🛒', href:'Einkaufsliste.html'},
+      {name:'Pflanzen', icon:'🌱', href:'Pflanzen_Galerie.html'}
+    ]
+  }
+];
+
+// ── STORAGE ──
+var KEY = 'lebensrad_v1';
+var state = {};
+var aktivId = null;
+
+function ladeState(){
+  var heute = new Date().toISOString().slice(0,10);
+  try {
+    var s = JSON.parse(localStorage.getItem(KEY));
+    if(s && s.datum === heute){ state = s.state || {}; return; }
+  } catch(e){}
+  state = {};
+}
+
+function speichereState(){
+  var heute = new Date().toISOString().slice(0,10);
+  try { localStorage.setItem(KEY, JSON.stringify({datum:heute, state:state})); } catch(e){}
+}
+
+// ── GRID ──
+function renderGrid(){
+  var grid = document.getElementById('grid');
+  grid.innerHTML = BEREICHE.map(function(b){
+    var s = state[b.id] || {};
+    var done = b.tätigkeiten.filter(function(_,i){ return s[i]; }).length;
+    var total = b.tätigkeiten.length;
+    var pct = Math.round(done/total*100);
+    var hatWas = done > 0;
+    var labelHtml = b.label.replace('\n','<br>');
+    return '<div class="kachel' + (hatWas?' aktiv':'') + '" onclick="oeffne(\'' + b.id + '\')">' +
+      '<div class="kachel-top">' +
+        '<span class="kachel-icon">' + b.icon + '</span>' +
+        '<span class="kachel-label">' + labelHtml + '</span>' +
+      '</div>' +
+      '<div class="kachel-bar-bg"><div class="kachel-bar" style="width:' + pct + '%;background:' + b.farbe + ';"></div></div>' +
+      '<div class="kachel-info">' + (done === 0 ? 'noch nichts' : done + ' von ' + total + ' ✦') + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// ── OVERLAY ──
+function oeffne(id){
+  aktivId = id;
+  var b = BEREICHE.filter(function(x){ return x.id===id; })[0];
+  if(!b) return;
+  document.getElementById('ovIcon').textContent = b.icon;
+  document.getElementById('ovTitel').textContent = b.label.replace('\n',' ');
+  renderOvBody(b);
+  document.getElementById('overlay').classList.add('offen');
+}
+
+function renderOvBody(b){
+  var s = state[b.id] || {};
+  var done = b.tätigkeiten.filter(function(_,i){ return s[i]; }).length;
+
+  var tätHtml = '<div class="ov-section-label">Was habe ich heute getan?</div>' +
+    b.tätigkeiten.map(function(t,i){
+      var isDone = s[i] || false;
+      return '<div class="tätigkeit' + (isDone?' done':'') + '" onclick="toggleTät(\'' + b.id + '\',' + i + ')">' +
+        '<div class="tät-check">' + (isDone?'✓':'') + '</div>' +
+        '<span class="tät-name">' + t + '</span>' +
+      '</div>';
+    }).join('');
+
+  var appHtml = b.apps.length > 0 ?
+    '<div class="ov-section-label" style="margin-top:.9rem;">Apps & Links</div>' +
+    b.apps.map(function(a){
+      return '<a class="app-link" href="' + a.href + '">' +
+        '<span class="app-link-icon">' + a.icon + '</span>' +
+        '<span class="app-link-name">' + a.name + '</span>' +
+        '<span class="app-link-arr">›</span>' +
+      '</a>';
+    }).join('') : '';
+
+  document.getElementById('ovBody').innerHTML = tätHtml + appHtml;
+
+  var footer = document.getElementById('ovFooter');
+  if(done === 0) footer.textContent = 'Tippe an, was du heute getan hast.';
+  else if(done === 1) footer.textContent = '1 Ding — gut. ✦';
+  else footer.textContent = done + ' Dinge heute — schön. ✦';
+}
+
+function toggleTät(id, i){
+  if(!state[id]) state[id] = {};
+  state[id][i] = !state[id][i];
+  speichereState();
+  renderGrid();
+  var b = BEREICHE.filter(function(x){ return x.id===id; })[0];
+  if(b) renderOvBody(b);
+}
+
+function schliesseOverlay(){
+  document.getElementById('overlay').classList.remove('offen');
+  aktivId = null;
+}
+
+// ── START ──
+ladeState();
+renderGrid();
+</script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fdf6ee">
+<title>Lernplan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+@keyframes wimpel-swing{0%,100%{transform:rotate(-4deg) skewX(2deg);}50%{transform:rotate(4deg) skewX(-2deg);}}
+@keyframes wimpel-swing2{0%,100%{transform:rotate(3deg) skewX(-1deg);}50%{transform:rotate(-3deg) skewX(1deg);}}
+@keyframes wimpel-swing3{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(5deg);}}
+@keyframes rope-sway{0%,100%{transform:scaleX(1);}50%{transform:scaleX(1.008);}}
+@keyframes tier-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+@keyframes spotlight{0%{left:-100%;}60%,100%{left:220%;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+:root{
+  --bg:#fdf6ee;--card:#fffbf5;--text:#1e1208;--muted:rgba(30,18,8,0.45);
+  --crimson:#b8294a;--crimson-l:rgba(184,41,74,0.10);
+  --gold:#c9893a;--gold-l:rgba(201,137,58,0.13);
+  --navy:#1a2744;--navy-l:rgba(26,39,68,0.07);
+  --sage:#5e8a5a;--sage-l:rgba(94,138,90,0.12);
+  --violet:#6a3f7a;
+  --border:rgba(184,41,74,0.13);--shadow:rgba(30,18,8,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+body{
+  background:var(--bg);font-family:"Raleway",sans-serif;color:var(--text);
+  min-height:100vh;padding-bottom:4rem;
+  background-image:repeating-linear-gradient(-6deg,rgba(184,41,74,0.022) 0px,rgba(184,41,74,0.022) 28px,transparent 28px,transparent 56px,rgba(201,137,58,0.018) 56px,rgba(201,137,58,0.018) 84px,transparent 84px,transparent 112px);
+}
+.wimpelkette{position:relative;width:100%;height:40px;overflow:hidden;display:block;background:var(--bg);}
+.wimpelkette svg{width:100%;height:40px;overflow:visible;animation:rope-sway 5s ease-in-out infinite;}
+.wimpel-1{animation:wimpel-swing 2.8s ease-in-out infinite;}
+.wimpel-2{animation:wimpel-swing2 3.2s ease-in-out infinite 0.3s;}
+.wimpel-3{animation:wimpel-swing3 2.5s ease-in-out infinite 0.6s;}
+.wimpel-4{animation:wimpel-swing 3.0s ease-in-out infinite 0.9s;}
+.wimpel-5{animation:wimpel-swing2 2.7s ease-in-out infinite 1.2s;}
+.wimpel-6{animation:wimpel-swing3 3.4s ease-in-out infinite 1.5s;}
+.wimpel-7{animation:wimpel-swing 2.9s ease-in-out infinite 1.8s;}
+.wimpel-8{animation:wimpel-swing2 2.6s ease-in-out infinite 2.1s;}
+.wimpel-9{animation:wimpel-swing3 3.1s ease-in-out infinite 2.4s;}
+header{padding:1rem 1.2rem .85rem;border-bottom:2px solid var(--border);background:rgba(255,251,245,0.92);backdrop-filter:blur(3px);position:relative;}
+.back-btn{display:inline-flex;align-items:center;gap:.3rem;font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--crimson);text-decoration:none;opacity:.7;margin-bottom:.4rem;background:none;border:none;cursor:pointer;padding:0;}
+.back-btn:active{opacity:1;}
+.header-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;font-weight:500;}
+.header-title{font-family:"Playfair Display",serif;font-size:22px;font-style:italic;color:var(--text);line-height:1.2;}
+.header-sub{font-family:"IM Fell English",serif;font-size:14px;font-style:italic;color:var(--muted);margin-top:.15rem;}
+.rainbow-stripe{height:5px;background:repeating-linear-gradient(90deg,var(--crimson) 0%,var(--crimson) 20%,var(--gold) 20%,var(--gold) 40%,var(--navy) 40%,var(--navy) 60%,var(--violet) 60%,var(--violet) 80%,var(--sage) 80%,var(--sage) 100%);opacity:.6;margin-bottom:.2rem;}
+.z-card{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:0 3px 16px var(--shadow);margin:.5rem 1rem;overflow:hidden;position:relative;}
+.z-card::after{content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.055),transparent);animation:spotlight 10s ease-in-out infinite;pointer-events:none;}
+.z-item{display:flex;align-items:flex-start;gap:.6rem;padding:.55rem .9rem;border-bottom:1px solid rgba(184,41,74,0.07);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .2s;}
+.z-item:last-child{border-bottom:none;}
+.z-item.done{opacity:.28;}
+.z-item.done .z-name{text-decoration:line-through;text-decoration-color:rgba(184,41,74,0.3);}
+.z-check{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(184,41,74,0.3);flex-shrink:0;margin-top:2px;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;}
+.z-item.done .z-check{background:var(--sage-l);border-color:var(--sage);color:var(--sage);}
+.z-item.done .z-check::after{content:"✦";}
+.z-name{font-size:16px;color:var(--text);line-height:1.35;}
+.z-sub{font-size:13px;font-style:italic;color:var(--muted);margin-top:1px;font-family:"IM Fell English",serif;}
+.z-sec{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);padding:.7rem 1rem .2rem;opacity:.8;font-weight:500;}
+.z-info{margin:.3rem 1rem .4rem;padding:.5rem .8rem;background:var(--gold-l);border-left:2px solid var(--gold);font-family:"IM Fell English",serif;font-style:italic;font-size:14px;color:var(--muted);line-height:1.6;}
+.section-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:.8rem 1rem .3rem;padding-left:.2rem;font-weight:500;}
+.z-progress{margin:.4rem 1rem .2rem;}
+.z-progress-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:.3rem;}
+.z-progress-bar{height:3px;background:var(--border);border-radius:10px;overflow:hidden;}
+.z-progress-fill{height:100%;background:linear-gradient(90deg,var(--crimson),var(--gold));border-radius:10px;transition:width .4s ease;}
+.z-reset{position:fixed;bottom:1.2rem;right:1.2rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:20px;padding:.4rem 1rem;font-size:13px;font-family:"IM Fell English",serif;font-style:italic;cursor:pointer;}
+.z-reset:active{background:var(--crimson-l);color:var(--crimson);}
+.tier-zeile{display:flex;align-items:center;justify-content:center;gap:.2rem;padding:.3rem 1rem;user-select:none;pointer-events:none;overflow:hidden;}
+.tier-zeile .tier{display:inline-block;animation:tier-float 3s ease-in-out infinite;opacity:.5;font-size:.9rem;}
+.tier-zeile .tier:nth-child(2){animation-delay:.4s;}.tier-zeile .tier:nth-child(3){animation-delay:.8s;}.tier-zeile .tier:nth-child(4){animation-delay:1.2s;}.tier-zeile .tier:nth-child(5){animation-delay:1.6s;}
+.tier-linie{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(184,41,74,0.2),transparent);}
+.manege-line{display:flex;align-items:center;gap:.5rem;padding:.1rem 1rem;color:var(--crimson);opacity:.3;font-size:11px;letter-spacing:.3em;user-select:none;}
+.manege-line::before,.manege-line::after{content:'';flex:1;height:1px;background:currentColor;}
+</style>
+
+<style>
+/* App-spezifisches CSS */
+h1{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;font-weight:400;color:var(--text);margin-bottom:.2rem}
+.sub{font-size:13px;color:var(--muted);font-style:italic;margin-bottom:1rem}
+.modul{background:var(--white);border-radius:14px;margin-bottom:.8rem;border:1px solid var(--border);overflow:hidden;box-shadow:0 1px 8px rgba(180,120,40,0.05)}
+.modul-hdr{display:flex;align-items:center;justify-content:space-between;padding:.7rem .9rem;cursor:pointer}
+.mh-migration{background:linear-gradient(90deg,#fdf0e8,#faf3e8)}
+.mh-grammatik{background:linear-gradient(90deg,#edf5e8,#faf3e8)}
+.mh-aesthetisch{background:linear-gradient(90deg,#e8f0fd,#faf3e8)}
+.mh-lehrskizze{background:linear-gradient(90deg,#f0e8fd,#faf3e8)}
+.mh-praktikum{background:linear-gradient(90deg,#fdf5e8,#faf3e8)}
+.modul-name{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;font-weight:400;color:var(--text)}
+.modul-prog{font-size:13px;color:var(--gold);font-weight:600}
+.abgabe{font-size:13px;background:rgba(196,112,74,0.1);color:var(--terra);padding:.25rem .7rem;margin:.3rem .9rem;border-radius:8px;display:inline-block;font-weight:600;border:1px solid rgba(196,112,74,0.2)}
+.progress-bar{height:3px;background:var(--border)}
+.progress-fill{height:100%;transition:width .3s;border-radius:2px}
+.fill-migration{background:var(--terra)}
+.fill-grammatik{background:var(--sage)}
+.fill-aesthetisch{background:#4A7FA8}
+.fill-lehrskizze{background:#7B5EA7}
+.fill-praktikum{background:var(--gold)}
+.aufgaben{padding:.3rem 0}
+.aufgabe{display:flex;align-items:flex-start;gap:.7rem;padding:.55rem .9rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+.aufgabe:last-child{border:none}
+.aufgabe:active{background:rgba(200,148,58,0.06)}
+.aufgabe.done{opacity:.4}
+.check{width:22px;height:22px;border-radius:50%;border:2px solid rgba(180,130,70,0.3);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:.1rem;transition:all .15s;font-size:13px}
+.check.on{background:var(--sage);border-color:var(--sage);color:#fff}
+.aufg-body{flex:1}
+.aufg-datum{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.aufg-text{font-size:15px;color:var(--text);margin-top:.15rem;line-height:1.4}
+.aufg-text.done-text{text-decoration:line-through;color:var(--muted)}
+.aufg-dauer{font-size:12px;color:var(--muted);margin-top:.1rem;font-style:italic}
+.reset-btn{position:fixed;bottom:1rem;right:1rem;background:var(--gold);color:#fff;border:none;border-radius:20px;padding:.45rem 1.1rem;font-size:14px;cursor:pointer;font-family:'Cormorant Garamond',serif}
+</style>
+</head>
+<body>
+<div class="wimpelkette" aria-hidden="true"><svg viewBox="0 0 400 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,7 Q50,11 100,9 Q150,7 200,10 Q250,13 300,9 Q350,7 400,9" stroke="#1a2744" stroke-width="1" fill="none" opacity="0.3"/><g class="wimpel-1" transform-origin="30 9"><polygon points="23,9 37,9 30,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-2" transform-origin="67 9"><polygon points="60,9 74,9 67,28" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-3" transform-origin="104 9"><polygon points="97,9 111,9 104,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-4" transform-origin="141 9"><polygon points="134,9 148,9 141,28" fill="#6a3f7a" opacity="0.75"/></g><g class="wimpel-5" transform-origin="178 10"><polygon points="171,10 185,10 178,29" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-6" transform-origin="215 9"><polygon points="208,9 222,9 215,28" fill="#5e8a5a" opacity="0.7"/></g><g class="wimpel-7" transform-origin="252 10"><polygon points="245,10 259,10 252,29" fill="#c9893a" opacity="0.8"/></g><g class="wimpel-8" transform-origin="289 9"><polygon points="282,9 296,9 289,28" fill="#b8294a" opacity="0.8"/></g><g class="wimpel-9" transform-origin="326 9"><polygon points="319,9 333,9 326,28" fill="#1a2744" opacity="0.75"/></g><g class="wimpel-1" transform-origin="363 9"><polygon points="356,9 370,9 363,28" fill="#6a3f7a" opacity="0.75"/></g></svg></div>
+<header>
+<div class="rainbow-stripe"></div>
+<div class="header-eyebrow">Uni & Bildung</div>
+<div class="header-title">Lernplan</div>
+<div class="header-sub">DaZF · Sandra Hnat-Gerersdorfer</div>
+</header>
+<p class="sub">Sandra Hnat-Gerersdorfer · März–September 2026 · <a href="https://moodle.univie.ac.at" target="_blank" style="color:var(--gold)">Moodle öffnen</a></p>
+
+<div style="padding:.5rem 1rem 0;">
+  <button onclick="toggleChronoView()" id="btn-chrono" style="
+    width:100%;background:var(--navy);color:#fff;border:none;border-radius:14px;
+    padding:.7rem 1rem;font-family:'Raleway',sans-serif;font-weight:700;font-size:14px;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;
+    box-shadow:0 3px 10px rgba(26,39,68,.15);margin-bottom:.5rem;">
+    📅 Alle Aufgaben nach Datum
+    <span id="btn-chrono-arrow" style="font-size:10px;opacity:.7;">▼</span>
+  </button>
+</div>
+
+<div id="chrono-view" style="display:none;padding:0 1rem .5rem;">
+  <div id="list-chrono" style="display:flex;flex-direction:column;gap:.5rem;"></div>
+</div>
+
+<div class="modul">
+<div class="modul-hdr mh-migration" onclick="toggleModul('migration')">
+<span class="modul-name">&#9995; Migration, Flucht, Trauma</span>
+<span class="modul-prog" id="prog-migration">0/11</span>
+</div>
+<span class="abgabe">&#128276; Abgabe: So 29.03.2026</span>
+<div class="z-progress-bar"><div class="progress-fill fill-migration" id="fill-migration"></div></div>
+<div class="aufgaben" id="list-migration"></div>
+</div>
+
+<div class="modul">
+<div class="modul-hdr mh-grammatik" onclick="toggleModul('grammatik')">
+<span class="modul-name">&#128218; Grammatik &amp; Grammatikunterricht</span>
+<span class="modul-prog" id="prog-grammatik">0/9</span>
+</div>
+<span class="abgabe">&#128276; Abgabe: So 12.04.2026</span>
+<div class="z-progress-bar"><div class="progress-fill fill-grammatik" id="fill-grammatik"></div></div>
+<div class="aufgaben" id="list-grammatik"></div>
+</div>
+
+<div class="modul">
+<div class="modul-hdr mh-aesthetisch" onclick="toggleModul('aesthetisch')">
+<span class="modul-name">&#127912; Aesthetisches Lernen</span>
+<span class="modul-prog" id="prog-aesthetisch">0/6</span>
+</div>
+<span class="abgabe">&#128276; Abgabe: Sa 26.04.2026</span>
+<div class="z-progress-bar"><div class="progress-fill fill-aesthetisch" id="fill-aesthetisch"></div></div>
+<div class="aufgaben" id="list-aesthetisch"></div>
+</div>
+
+<div class="modul">
+<div class="modul-hdr mh-lehrskizze" onclick="toggleModul('lehrskizze')">
+<span class="modul-name">&#128221; Lehrskizzen &amp; Unterricht</span>
+<span class="modul-prog" id="prog-lehrskizze">0/8</span>
+</div>
+<div class="z-progress-bar"><div class="progress-fill fill-lehrskizze" id="fill-lehrskizze"></div></div>
+<div class="aufgaben" id="list-lehrskizze"></div>
+</div>
+
+<div class="modul">
+<div class="modul-hdr" style="background:linear-gradient(90deg,#fdf5e0,#faf3e8)" onclick="toggleModul('portfolio')">
+<span class="modul-name">🎓 Portfolio & Abschlussgespräch</span>
+<span class="modul-prog" id="prog-portfolio">0/9</span>
+</div>
+<span class="abgabe">🔔 Portfolio: 30.08.2026 · Gespräch: 25.09.2026 · Zertifikat: Oktober 2026</span>
+<div class="z-progress-bar"><div class="z-progress-fill" style="background:var(--gold)" id="fill-portfolio"></div></div>
+<div class="aufgaben" id="list-portfolio"></div>
+</div>
+
+<div class="modul">
+<div class="modul-hdr" style="background:linear-gradient(90deg,#fde8f0,#faf3e8)" onclick="toggleModul('fehlerkorrektur')">
+<span class="modul-name">🎥 IV. Fehlerkorrektur & Fehlerkultur</span>
+<span class="modul-prog" id="prog-fehlerkorrektur">0/6</span>
+</div>
+<span class="abgabe">🔔 Abgabe: Sa 17.05.2026 · M2 Pflichtaufgabe</span>
+<div class="z-progress-bar"><div class="z-progress-fill" style="background:var(--rose)" id="fill-fehlerkorrektur"></div></div>
+<div class="aufgaben" id="list-fehlerkorrektur"></div>
+</div>
+
+<div class="modul">
+<div class="modul-hdr" style="background:linear-gradient(90deg,#e8f5e8,#faf3e8)" onclick="toggleModul('lehrskizze_detail')">
+<span class="modul-name">📝 V. Detaillierte Lehrskizze</span>
+<span class="modul-prog" id="prog-lehrskizze_detail">0/7</span>
+</div>
+<span class="abgabe">🔔 Abgabe: Sa 31.05.2026 · M3 Pflichtaufgabe</span>
+<div class="z-progress-bar"><div class="z-progress-fill" style="background:var(--sage)" id="fill-lehrskizze_detail"></div></div>
+<div class="aufgaben" id="list-lehrskizze_detail"></div>
+</div>
+
+<div class="modul">
+<div class="modul-hdr" style="background:linear-gradient(90deg,#f0e8fd,#faf3e8)" onclick="toggleModul('kulturreflexiv')">
+<span class="modul-name">🌍 VI. Kulturreflexiv kompetente Lehrkraft</span>
+<span class="modul-prog" id="prog-kulturreflexiv">0/6</span>
+</div>
+<span class="abgabe">🔔 Abgabe: So 28.06.2026 · M4 Pflichtaufgabe</span>
+<div class="z-progress-bar"><div class="z-progress-fill" style="background:#7B5EA7" id="fill-kulturreflexiv"></div></div>
+<div class="aufgaben" id="list-kulturreflexiv"></div>
+</div>
+
+<div class="modul">
+<div class="modul-hdr mh-praktikum" onclick="toggleModul('praktikum')">
+<span class="modul-name">&#127979; Unterrichtspraktikum</span>
+<span class="modul-prog" id="prog-praktikum">0/12</span>
+</div>
+<span class="abgabe">&#128276; Runde 1: Mi 16.04. | Runde 2: So 21.06.2026</span>
+<div class="z-progress-bar"><div class="progress-fill fill-praktikum" id="fill-praktikum"></div></div>
+<div class="aufgaben" id="list-praktikum"></div>
+</div>
+
+<button class="reset-btn" onclick="resetAll()">↺ Zurücksetzen</button>
+
+<script>
+var TASKS = {
+  migration: [
+    {id:'m1', datum:'Do 19.03. ✓', text:'Konzett (2019) lesen + Leitfragen ausfuellen', dauer:'2 Std.'},
+    {id:'m2', datum:'Do 19.03. Abend ✓', text:'Garcia (2017) lesen + Leitfragen ausfuellen', dauer:'2 Std.'},
+    {id:'m3', datum:'Fr 20.03. ✓', text:'Plutzar (2016/2019) lesen + Notizen', dauer:'1 Std.'},
+    {id:'m4', datum:'Fr 20.03. ✓', text:'Don Bosco + Logbuch Neuland + Notizen', dauer:'1 Std.'},
+    {id:'m5', datum:'Mo 23.03. Abend ✓', text:'Synthese-Fragen + roten Faden entwickeln', dauer:'2 Std.'},
+    {id:'m6', datum:'Di 24.03. ✓', text:'Einleitung + Abschnitt 1 schreiben', dauer:'2 Std.'},
+    {id:'m7', datum:'Mi 25.03. ✓', text:'Abschnitt 2 schreiben (Don Bosco & Logbuch)', dauer:'2 Std.'},
+    {id:'m8', datum:'Mi 25.03. Nachm. ✓', text:'Abschnitt 3 schreiben (Plutzar)', dauer:'1 Std.'},
+    {id:'m9', datum:'Do 26.03. ✓', text:'Ueberarbeiten + Zitate + Quellenangaben', dauer:'2 Std.'},
+    {id:'m10', datum:'Fr 27.03. ✓', text:'Korrekturlesen + finales Layout', dauer:'1 Std.'},
+    {id:'m11', datum:'So 29.03. ✓', text:'&#128308; ABGABE auf Moodle hochladen!', dauer:'30 Min.'},
+  ],
+  grammatik: [
+    {id:'g1', datum:'Do 02.04.', text:'Aufgabenstellung lesen + Text auswählen', dauer:'1,5 Std.'},
+    {id:'g2', datum:'Fr 03.04.', text:'Analytischen Zyklus planen (Niveau A + B)', dauer:'2 Std.'},
+    {id:'g3', datum:'Sa 04.04.', text:'Suche-X + Sammeln & Sortieren + Tafelbild', dauer:'2 Std.'},
+    {id:'g4', datum:'So 05.04.', text:'Regelbildung + Recyclingaktivität', dauer:'2 Std.'},
+    {id:'g5', datum:'Mo 06.04.', text:'Dialog + freiere Aktivität', dauer:'2 Std.'},
+    {id:'g6', datum:'Di 07.04.', text:'Arbeitsblätter erstellen', dauer:'2 Std.'},
+    {id:'g7', datum:'Mi 08.04.', text:'Überarbeiten + Hypothesen & Regelformulierung', dauer:'2 Std.'},
+    {id:'g8', datum:'Fr 10.04.', text:'Korrekturlesen + Quellenangaben', dauer:'1,5 Std.'},
+    {id:'g9', datum:'So 12.04.', text:'🔴 ABGABE auf Moodle hochladen!', dauer:'30 Min.'},
+  ],
+  aesthetisch: [
+    {id:'a1', datum:'Di 24.03. ✓', text:'Thema + Material suchen', dauer:'2 Std.'},
+    {id:'a2', datum:'Mi 25.03. ✓', text:'Material sichten + Lernziele formulieren', dauer:'2 Std.'},
+    {id:'a3', datum:'Do 26.03. ✓', text:'Aufgaben entwerfen', dauer:'2 Std.'},
+    {id:'a4', datum:'Fr 27.03. ✓', text:'Kommentar (ca. 1 Seite) schreiben', dauer:'2 Std.'},
+    {id:'a5', datum:'Di 14.04.', text:'Aufgaben finalisieren + Lösungen + Quellen', dauer:'2 Std.'},
+    {id:'a6', datum:'So 26.04.', text:'🔴 ABGABE auf Moodle hochladen!', dauer:'30 Min.'},
+  ],
+  lehrskizze: [
+    {id:'l1', datum:'Mi 18.03.', text:'Lehrskizze fertigstellen \u2013 Unterricht 25.3.', dauer:'1,5 Std.'},
+    {id:'l2', datum:'Di 24.03. bis 18:00', text:'Lehrskizze auf Moodle hochladen!', dauer:'15 Min.'},
+    {id:'l3', datum:'Mi 25.03.', text:'&#127979; UNTERRICHTEN \u2013 Runde 1 (Ute Bock)', dauer:'Praxis'},
+    {id:'l4', datum:'Do 26.03.', text:'Hospitationsprotokoll Di 24.3. schreiben', dauer:'1 Std.'},
+    {id:'l5', datum:'Do 26.03.', text:'Selbstreflexion Unterricht 25.3. schreiben', dauer:'1 Std.'},
+    {id:'l6', datum:'Mi 29.04.', text:'Lehrskizze ausarbeiten \u2013 Unterricht 11.5.', dauer:'2 Std.'},
+    {id:'l7', datum:'Mo 11.05. bis 18:00', text:'Lehrskizze auf Moodle hochladen!', dauer:'15 Min.'},
+    {id:'l8', datum:'Mo 11.05.', text:'&#127979; UNTERRICHTEN \u2013 Runde 2 (Ute Bock)', dauer:'Praxis'},
+  ],
+  portfolio: [
+    {id:'po1', datum:'Mo 22.06.', text:'Alle Pflichtaufgaben sichten — welche überarbeiten?', dauer:'1 Std.'},
+    {id:'po2', datum:'Di 23.06.', text:'Teaching Philosophy Statement schreiben (meine pädagogische Haltung)', dauer:'3 Std.'},
+    {id:'po3', datum:'Mi 24.06.', text:'Gewählte Pflichtaufgabe überarbeiten & verbessern', dauer:'3 Std.'},
+    {id:'po4', datum:'Do 25.06.', text:'Abschlussreflexion schreiben (Lernweg, Erkenntnisse, Wachstum)', dauer:'2 Std.'},
+    {id:'po5', datum:'Fr 26.06.', text:'Deckblatt + Inhaltsverzeichnis + Anhang zusammenstellen', dauer:'1,5 Std.'},
+    {id:'po6', datum:'Mo 29.06.', text:'Gesamtes Portfolio Korrekturlesen + Layout finalisieren', dauer:'2 Std.'},
+    {id:'po7', datum:'So 30.08.', text:'🔴 PORTFOLIO Abgabe auf Moodle!', dauer:'30 Min.'},
+    {id:'po8', datum:'Mo 14.09.', text:'Schwerpunkt-Pflichtaufgabe für Gespräch vorbereiten', dauer:'2 Std.'},
+    {id:'po9', datum:'Fr 25.09.', text:'🎓 ABSCHLUSSGESPRÄCH (20–30 Min.) — Zertifikat im Oktober!', dauer:'Mündlich'},
+  ],
+  fehlerkorrektur: [
+    {id:'fk1', datum:'Mo 04.05.', text:'Videosequenz auswählen & einmal ansehen', dauer:'1 Std.'},
+    {id:'fk2', datum:'Di 05.05.', text:'Videoanalyse: Fehlerreaktionen, Wartezeit, Selbstkorrektur beobachten', dauer:'2 Std.'},
+    {id:'fk3', datum:'Mi 06.05.', text:'Beobachtungen strukturieren + Bericht schreiben', dauer:'2 Std.'},
+    {id:'fk4', datum:'Do 07.05.', text:'Empfehlungen auf Basis Literatur formulieren', dauer:'1,5 Std.'},
+    {id:'fk5', datum:'Fr 08.05.', text:'Korrekturlesen + Quellenangaben + Layout', dauer:'1 Std.'},
+    {id:'fk6', datum:'So 17.05.', text:'🔴 ABGABE auf Moodle hochladen!', dauer:'30 Min.'},
+  ],
+  lehrskizze_detail: [
+    {id:'ls1', datum:'Di 19.05.', text:'Unterrichtsszenario wählen + Lernziele formulieren', dauer:'1,5 Std.'},
+    {id:'ls2', datum:'Mi 20.05.', text:'Rahmenbedingungen & Zielgruppe beschreiben', dauer:'1 Std.'},
+    {id:'ls3', datum:'Do 21.05.', text:'AVIVA-Modell anwenden — Phasen planen', dauer:'2 Std.'},
+    {id:'ls4', datum:'Fr 22.05.', text:'Materialien erstellen & beilegen', dauer:'2 Std.'},
+    {id:'ls5', datum:'Sa 23.05.', text:'Lehrskizze ausformulieren + Teillernziele', dauer:'2 Std.'},
+    {id:'ls6', datum:'Do 28.05.', text:'Überarbeiten + Korrekturlesen', dauer:'1,5 Std.'},
+    {id:'ls7', datum:'So 31.05.', text:'🔴 ABGABE auf Moodle hochladen!', dauer:'30 Min.'},
+  ],
+  kulturreflexiv: [
+    {id:'kr1', datum:'Di 09.06.', text:'3 Texte aus Basislektüre auswählen & lesen', dauer:'3 Std.'},
+    {id:'kr2', datum:'Mi 10.06.', text:'Leitfragen bearbeiten: Bedeutung kulturreflexiven Lernens', dauer:'2 Std.'},
+    {id:'kr3', datum:'Do 11.06.', text:'Herausforderungen & kritische Anmerkungen formulieren', dauer:'2 Std.'},
+    {id:'kr4', datum:'Fr 12.06.', text:'Essay schreiben + Bezug auf Modulinhalte', dauer:'2 Std.'},
+    {id:'kr5', datum:'Sa 13.06.', text:'Überarbeiten + Zitate + Quellenangaben', dauer:'1,5 Std.'},
+    {id:'kr6', datum:'So 28.06.', text:'🔴 ABGABE auf Moodle hochladen!', dauer:'30 Min.'},
+  ],
+  praktikum: [
+    {id:'p1', datum:'Di 24.03.', text:'&#128065; Hospitation Runde 1 \u2013 UP DaZ/DaF', dauer:'Praxis'},
+    {id:'p2', datum:'Mi 25.03.', text:'Hospitationsprotokoll Di 24.3. fertigstellen', dauer:'1 Std.'},
+    {id:'p3', datum:'Do 26.03.', text:'Selbstreflexion Unterricht 25.3. schreiben', dauer:'1 Std.'},
+    {id:'p4', datum:'Mi 01.04.', text:'&#128308; DEADLINE: Selbstreflexion auf Moodle', dauer:'30 Min.'},
+    {id:'p5', datum:'Di 14.04.', text:'Abgabe Runde 1 \u2013 Checkliste vorbereiten', dauer:'1 Std.'},
+    {id:'p6', datum:'Do 16.04.', text:'&#128308; ABGABE Runde 1 auf Moodle hochladen', dauer:'30 Min.'},
+    {id:'p7', datum:'Mi 06.05.', text:'&#128065; Hospitation Runde 2 \u2013 UP DaZ/DaF', dauer:'Praxis'},
+    {id:'p8', datum:'Do 07.05.', text:'Hospitationsprotokoll Mi 6.5. schreiben', dauer:'1 Std.'},
+    {id:'p9', datum:'Di 12.05.', text:'Selbstreflexion Unterricht 11.5. schreiben', dauer:'1 Std.'},
+    {id:'p10', datum:'Mo 18.05.', text:'&#128308; DEADLINE: Selbstreflexion auf Moodle', dauer:'30 Min.'},
+    {id:'p11', datum:'Di 09.06.', text:'Schriftl. Feedback Beobachtung Runde 2 verfassen', dauer:'2 Std.'},
+    {id:'p12', datum:'So 21.06.', text:'&#128308; ABGABE Runde 2 komplett auf Moodle!', dauer:'1 Std.'},
+  ]
+};
+
+var KEY = 'lernplan_v2';
+var checked = JSON.parse(localStorage.getItem(KEY) || '{}');
+// Bereits erledigte Aufgaben vormarkieren (nur wenn noch nicht gespeichert)
+if (Object.keys(checked).length === 0) {
+  // Migration (m1-m11), Aesthetisch (a1-a6), Lehrskizze Runden 1 (l1-l5), Praktikum Runde 1 (p1-p4)
+  ['m1','m2','m3','m4','m5','m6','m7','m8','m9','m10','m11',
+   'a1','a2','a3','a4',
+   'l1','l2','l3','l4','l5',
+   'p1','p2','p3','p4'].forEach(function(id){ checked[id] = true; });
+  localStorage.setItem(KEY, JSON.stringify(checked));
+}
+function save(){ localStorage.setItem(KEY, JSON.stringify(checked)); }
+
+function render(){
+  Object.keys(TASKS).forEach(function(modul){
+    var list = document.getElementById('list-'+modul);
+    var tasks = TASKS[modul];
+    var done = 0;
+    list.innerHTML = '';
+    tasks.forEach(function(t){
+      var isDone = !!checked[t.id];
+      if(isDone) done++;
+      var div = document.createElement('div');
+      div.className = 'aufgabe'+(isDone?' done':'');
+      div.innerHTML = '<div class="check'+(isDone?' on':'')+'">'+(isDone?'&#10003;':'')+
+        '</div><div class="aufg-body">'+
+        '<div class="aufg-datum">'+t.datum+'</div>'+
+        '<div class="aufg-text'+(isDone?' done-text':'')+'">'+t.text+'</div>'+
+        '<div class="aufg-dauer">'+t.dauer+'</div></div>';
+      div.onclick = function(){ checked[t.id]=!checked[t.id]; save(); render(); };
+      list.appendChild(div);
+    });
+    var pct = Math.round(done/tasks.length*100);
+    document.getElementById('prog-'+modul).textContent = done+'/'+tasks.length;
+    document.getElementById('fill-'+modul).style.width = pct+'%';
+  });
+}
+
+function toggleModul(id){
+  var list = document.getElementById('list-'+id);
+  list.style.display = list.style.display==='none' ? '' : 'none';
+}
+
+function toggleChronoView(){
+  var view = document.getElementById('chrono-view');
+  var arrow = document.getElementById('btn-chrono-arrow');
+  if(view.style.display==='none'){
+    renderChrono();
+    view.style.display='block';
+    arrow.textContent='▲';
+  } else {
+    view.style.display='none';
+    arrow.textContent='▼';
+  }
+}
+
+// Parse datum string to sortable number: "Do 19.03." → 20260319
+function parseDatum(datum){
+  var m = datum.match(/(\d{1,2})\.(\d{2})\./);
+  if(!m) return 99999999;
+  var day = parseInt(m[1],10);
+  var month = parseInt(m[2],10);
+  var year = 2026; // Alle Termine im Lernplan liegen in 2026
+  return year*10000 + month*100 + day;
+}
+
+function renderChrono(){
+  // Collect all tasks with modul label
+  var MODUL_LABELS = {
+    migration:'Migration', grammatik:'Grammatik', aesthetisch:'Ästhetisch',
+    lehrskizze:'Lehrskizze', portfolio:'Portfolio', fehlerkorrektur:'Fehlerkorrektur',
+    lehrskizze_detail:'Lehrskizze Detail', kulturreflexiv:'Kulturreflexiv', praktikum:'Praktikum'
+  };
+  var all = [];
+  Object.keys(TASKS).forEach(function(modul){
+    TASKS[modul].forEach(function(t){
+      all.push({task:t, modul:modul, label:MODUL_LABELS[modul]||modul, sort:parseDatum(t.datum)});
+    });
+  });
+  all.sort(function(a,b){ return a.sort - b.sort; });
+
+  var container = document.getElementById('list-chrono');
+  container.innerHTML = '';
+  all.forEach(function(item){
+    var t = item.task;
+    var isDone = !!checked[t.id];
+    var div = document.createElement('div');
+    div.className = 'aufgabe'+(isDone?' done':'');
+    div.style.cssText = 'background:var(--card);border-radius:12px;padding:.7rem .9rem;border:1px solid var(--border);display:flex;align-items:flex-start;gap:.7rem;cursor:pointer;';
+    div.innerHTML =
+      '<div class="check'+(isDone?' on':'')+'" style="flex-shrink:0;margin-top:2px;">'+(isDone?'&#10003;':'')+
+      '</div><div style="flex:1;">'+
+      '<div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;">'+
+        '<span class="aufg-datum">'+t.datum+'</span>'+
+        '<span style="font-size:10px;background:var(--navy);color:#fff;padding:.1rem .45rem;border-radius:6px;opacity:.7;">'+item.label+'</span>'+
+      '</div>'+
+      '<div class="aufg-text'+(isDone?' done-text':'')+'">'+t.text+'</div>'+
+      '<div class="aufg-dauer">'+t.dauer+'</div>'+
+      '</div>';
+    div.onclick = function(){ checked[t.id]=!checked[t.id]; save(); render(); renderChrono(); };
+    container.appendChild(div);
+  });
+}
+
+function resetAll(){
+  if(confirm('Alle Schritte zurücksetzen?')){ checked={}; save(); render(); }
+}
+render();
+</script>
+</body>
+</html>
